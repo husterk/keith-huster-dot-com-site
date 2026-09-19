@@ -1,6 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
-import { file } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
 
 const link = z.object({ label: z.string(), href: z.string() });
 const stat = z.object({ value: z.string(), label: z.string() });
@@ -96,4 +96,9 @@ const beyond = defineCollection({
   }),
 });
 
-export const collections = { site, experience, chart, impact, leadership, patents, beyond };
+const pages = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
+  schema: z.object({ title: z.string(), description: z.string(), updated: z.coerce.date() }),
+});
+
+export const collections = { site, experience, chart, impact, leadership, patents, beyond, pages };

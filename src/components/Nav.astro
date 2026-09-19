@@ -4,11 +4,11 @@ import { getSite } from '../lib/content';
 const site = await getSite();
 
 const links = [
-  { href: '#route', label: 'Experience' },
-  { href: '#segments', label: 'Impact' },
-  { href: '#crew', label: 'Leadership' },
-  { href: '#patents', label: 'Patents' },
-  { href: '#offclock', label: 'Beyond work' },
+  { href: '/#route', label: 'Experience' },
+  { href: '/#segments', label: 'Impact' },
+  { href: '/#crew', label: 'Leadership' },
+  { href: '/#patents', label: 'Patents' },
+  { href: '/#offclock', label: 'Beyond work' },
 ];
 ---
 
@@ -30,7 +30,7 @@ const links = [
     <button type="button" class="menu" aria-expanded="false" aria-controls="mobile-menu">
       Menu
     </button>
-    <a href="#contact" class="cta">
+    <a href="/#contact" class="cta">
       Get in touch
     </a>
   </nav>
@@ -40,7 +40,7 @@ const links = [
   {links.map((link) => (
     <a href={link.href}>{link.label}</a>
   ))}
-  <a href="#contact" class="cta">
+  <a href="/#contact" class="cta">
     Get in touch
   </a>
 </nav>
