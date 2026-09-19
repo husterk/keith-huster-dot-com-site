@@ -7,3 +7,4 @@ mise.lock
 docs/
 test-results/
 playwright-report/
+worker-configuration.d.ts

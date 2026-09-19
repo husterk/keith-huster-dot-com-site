@@ -7,6 +7,5 @@ export default defineConfig({
     command: 'bunx astro preview --ignore-lock',
     url: 'http://localhost:4321',
     reuseExistingServer: !process.env.CI,
-    env: { CONTACT_DRY_RUN: '1' },
   },
 });

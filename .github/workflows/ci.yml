@@ -13,8 +13,6 @@ jobs:
   ci:
     name: ci
     runs-on: ubuntu-latest
-    env:
-      CONTACT_DRY_RUN: '1'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
@@ -25,6 +23,7 @@ jobs:
       - run: bun run check
       - run: bun run build
       - run: bunx playwright install --with-deps chromium
+      - run: cp .dev.vars.example .dev.vars
       - run: bun run test
       - run: bunx lhci autorun
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
