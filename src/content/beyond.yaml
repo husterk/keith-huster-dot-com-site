@@ -1,0 +1,27 @@
+- id: beyond
+  eyebrow: '05 · Beyond work'
+  heading: 'Why I finish what I start'
+  paragraphs:
+    - >-
+      2,745 miles along the Continental Divide, self-supported, in 27 days: roughly a hundred miles a
+      day of planning, troubleshooting and pacing with nobody to hand the problem to. It's the same
+      discipline I bring to a multi-quarter migration or a 3 a.m. incident.
+  feature:
+    caption: 'Banff, AB → Antelope Wells, NM · 2025'
+    title: 'Tour Divide finisher'
+    body: >-
+      2,745 miles along the Continental Divide, self-supported, in 27 days: roughly a hundred miles a
+      day of planning, troubleshooting and pacing with nobody to hand the problem to. It's the same
+      discipline I bring to a multi-quarter migration or a 3 a.m. incident.
+    from: 'Mile 0 · Canada'
+    to: 'Mile 2,745 · Mexico'
+  boxes:
+    - caption: '2004 – 2016'
+      title: 'Volunteer firefighter, Lieutenant'
+      body: 'Twelve years on the department, promoted to Lieutenant. Calm, clear communication under pressure is a skill I learned long before my first production incident.'
+    - caption: 'github.com/husterk'
+      title: 'HomeLab'
+      body: 'A declarative, GitOps-driven lab on Proxmox VE, OPNsense, Talos Linux Kubernetes and Terraform with Atlantis.'
+    - caption: 'KeithAndLindsey.com'
+      title: 'Travel blog'
+      body: 'Ghost CMS with a fully custom theme, a GitHub Actions pipeline and two Cloudflare Workers handling webhooks and sitemaps.'

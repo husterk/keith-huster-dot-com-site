@@ -1,0 +1,39 @@
+# Waypoints on the 1280 x 360 elevation profile (x left to right, y down; the baseline is y=300).
+- id: hill-rom
+  x: 0
+  y: 270
+  year: '2002'
+  label: 'Hill-Rom · new product development'
+  note: '36 patents · 10 products commercialized'
+  labelAnchor: start
+- id: curriculum-loft
+  x: 640
+  y: 182
+  year: '2014'
+  label: 'Curriculum Loft'
+  labelAnchor: end
+- id: confluence
+  x: 693
+  y: 168
+  year: '2015'
+  label: 'Confluence'
+- id: olo-menu
+  x: 890
+  y: 132
+  year: '2018'
+  label: 'Olo · Menu team'
+- id: olo-infra
+  x: 1045
+  y: 104
+  year: '2021'
+  label: 'Olo · Software Infrastructure'
+- id: team-lead
+  x: 1188
+  y: 70
+  year: '2024'
+  label: 'Team Lead II'
+- id: now
+  x: 1262
+  y: 52
+  year: 'NOW'
+  labelAnchor: end
