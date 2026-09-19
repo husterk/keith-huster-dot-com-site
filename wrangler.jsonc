@@ -1,6 +1,5 @@
 // Cloudflare Worker config for keithhuster.com (Astro 7 static output + one server route).
 // `main` and `assets` match what @astrojs/cloudflare v14 generates by default; kept explicit so bindings, routes and vars are visible.
-// The custom-domain route for keithhuster.com is added at launch (M4).
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "keithhuster-com",
@@ -8,6 +7,7 @@
   "workers_dev": true,
   "preview_urls": true,
   "compatibility_flags": ["nodejs_compat"],
+  "routes": [{ "pattern": "keithhuster.com", "custom_domain": true }],
   "main": "@astrojs/cloudflare/entrypoints/server",
   "assets": {
     "directory": "./dist",
