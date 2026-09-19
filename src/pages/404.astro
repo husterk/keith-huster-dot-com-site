@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Not found · Keith Huster" description="That page does not exist.">
+  <main id="main" class="wrap">
+    <p class="eyebrow">404</p>
+    <h1>Off route.</h1>
+    <p class="body">
+      That page does not exist. <a href="/">Back to the site</a>.
+    </p>
+  </main>
+</Base>
+
+<style>
+  .wrap {
+    min-height: 100vh;
+    background: var(--bg-spruce);
+    padding: 96px var(--pad);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0;
+  }
+  h1 {
+    font-family: var(--font-cond);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(56px, 8vw, 112px);
+    line-height: 0.9;
+    margin: 0;
+  }
+  .body {
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--text-soft);
+    margin: 0;
+  }
+  a {
+    color: var(--accent);
+  }
+</style>

@@ -1,0 +1,52 @@
+name: deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        with:
+          install: false
+      - run: mise install --locked
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+      - run: bun run build
+
+      - name: Load secrets from 1Password
+        uses: 1password/load-secrets-action@70062d7a876d3eb6334754fa26efd2fbd90c32f2 # v5.0.1
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          CLOUDFLARE_API_TOKEN: op://secrets_keith-huster-dot-com-site/Cloudflare API token/credential
+          CLOUDFLARE_ACCOUNT_ID: op://secrets_keith-huster-dot-com-site/Cloudflare API token/account id
+
+      - name: Deploy
+        id: deploy
+        run: |
+          OUT=$(bunx wrangler deploy 2>&1 | tee /dev/stderr)
+          URL=$(echo "$OUT" | grep -Eo 'https://keithhuster-com\.[a-z0-9-]+\.workers\.dev' | head -1)
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+
+      # Until the custom domain is bound at launch, the smoke check targets the workers.dev URL.
+      - name: Smoke check
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          test -n "$URL"
+          sleep 5
+          curl -sSf -o /dev/null "$URL/"
+          curl -sSf -o /dev/null "$URL/favicon.svg"

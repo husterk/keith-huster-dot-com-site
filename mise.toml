@@ -1,0 +1,13 @@
+# Bun is the package manager and script runner; Node runs the Astro, Wrangler
+# and Playwright CLIs underneath `bun run`. Both are pinned here for local
+# development and CI (jdx/mise-action). Tasks live in package.json scripts.
+min_version = "2026.1.2"
+
+[tools]
+bun = "1.4.2"
+node = "24.21.0"
+
+[settings]
+experimental = true
+lockfile = true
+not_found_auto_install = true

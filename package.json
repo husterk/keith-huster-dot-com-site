@@ -1,0 +1,35 @@
+{
+  "name": "keith-huster-dot-com-site",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "engines": {
+    "node": ">=24",
+    "bun": ">=1.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check && prettier --check .",
+    "format": "prettier --write .",
+    "test": "playwright test",
+    "secrets:local": "op inject -i .dev.vars.tpl -o .dev.vars"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "14.3.2",
+    "@fontsource/barlow": "5.3.0",
+    "@fontsource/barlow-condensed": "5.3.0",
+    "@fontsource/spline-sans-mono": "5.3.0",
+    "astro": "7.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@playwright/test": "1.63.0",
+    "@types/node": "26.6.2",
+    "prettier": "3.9.8",
+    "prettier-plugin-astro": "1.0.1",
+    "typescript": "5.9.3",
+    "wrangler": "4.135.0"
+  }
+}
