@@ -5,7 +5,7 @@ Each milestone ends with something deployable. Estimates assume focused sessions
 ## M0 · Accounts and access (≈1 hour, all in dashboards)
 
 - GitHub repo `keithhuster.com` (public), branch protection on `main` requiring the `ci` check.
-- 1Password: vault `keithhuster.com`; service account with read access to it; items for the Cloudflare API token, Resend key, Turnstile secret. Put `OP_SERVICE_ACCOUNT_TOKEN` in the GitHub repo secrets.
+- 1Password: vault `secrets_keith-huster-dot-com-site`; service account with read access to it; items for the Cloudflare API token, Resend key, Turnstile secret. Put `OP_SERVICE_ACCOUNT_TOKEN` in the GitHub repo secrets.
 - Cloudflare: API token (scoped as in `03`), Turnstile widget, Web Analytics site.
 - Resend: add and verify the `keithhuster.com` sending domain (three DNS records in Cloudflare), create the restricted API key.
 

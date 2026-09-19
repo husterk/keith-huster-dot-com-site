@@ -30,10 +30,10 @@ jobs:
         with: { export-env: true }
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          CLOUDFLARE_API_TOKEN: op://keithhuster.com/Cloudflare API token/credential
-          CLOUDFLARE_ACCOUNT_ID: op://keithhuster.com/Cloudflare API token/account id
-          RESEND_API_KEY: op://keithhuster.com/Resend/credential
-          TURNSTILE_SECRET_KEY: op://keithhuster.com/Turnstile/secret key
+          CLOUDFLARE_API_TOKEN: op://secrets_keith-huster-dot-com-site/Cloudflare API token/credential
+          CLOUDFLARE_ACCOUNT_ID: op://secrets_keith-huster-dot-com-site/Cloudflare API token/account id
+          RESEND_API_KEY: op://secrets_keith-huster-dot-com-site/Resend/credential
+          TURNSTILE_SECRET_KEY: op://secrets_keith-huster-dot-com-site/Turnstile/secret key
 
       - name: Sync Worker secrets (so they always match 1Password)
         run: |

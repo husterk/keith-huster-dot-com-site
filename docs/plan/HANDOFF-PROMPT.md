@@ -45,7 +45,7 @@ At the end of each work session, update `docs/plan/STATUS.md` (create it) with: 
 
 ### M0 completion report (I fill this in before sending)
 
-- [ ] §3 1Password vault `keithhuster.com`, items `Cloudflare API token`, `Resend`, `Turnstile`; service account; GitHub secret `OP_SERVICE_ACCOUNT_TOKEN`
+- [ ] §3 1Password vault `secrets_keith-huster-dot-com-site`, items `Cloudflare API token`, `Resend`, `Turnstile`; service account; GitHub secret `OP_SERVICE_ACCOUNT_TOKEN`
 - [ ] §4 Cloudflare API token + account ID stored
 - [ ] §5 Resend domain verified + sending-only key stored (or: "using onboarding@resend.dev for now")
 - [ ] §6 Turnstile widget created; **site key:** `________________`

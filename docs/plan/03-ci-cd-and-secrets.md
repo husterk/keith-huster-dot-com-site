@@ -10,7 +10,7 @@
 
 | Secret | Where it lives | Who reads it | Notes |
 |---|---|---|---|
-| `OP_SERVICE_ACCOUNT_TOKEN` | GitHub repo secret | both workflows | The only GitHub secret. Scope the service account to one vault (`keithhuster.com`), read-only. |
+| `OP_SERVICE_ACCOUNT_TOKEN` | GitHub repo secret | both workflows | The only GitHub secret. Scope the service account to one vault (`secrets_keith-huster-dot-com-site`), read-only. |
 | `CLOUDFLARE_API_TOKEN` | 1Password vault | deploy + preview jobs | Custom token: Account `Workers Scripts:Edit`, Account `Account Settings:Read`, Zone `Workers Routes:Edit` (zone-level only; needed to bind the custom domain), and Zone `DNS:Edit` only if the custom-domain step complains at launch. Scope to the one account and the one zone. |
 | `CLOUDFLARE_ACCOUNT_ID` | 1Password (not secret, but keep it out of the repo anyway) | deploy | Or set in `wrangler.jsonc`; it's not sensitive. |
 | `RESEND_API_KEY` | 1Password → synced to the Worker as a secret | the Worker at runtime | Create a key restricted to "Sending access" and the one domain. |

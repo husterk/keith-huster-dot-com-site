@@ -50,8 +50,8 @@ jobs:
         with: { export-env: true }
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          CLOUDFLARE_API_TOKEN: op://keithhuster.com/Cloudflare API token/credential
-          CLOUDFLARE_ACCOUNT_ID: op://keithhuster.com/Cloudflare API token/account id
+          CLOUDFLARE_API_TOKEN: op://secrets_keith-huster-dot-com-site/Cloudflare API token/credential
+          CLOUDFLARE_ACCOUNT_ID: op://secrets_keith-huster-dot-com-site/Cloudflare API token/account id
       - name: Upload preview version
         id: upload
         run: |

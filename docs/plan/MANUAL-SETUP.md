@@ -17,7 +17,7 @@ The repo is cloned on your Mac with an SSH remote and the Claude workspace has n
 2. Name `claude-keithhuster-site`, expiration 30 days, resource owner `husterk`, repository access: **Only select repositories → keith-huster-dot-com-site**.
 3. Repository permissions: Administration **Read and write** (settings, branch protection), Contents **Read and write**, Issues **Read and write**, Pull requests **Read and write**, Workflows **Read and write** (needed to push `.github/workflows`), Metadata Read.
 4. Account permissions: Projects **Read and write** (the board is a user-level Project).
-5. Store the token in 1Password (item `GitHub PAT · keithhuster site`, vault `keithhuster.com` — see step 3). Then either give me the `op://` reference to read with the CLI on your Mac, or save it to `/Users/keithhuster/git-repos/keith-huster-dot-com-site/.secrets/gh_token` (that path is gitignored; I'll delete the file when done). Do **not** paste it into the chat.
+5. Store the token in 1Password (item `GitHub PAT · keithhuster site`, vault `secrets_keith-huster-dot-com-site` — see step 3). Then either give me the `op://` reference to read with the CLI on your Mac, or save it to `/Users/keithhuster/git-repos/keith-huster-dot-com-site/.secrets/gh_token` (that path is gitignored; I'll delete the file when done). Do **not** paste it into the chat.
 6. Revoke the token when the build is finished.
 
 I'll switch the clone's remote to HTTPS for pushes while the token is in use and switch it back afterwards.
@@ -32,7 +32,7 @@ Repo → Settings:
 
 ## 3. 1Password: vault, items, service account  *(≈15 min)*
 
-1. Create a vault named **`keithhuster.com`**.
+1. Create a vault named **`secrets_keith-huster-dot-com-site`**.
 2. Create these items in it (exact titles and field names matter; the workflows read them by `op://` reference):
 
    | Item title | Fields | Filled in step |
@@ -42,9 +42,9 @@ Repo → Settings:
    | `Turnstile` | `site key` (text), `secret key` (password) | 6 |
 
    Use the *API Credential* item type for the first two and a *Password* item with two custom fields for Turnstile.
-3. Create a **Service Account**: 1Password → Developer → Service Accounts → *Create*. Name `github-actions-keithhuster`, grant **read** access to the `keithhuster.com` vault only. Copy the token once.
+3. Create a **Service Account**: 1Password → Developer → Service Accounts → *Create*. Name `github-actions-keithhuster`, grant **read** access to the `secrets_keith-huster-dot-com-site` vault only. Copy the token once.
 4. GitHub repo → Settings → Secrets and variables → Actions → *New repository secret*: name **`OP_SERVICE_ACCOUNT_TOKEN`**, value = the service-account token. This is the only GitHub secret the project will ever have.
-5. Optional but useful: `op vault list` on your Mac should show the vault; `op read "op://keithhuster.com/Cloudflare API token/credential"` will work once step 4 is done.
+5. Optional but useful: `op vault list` on your Mac should show the vault; `op read "op://secrets_keith-huster-dot-com-site/Cloudflare API token/credential"` will work once step 4 is done.
 
 **Done when:** the four items exist and the GitHub secret is set. Tell me "1Password done".
 
@@ -100,7 +100,7 @@ Repository settings via API (default branch `main`, squash-merge only with auto-
 
 - [ ] 1. Repo access for this session (Option A or B)
 - [ ] 2. Forking decision acknowledged; wiki and discussions off
-- [ ] 3. 1Password vault `keithhuster.com`, three items, service account, GitHub secret `OP_SERVICE_ACCOUNT_TOKEN`
+- [ ] 3. 1Password vault `secrets_keith-huster-dot-com-site`, three items, service account, GitHub secret `OP_SERVICE_ACCOUNT_TOKEN`
 - [ ] 4. Cloudflare API token + account ID in 1Password
 - [ ] 5. Resend domain verified + sending-only API key in 1Password
 - [ ] 6. Turnstile widget; keys in 1Password; site key sent to me
