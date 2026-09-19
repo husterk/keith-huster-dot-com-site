@@ -1,5 +1,6 @@
 ---
 import { getSite } from '../lib/content';
+import ContactForm from './ContactForm.astro';
 
 const site = await getSite();
 const { contact, links, footer } = site;
@@ -20,6 +21,7 @@ const { contact, links, footer } = site;
         GitHub
       </a>
     </div>
+    <ContactForm />
   </div>
   <footer class="foot">
     <span>{footer}</span>

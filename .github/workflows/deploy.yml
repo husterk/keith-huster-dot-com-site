@@ -33,6 +33,13 @@ jobs:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           CLOUDFLARE_API_TOKEN: op://secrets_keith-huster-dot-com-site/Cloudflare API token/credential
           CLOUDFLARE_ACCOUNT_ID: op://secrets_keith-huster-dot-com-site/Cloudflare API token/account id
+          RESEND_API_KEY: op://secrets_keith-huster-dot-com-site/Resend/credential
+          TURNSTILE_SECRET_KEY: op://secrets_keith-huster-dot-com-site/Turnstile/secret key
+
+      - name: Sync Worker secrets from 1Password
+        run: |
+          jq -n --arg r "$RESEND_API_KEY" --arg t "$TURNSTILE_SECRET_KEY" \
+            '{RESEND_API_KEY:$r, TURNSTILE_SECRET_KEY:$t}' | bunx wrangler secret bulk
 
       - name: Deploy
         id: deploy

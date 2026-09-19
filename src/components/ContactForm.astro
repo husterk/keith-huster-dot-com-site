@@ -1,0 +1,99 @@
+---
+import { getSite } from '../lib/content';
+
+const { turnstileSiteKey, links } = await getSite();
+---
+
+<form class="contact-form" method="post" action="/api/contact" novalidate data-contact-form>
+  <div class="field">
+    <label class="mono" for="contact-name">
+      Name
+    </label>
+    <input id="contact-name" name="name" type="text" autocomplete="name" required maxlength="100" />
+  </div>
+  <div class="field">
+    <label class="mono" for="contact-email">
+      Email
+    </label>
+    <input
+      id="contact-email"
+      name="email"
+      type="email"
+      autocomplete="email"
+      required
+      maxlength="254"
+    />
+  </div>
+  <div class="field wide">
+    <label class="mono" for="contact-message">
+      Message
+    </label>
+    <textarea
+      id="contact-message"
+      name="message"
+      rows="6"
+      required
+      minlength="10"
+      maxlength="3000"
+    ></textarea>
+  </div>
+  <div class="trap" aria-hidden="true">
+    <label for="contact-company">Company</label>
+    <input id="contact-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+  <div
+    class="cf-turnstile"
+    data-sitekey={turnstileSiteKey}
+    data-theme="dark"
+    data-size="flexible"
+  ></div>
+  <div class="actions">
+    <button class="btn primary" type="submit">
+      Send message
+    </button>
+    <p class="status mono" role="status" aria-live="polite" data-status></p>
+  </div>
+  <p class="fallback body" data-fallback hidden>
+    Or email me directly at <a href={`mailto:${links.email}`}>{links.email}</a>.
+  </p>
+</form>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  if (form) {
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const fallback = form.querySelector<HTMLElement>('[data-fallback]')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      button.disabled = true;
+      status.textContent = 'Sending…';
+      fallback.hidden = true;
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { accept: 'application/json' },
+        });
+        const data = (await response.json()) as { ok: boolean; message: string };
+        status.textContent = data.message;
+        if (data.ok) {
+          form.reset();
+          form
+            .querySelectorAll('input, textarea')
+            .forEach((el) => ((el as HTMLInputElement).disabled = true));
+        } else {
+          button.disabled = false;
+          fallback.hidden = false;
+          (window as unknown as { turnstile?: { reset: () => void } }).turnstile?.reset();
+        }
+      } catch {
+        status.textContent = 'Something went wrong sending your message.';
+        fallback.hidden = false;
+        button.disabled = false;
+      }
+    });
+  }
+</script>

@@ -11,10 +11,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check && prettier --check .",
+    "check": "wrangler types && astro check && prettier --check .",
     "format": "prettier --write .",
     "test": "playwright test",
-    "secrets:local": "op inject -i .dev.vars.tpl -o .dev.vars"
+    "secrets:local": "op inject -i .dev.vars.tpl -o .dev.vars",
+    "types": "wrangler types"
   },
   "dependencies": {
     "@astrojs/cloudflare": "14.3.2",

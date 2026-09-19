@@ -377,6 +377,94 @@
   font-size: 15px;
 }
 
+.contact-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 32px;
+  max-width: 760px;
+  margin-top: 16px;
+}
+
+.contact-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-form .wide,
+.contact-form .cf-turnstile,
+.contact-form .actions,
+.contact-form .fallback {
+  grid-column: 1 / -1;
+}
+
+.contact-form label {
+  color: var(--mute);
+}
+
+.contact-form input,
+.contact-form textarea {
+  font: 17px/1.5 var(--font-body);
+  color: var(--bone);
+  background: var(--panel);
+  border: 1px solid var(--line2);
+  padding: 12px 14px;
+  min-height: 44px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+.contact-form .trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-form .actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.contact-form .btn {
+  border: 0;
+  cursor: pointer;
+}
+
+.contact-form .btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.contact-form .status {
+  margin: 0;
+  color: var(--text-soft);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+}
+
+.contact-form .fallback {
+  margin: 0;
+}
+
+.contact-form .fallback a {
+  color: var(--accent);
+}
+
 @media (max-width: 1099px) {
   :root {
     --k: 0.58;
@@ -570,5 +658,8 @@
   }
   .contact .h2 {
     font-size: 52px;
+  }
+  .contact-form {
+    grid-template-columns: 1fr;
   }
 }
