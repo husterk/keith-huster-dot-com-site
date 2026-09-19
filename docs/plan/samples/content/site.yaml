@@ -27,4 +27,4 @@
     eyebrow: "Let's talk"
     heading: "Hiring a Staff engineer or an engineering manager? Let's talk."
   footer: "Open to Senior, Staff and engineering management roles · Remote from Orem, Utah"
-  turnstileSiteKey: "1x00000000000000000000AA"   # Cloudflare's always-passes test key; replace with the real widget key
+  turnstileSiteKey: "0x4AAAAAAE9H4_9aeIf8uo-Q"   # production widget (public). CI/tests override with Cloudflare's always-passes test key 1x00000000000000000000AA

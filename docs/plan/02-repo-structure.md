@@ -26,7 +26,7 @@ keithhuster.com/
 │   │   ├── beyond.yaml            # Tour Divide panel + the three boxes
 │   │   └── colophon.md            # the "how this site was built" page
 │   ├── layouts/
-│   │   └── Base.astro             # <head>, fonts, analytics beacon, skip link, nav, footer
+│   │   └── Base.astro             # <head>, fonts, skip link, nav, footer (analytics is injected by Cloudflare)
 │   ├── components/
 │   │   ├── Nav.astro, MobileMenu.astro
 │   │   ├── Hero.astro, Stats.astro

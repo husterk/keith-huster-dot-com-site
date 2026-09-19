@@ -64,7 +64,7 @@ Repo → Settings:
 ## 5. Resend: sending domain and API key  *(≈10 min + DNS propagation)*
 
 1. Resend → Domains → *Add Domain* → `keithhuster.com`, region US East.
-2. Resend shows three DNS records (a DKIM TXT, an MX and a TXT for the `send` subdomain used for bounces, and a DMARC TXT). Add each in Cloudflare → `keithhuster.com` → DNS. For the MX/TXT records set proxy status to *DNS only* (grey cloud).
+2. Use the "Add records to Cloudflare" integration; it adds two CNAMEs (`send`, `rsend` → `*.forge.rmta.net`) and the `resend._domainkey` TXT, all DNS only. Only one verification method may exist at `send.keithhuster.com`: if older MX/SPF records from Resend's Amazon SES method are present there, delete them or verification never completes.
 3. Back in Resend, click *Verify*. Usually completes within minutes.
 4. Resend → API Keys → *Create API Key*: name `keithhuster-site-worker`, permission **Sending access**, domain **keithhuster.com** only.
 5. Copy the key into the 1Password item `Resend` → `credential`.
@@ -81,8 +81,7 @@ Repo → Settings:
 
 ## 7. Cloudflare Web Analytics  *(≈2 min)*
 
-1. Cloudflare dashboard → Analytics & Logs → Web Analytics → *Add a site* → hostname `keithhuster.com`, **do not** enable automatic setup (the site isn't proxied through the zone until launch).
-2. Copy the beacon snippet's `token` value and send it to me in chat (it's public; it's embedded in the page).
+1. Cloudflare dashboard → Analytics & Logs → Web Analytics → *Add a site* → hostname `keithhuster.com`. **Done with automatic setup** (the dashboard only offered that for a proxied zone): Cloudflare injects the beacon at the edge once the Worker custom domain is live, so nothing goes in the repo. Two constraints follow: the Worker must not send `Cache-Control: no-transform` on HTML, and previews on `workers.dev` won't report analytics. The snippet/token is still available under *Manage site* if a manual beacon is ever preferred.
 
 ## 8. Later, at launch (I'll tell you when)
 
@@ -98,10 +97,10 @@ Repository settings via API (default branch `main`, squash-merge only with auto-
 
 ### Quick checklist
 
-- [ ] 1. Repo access for this session (Option A or B)
-- [ ] 2. Forking decision acknowledged; wiki and discussions off
-- [ ] 3. 1Password vault `secrets_keith-huster-dot-com-site`, three items, service account, GitHub secret `OP_SERVICE_ACCOUNT_TOKEN`
-- [ ] 4. Cloudflare API token + account ID in 1Password
-- [ ] 5. Resend domain verified + sending-only API key in 1Password
-- [ ] 6. Turnstile widget; keys in 1Password; site key sent to me
-- [ ] 7. Web Analytics site; beacon token sent to me
+- [x] 1. Repo access: handled by moving to a terminal Claude Code session
+- [x] 2. Forking decision acknowledged; wiki and discussions off
+- [x] 3. 1Password vault `secrets_keith-huster-dot-com-site`, three items, service account, GitHub secret `OP_SERVICE_ACCOUNT_TOKEN`
+- [x] 4. Cloudflare API token + account ID in 1Password
+- [x] 5. Resend domain verified + sending-only API key in 1Password
+- [x] 6. Turnstile widget; keys in 1Password; site key `0x4AAAAAAE9H4_9aeIf8uo-Q`
+- [x] 7. Web Analytics site (automatic setup; no token needed)

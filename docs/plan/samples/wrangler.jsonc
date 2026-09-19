@@ -19,7 +19,7 @@
   "vars": {
     "CONTACT_TO": "husterk@gmail.com",
     "SITE_ORIGIN": "https://keithhuster.com",
-    "TURNSTILE_SITE_KEY": "<public site key>"
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAE9H4_9aeIf8uo-Q"
   },
   // Secrets (set by the deploy workflow from 1Password, never here):
   //   RESEND_API_KEY, TURNSTILE_SECRET_KEY

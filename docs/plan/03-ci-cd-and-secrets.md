@@ -54,7 +54,7 @@ Both workflows are in `samples/github/workflows/` (copy to `.github/` in the rep
 
 `www.keithhuster.com` → apex: a Cloudflare **Bulk Redirect** (301, preserve path) is the zero-code option and survives any future rewrite of the Worker; alternatively handle it in the Worker's `run_worker_first` path. Use the Bulk Redirect.
 
-Web Analytics: create the site in the Cloudflare dashboard and paste the beacon `<script>` into `Base.astro`. No configuration in the repo beyond the public token.
+Web Analytics: the site was created in the Cloudflare dashboard with **automatic setup**, so Cloudflare injects the beacon at the edge for the proxied custom domain and nothing goes in the repo. Do not add a manual `<script>` as well (double counting), and do not set `Cache-Control: no-transform` on HTML responses, which disables the injection. Preview URLs on `workers.dev` are not measured.
 
 ## DNS cutover from the old site
 
