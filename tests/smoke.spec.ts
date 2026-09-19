@@ -26,10 +26,16 @@ for (const width of widths) {
       expect(count).toBeGreaterThanOrEqual(6);
       for (let i = 0; i < count; i++) {
         const rider = riders.nth(i);
-        await rider.evaluate((el) => el.scrollIntoView({ block: 'center' }));
-        const b = (await rider.boundingBox())!;
-        expect(b.x, `rider ${i} left edge`).toBeGreaterThanOrEqual(-1);
-        expect(b.x + b.width, `rider ${i} right edge`).toBeLessThanOrEqual(width + 1);
+        for (const nudge of [0, 350, -700]) {
+          if (nudge === 0) await rider.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+          else await page.mouse.wheel(0, nudge);
+          await page.waitForTimeout(150);
+          const b = (await rider.boundingBox())!;
+          expect(b.x, `rider ${i} left edge after ${nudge}`).toBeGreaterThanOrEqual(-1);
+          expect(b.x + b.width, `rider ${i} right edge after ${nudge}`).toBeLessThanOrEqual(
+            width + 1,
+          );
+        }
       }
     });
   });
@@ -115,30 +121,44 @@ test.describe('contact endpoint', () => {
 });
 
 test.describe('motion', () => {
+  const rider = (page: import('@playwright/test').Page) =>
+    page.locator('.rider[data-rides]').nth(1);
+  const x = (t: string | null) => Number(/translate\(([-\d.]+),/.exec(t ?? '')?.[1]);
+
   test.describe('reduced motion', () => {
     test.use({ reducedMotion: 'reduce' });
 
-    test('the rider does not animate or drift on scroll', async ({ page }) => {
+    test('the rider neither bobs nor moves on scroll', async ({ page }) => {
       await page.goto('/');
-      const rider = page.locator('.rider').first();
-      expect(await rider.evaluate((el) => getComputedStyle(el.children[0]).animationName)).toBe(
-        'none',
-      );
-      await page.mouse.wheel(0, 100000);
-      expect(await rider.evaluate((el) => (el as SVGElement).style.translate)).toBe('');
+      const before = await rider(page).getAttribute('transform');
+      expect(
+        await rider(page).evaluate((el) => getComputedStyle(el.children[0]).animationName),
+      ).toBe('none');
+      await rider(page).evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      await page.mouse.wheel(0, 400);
+      await page.waitForTimeout(200);
+      expect(await rider(page).getAttribute('transform')).toBe(before);
     });
   });
 
   test.describe('no motion preference', () => {
     test.use({ reducedMotion: 'no-preference' });
 
-    test('the rider bobs', async ({ page }) => {
+    test('the rider bobs and travels the ground as the strip scrolls', async ({ page }) => {
       await page.goto('/');
-      const rider = page.locator('.rider').first();
-      expect(await rider.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
-      expect(await rider.evaluate((el) => getComputedStyle(el.children[0]).animationName)).toBe(
-        'bob',
-      );
+      const before = await rider(page).getAttribute('transform');
+      expect(
+        await rider(page).evaluate((el) => getComputedStyle(el.children[0]).animationName),
+      ).toBe('bob');
+      await rider(page).evaluate((el) => el.scrollIntoView({ block: 'end' }));
+      await page.waitForTimeout(200);
+      const low = await rider(page).getAttribute('transform');
+      await page.mouse.wheel(0, 500);
+      await page.waitForTimeout(200);
+      const high = await rider(page).getAttribute('transform');
+      expect(low).not.toBe(before);
+      expect(high).not.toBe(low);
+      expect(x(high)).toBeGreaterThan(x(low));
     });
   });
 });
