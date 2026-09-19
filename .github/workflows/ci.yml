@@ -21,9 +21,10 @@ jobs:
       - run: mise install --locked
       - run: bun install --frozen-lockfile
       - run: bun run check
+      # The Vite plugin copies .dev.vars into the preview build, so it must exist before the build.
+      - run: cp .dev.vars.example .dev.vars
       - run: bun run build
       - run: bunx playwright install --with-deps chromium
-      - run: cp .dev.vars.example .dev.vars
       - run: bun run test
       - run: bunx lhci autorun
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
