@@ -43,7 +43,13 @@ const { feature, boxes } = beyond;
       {boxes.map((box) => (
         <li class="box">
           <div class="mono muted" style="font-size: 12px;">
-            {box.caption}
+            {/^[a-z0-9.-]+\.[a-z]{2,}(\/\S*)?$/i.test(box.caption) ? (
+              <a href={`https://${box.caption}`} target="_blank" rel="noopener">
+                {box.caption}
+              </a>
+            ) : (
+              box.caption
+            )}
           </div>
           <div class="t">{box.title}</div>
           <div class="d">{box.body}</div>

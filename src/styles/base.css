@@ -112,6 +112,22 @@ ol {
   padding: 28px var(--pad);
   border-bottom: 1px solid var(--line);
   background: var(--bg-spruce);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.brand {
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand:hover {
+  color: inherit;
+}
+
+[id] {
+  scroll-margin-top: 104px;
 }
 
 .nav .links {
@@ -172,13 +188,16 @@ ol {
   padding: 24px 0;
   border-top: 1px solid var(--line);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--mute);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 @media (max-width: 1099px) {
+  [id] {
+    scroll-margin-top: 72px;
+  }
   .section {
     padding: 80px var(--pad);
   }
@@ -219,6 +238,9 @@ ol {
 }
 
 @media (max-width: 699px) {
+  [id] {
+    scroll-margin-top: 64px;
+  }
   .section {
     padding: 64px var(--pad);
   }

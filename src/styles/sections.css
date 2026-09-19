@@ -46,7 +46,7 @@
 }
 
 .spacer {
-  height: 500px;
+  height: calc(500px * var(--k));
 }
 
 .stats {
@@ -227,6 +227,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
+  align-self: start;
   border-top: 1px solid var(--line2);
   border-left: 1px solid var(--line2);
 }
@@ -359,7 +360,7 @@
 .contact {
   background: var(--bg-border);
   flex-grow: 1;
-  padding: 112px var(--pad) 0;
+  padding: 112px var(--pad) 8px;
   display: flex;
   flex-direction: column;
   gap: 64px;

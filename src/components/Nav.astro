@@ -13,7 +13,7 @@ const links = [
 ---
 
 <header class="nav">
-  <div class="brand">
+  <a class="brand" href="/" data-home>
     <svg width="34" height="34">
       <path
         d="M2,28 L12,10 L18,19 L23,12 L32,28 Z"
@@ -22,7 +22,7 @@ const links = [
       ></path>
     </svg>
     <div class="name">{site.name}</div>
-  </div>
+  </a>
   <nav aria-label="Primary" class="links mono">
     {links.map((link) => (
       <a href={link.href}>{link.label}</a>
@@ -130,4 +130,18 @@ const links = [
       if ((event.target as HTMLElement).tagName === 'A') close();
     });
   }
+</script>
+
+<script>
+  document.querySelector<HTMLAnchorElement>('[data-home]')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    history.scrollRestoration = 'manual';
+    if (location.pathname === '/') {
+      history.replaceState(null, '', '/');
+      scrollTo(0, 0);
+      location.reload();
+    } else {
+      location.href = '/';
+    }
+  });
 </script>
