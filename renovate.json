@@ -6,6 +6,7 @@
     ":pinAllExceptPeerDependencies",
     "helpers:pinGitHubActionDigests"
   ],
+  "ignorePaths": ["docs/**"],
   "timezone": "America/Denver",
   "schedule": ["before 6am on monday"],
   "labels": ["dependencies"],
