@@ -59,6 +59,29 @@ test.describe('phone menu', () => {
   });
 });
 
+test('the nav stays visible, the brand returns to the top, and external links open in a new tab', async ({
+  page,
+}) => {
+  await page.goto('/#contact');
+  await page.waitForTimeout(300);
+  expect((await page.locator('header.nav').boundingBox())!.y).toBe(0);
+  await page.locator('header.nav a.brand').click();
+  await page.waitForLoadState('load');
+  expect(new URL(page.url()).pathname + new URL(page.url()).hash).toBe('/');
+  expect(await page.evaluate(() => scrollY)).toBe(0);
+  const external = page.locator('a[href^="http"]:not([href*="keithhuster.com"])');
+  expect(await external.count()).toBeGreaterThan(0);
+  for (const link of await external.all()) {
+    expect(await link.getAttribute('target')).toBe('_blank');
+    expect(await link.getAttribute('rel')).toContain('noopener');
+  }
+  await page.goto('/colophon');
+  for (const link of await page
+    .locator('main a[href^="http"]:not([href*="keithhuster.com"])')
+    .all())
+    expect(await link.getAttribute('target')).toBe('_blank');
+});
+
 test('unknown routes get the 404 page', async ({ page }) => {
   const response = await page.goto('/nope');
   expect(response?.status()).toBe(404);

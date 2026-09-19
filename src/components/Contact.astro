@@ -14,20 +14,20 @@ const { contact, links, footer } = site;
       <a href={`mailto:${links.email}`} class="btn primary">
         {links.email}
       </a>
-      <a href={links.linkedin} class="btn ghost">
+      <a href={links.linkedin} class="btn ghost" target="_blank" rel="noopener">
         LinkedIn
       </a>
-      <a href={links.github} class="btn ghost">
+      <a href={links.github} class="btn ghost" target="_blank" rel="noopener">
         GitHub
       </a>
     </div>
     <ContactForm />
   </div>
+  <slot name="scene" />
   <footer class="foot">
     <span>{footer}</span>
     <span>
       <a href="/colophon">How this site was built</a> · © 2026
     </span>
   </footer>
-  <slot name="scene" />
 </section>
