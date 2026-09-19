@@ -55,6 +55,7 @@ const chart = defineCollection({
 const impact = defineCollection({
   loader: file('src/content/impact.yaml'),
   schema: z.object({
+    order: z.number().int(),
     title: z.string(),
     body: z.string(),
     result: stat,

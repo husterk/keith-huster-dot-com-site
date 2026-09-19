@@ -11,6 +11,11 @@
   flex-direction: column;
 }
 
+.hero .scene {
+  --h: 1180px;
+  --cx: 720px;
+}
+
 .hero .text {
   position: relative;
   display: grid;
@@ -92,6 +97,7 @@
 
 .chartwrap {
   width: 100%;
+  overflow: hidden;
 }
 
 .cards {
@@ -375,6 +381,11 @@
   :root {
     --k: 0.58;
   }
+
+  .hero .scene {
+    --k: 0.75;
+    bottom: 70px;
+  }
   .hero {
     padding: 72px var(--pad) 64px;
   }
@@ -468,6 +479,12 @@
 @media (max-width: 699px) {
   :root {
     --k: 0.7;
+  }
+
+  .hero .scene {
+    --k: 0.55;
+    --cx: 850px;
+    bottom: 150px;
   }
   .hero {
     padding: 48px var(--pad) 48px;

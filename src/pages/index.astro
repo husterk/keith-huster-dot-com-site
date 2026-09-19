@@ -8,6 +8,13 @@ import Leadership from '../components/Leadership.astro';
 import Patents from '../components/Patents.astro';
 import Beyond from '../components/Beyond.astro';
 import Contact from '../components/Contact.astro';
+import Strip from '../components/scenes/Strip.astro';
+import HeroBanff from '../components/scenes/HeroBanff.astro';
+import LakeMontana from '../components/scenes/LakeMontana.astro';
+import BasinWyoming from '../components/scenes/BasinWyoming.astro';
+import PassColorado from '../components/scenes/PassColorado.astro';
+import DesertNewMexico from '../components/scenes/DesertNewMexico.astro';
+import FinishAntelopeWells from '../components/scenes/FinishAntelopeWells.astro';
 ---
 
 <Base
@@ -15,11 +22,29 @@ import Contact from '../components/Contact.astro';
   description="Keith Huster, Senior / Staff Software Engineer and Engineering Manager. Distributed .NET platforms, Kubernetes, CI/CD, and 36 US patents. Remote from Orem, Utah."
 >
   <Nav />
-  <Hero id="main" />
+  <Hero id="main">
+    <HeroBanff slot="scene" />
+  </Hero>
   <Experience />
+  <Strip name="lake" h={380} background="var(--bg-spruce)">
+    <LakeMontana />
+  </Strip>
   <Impact />
+  <Strip name="basin" h={370} background="var(--bg-lake)">
+    <BasinWyoming />
+  </Strip>
   <Leadership />
+  <Strip name="pass" h={420} background="var(--bg-basin)">
+    <PassColorado />
+  </Strip>
   <Patents />
+  <Strip name="nm" h={360} background="var(--bg-alpine)">
+    <DesertNewMexico />
+  </Strip>
   <Beyond />
-  <Contact />
+  <Contact>
+    <Strip name="finish" h={400} background="var(--bg-border)" slot="scene">
+      <FinishAntelopeWells />
+    </Strip>
+  </Contact>
 </Base>

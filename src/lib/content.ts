@@ -22,8 +22,5 @@ export const getExperience = async () =>
 export const getChart = async () =>
   (await getCollection('chart')).map((e) => e.data).sort((a, b) => a.x - b.x);
 
-const impactOrder = ['eks', 'cicd', 'payload-logging', 'menu-import', 'flags-config'];
 export const getImpact = async () =>
-  (await getCollection('impact'))
-    .sort((a, b) => impactOrder.indexOf(a.id) - impactOrder.indexOf(b.id))
-    .map((e) => e.data);
+  (await getCollection('impact')).map((e) => e.data).sort((a, b) => a.order - b.order);
