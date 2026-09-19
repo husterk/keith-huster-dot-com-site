@@ -36,11 +36,6 @@ jobs:
           RESEND_API_KEY: op://secrets_keith-huster-dot-com-site/Resend/credential
           TURNSTILE_SECRET_KEY: op://secrets_keith-huster-dot-com-site/Turnstile/secret key
 
-      - name: Sync Worker secrets from 1Password
-        run: |
-          jq -n --arg r "$RESEND_API_KEY" --arg t "$TURNSTILE_SECRET_KEY" \
-            '{RESEND_API_KEY:$r, TURNSTILE_SECRET_KEY:$t}' | bunx wrangler secret bulk
-
       - name: Deploy
         id: deploy
         run: |
@@ -48,6 +43,13 @@ jobs:
           OUT=$(bunx wrangler deploy 2>&1 | tee /dev/stderr)
           URL=$(echo "$OUT" | grep -Eo 'https://keithhuster-com\.[a-z0-9-]+\.workers\.dev' | head -1)
           echo "url=$URL" >> "$GITHUB_OUTPUT"
+
+      # Runs after the deploy: Cloudflare refuses secret edits while a newer, undeployed
+      # version exists, and every PR preview upload creates one.
+      - name: Sync Worker secrets from 1Password
+        run: |
+          jq -n --arg r "$RESEND_API_KEY" --arg t "$TURNSTILE_SECRET_KEY" \
+            '{RESEND_API_KEY:$r, TURNSTILE_SECRET_KEY:$t}' | bunx wrangler secret bulk
 
       # Until the custom domain is bound at launch, the smoke check targets the workers.dev URL.
       - name: Smoke check
