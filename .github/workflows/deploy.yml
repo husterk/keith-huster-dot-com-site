@@ -51,7 +51,6 @@ jobs:
           jq -n --arg r "$RESEND_API_KEY" --arg t "$TURNSTILE_SECRET_KEY" \
             '{RESEND_API_KEY:$r, TURNSTILE_SECRET_KEY:$t}' | bunx wrangler secret bulk
 
-      # Until the custom domain is bound at launch, the smoke check targets the workers.dev URL.
       - name: Smoke check
         env:
           URL: ${{ steps.deploy.outputs.url }}
@@ -59,4 +58,5 @@ jobs:
           test -n "$URL"
           sleep 5
           curl -sSf -o /dev/null "$URL/"
-          curl -sSf -o /dev/null "$URL/favicon.svg"
+          curl -sSf -o /dev/null https://keithhuster.com/
+          curl -sSf -I -o /dev/null https://keithhuster.com/Keith-Huster-Resume.pdf
