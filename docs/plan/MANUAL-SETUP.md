@@ -53,10 +53,9 @@ Repo → Settings:
 1. Cloudflare dashboard → profile (top right) → *API Tokens* → *Create Token* → *Create Custom Token*.
 2. Name `github-actions-keithhuster-site`. Permissions:
    - Account · **Workers Scripts · Edit**
-   - Account · **Workers Routes · Edit** *(custom domain route)*
-   - Account · **Account Settings · Read**
-   - Zone · **Workers Routes · Edit** for zone `keithhuster.com`
-   - Zone · **DNS · Edit** for zone `keithhuster.com` *(lets Wrangler create the custom-domain record; remove after launch if you like)*
+   - Account · **Account Settings · Read** *(Wrangler uses it to resolve the account)*
+   - Zone · **Workers Routes · Edit** for zone `keithhuster.com` *(required to add the custom domain; Cloudflare creates the DNS record itself when the route is bound — there is no account-level "Workers Routes" permission)*
+   - Optional: Zone · **DNS · Edit** for `keithhuster.com`, only if the custom-domain step at launch complains about an existing record; otherwise leave it off
 3. Account resources: include only your account. Zone resources: include only `keithhuster.com`. Client IP filtering: leave empty (GitHub runners). TTL: no end date, or one year.
 4. Copy the token into the 1Password item `Cloudflare API token` → `credential`. Put your **Account ID** (Workers & Pages overview page, right-hand column) into the `account id` field.
 
