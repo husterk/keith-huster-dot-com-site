@@ -57,11 +57,33 @@ const { turnstileSiteKey, links } = await getSite();
     Or email me directly at <a href={`mailto:${links.email}`}>{links.email}</a>.
   </p>
 </form>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
 
 <script>
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
   if (form) {
+    const loadTurnstile = () => {
+      if (document.querySelector('script[data-turnstile]')) return;
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      script.async = true;
+      script.dataset.turnstile = '';
+      document.head.appendChild(script);
+    };
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            loadTurnstile();
+            observer.disconnect();
+          }
+        },
+        { rootMargin: '600px' },
+      );
+      observer.observe(form);
+    } else {
+      loadTurnstile();
+    }
+    form.addEventListener('focusin', loadTurnstile, { once: true });
     const status = form.querySelector<HTMLElement>('[data-status]')!;
     const fallback = form.querySelector<HTMLElement>('[data-fallback]')!;
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
