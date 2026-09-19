@@ -10,9 +10,9 @@ Nothing in this guide should ever be pasted into the repository, an issue, or th
 
 The repo is cloned on your Mac with an SSH remote and the Claude workspace has no SSH key or GitHub credential, so today I can read the public repo but cannot push, open issues, create the project board or change settings.
 
-**Option A (recommended): attach the repo to this Claude session.** In the Claude desktop app, in this session's GitHub settings, add `husterk/keith-huster-dot-com-site` with push access. That gives me a scoped, session-bound token that disappears when the session ends. Tell me "repo attached" and I'll verify with an API call.
+**Option A (chosen): continue in a terminal Claude Code session.** A running Cowork session cannot be given a new repository (GitHub access is fixed when a session starts), so the build moves to the Claude Code CLI on your Mac, where your existing `gh` login and SSH key already have push access. Steps: `cd ~/git-repos/keith-huster-dot-com-site`, `gh auth status` (run `gh auth refresh -s workflow,project` so the session can push workflow files and manage the Project board), start `claude`, and paste the prompt from `docs/plan/HANDOFF-PROMPT.md` after filling in its M0 completion report. That session pushes the pending local commit and does everything in §9.
 
-**Option B: a fine-grained personal access token.**
+**Option B (not needed if you use Option A): a fine-grained personal access token for a cloud session.**
 1. GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens → *Generate new token*.
 2. Name `claude-keithhuster-site`, expiration 30 days, resource owner `husterk`, repository access: **Only select repositories → keith-huster-dot-com-site**.
 3. Repository permissions: Administration **Read and write** (settings, branch protection), Contents **Read and write**, Issues **Read and write**, Pull requests **Read and write**, Workflows **Read and write** (needed to push `.github/workflows`), Metadata Read.
@@ -91,7 +91,7 @@ Repo → Settings:
 - **Old site**: know where the current keithhuster.com is hosted and how to take it down or repoint it; the custom-domain step will replace the apex DNS record.
 - **LinkedIn / résumé**: point them at the new site after launch.
 
-## 9. Things I will do once step 1 is complete (no action needed)
+## 9. Things the Claude Code session will do once step 1 is complete (no action needed)
 
 Repository settings via API (default branch `main`, squash-merge only with auto-delete of head branches, branch protection requiring the `ci` check and PRs, wiki/projects/discussions toggles, vulnerability alerts, secret scanning + push protection), labels, milestones M0–M5, the user-level GitHub Project board with a Status field and one issue per work item, and the first commit with `docs/`, `LICENSE`, `SECURITY.md`, `CODEOWNERS`, `renovate.json` and `.gitignore`.
 
