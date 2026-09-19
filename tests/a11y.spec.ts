@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-for (const path of ['/', '/404']) {
+for (const path of ['/', '/colophon', '/404']) {
   test(`axe finds no violations on ${path}`, async ({ page }) => {
     await page.goto(path);
     const results = await new AxeBuilder({ page })

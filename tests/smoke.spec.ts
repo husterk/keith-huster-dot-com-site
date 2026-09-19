@@ -46,7 +46,7 @@ test.describe('phone menu', () => {
     await expect(button).toHaveAttribute('aria-expanded', 'true');
     const menu = page.locator('#mobile-menu');
     await expect(menu).toBeVisible();
-    await expect(menu.locator('a[href="#segments"]')).toBeVisible();
+    await expect(menu.locator('a[href="/#segments"]')).toBeVisible();
     await page.keyboard.press('Escape');
     await expect(button).toHaveAttribute('aria-expanded', 'false');
     await expect(menu).toBeHidden();
