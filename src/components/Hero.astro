@@ -1,0 +1,53 @@
+---
+import { getSite } from '../lib/content';
+
+interface Props {
+  id?: string;
+}
+
+const { id } = Astro.props;
+const site = await getSite();
+const { headline, roles, rolesShort, location, intro, cta, stats } = site;
+
+const accentSpaceIndex = headline.accent.indexOf(' ');
+const accentPrefix = headline.accent.slice(0, accentSpaceIndex);
+const accentWord = headline.accent.slice(accentSpaceIndex + 1);
+
+const eyebrowLong = `${roles} · ${location}`;
+const eyebrowShort = `${rolesShort} · ${location.split(' ')[0]}`;
+---
+
+<section class="hero" id={id}>
+  <slot name="scene" />
+  <div class="text">
+    <div class="col">
+      <div class="mono muted eb-long">{eyebrowLong}</div>
+      <div class="mono muted eb-short">{eyebrowShort}</div>
+      <h1 class="cond">
+        {headline.lead}
+        <br />
+        {accentPrefix} <span style="color: var(--accent);">{accentWord}</span>
+      </h1>
+    </div>
+    <div class="col">
+      <p>{intro}</p>
+      <div class="btns">
+        <a href={cta.primary.href} class="btn primary">
+          {cta.primary.label}
+        </a>
+        <a href={cta.secondary.href} class="btn ghost">
+          {cta.secondary.label}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <div class="stats">
+    {stats.map((stat) => (
+      <div class="stat">
+        <div class="n">{stat.value}</div>
+        <div class="l">{stat.label}</div>
+      </div>
+    ))}
+  </div>
+</section>

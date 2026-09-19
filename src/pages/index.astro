@@ -1,77 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Experience from '../components/Experience.astro';
+import Impact from '../components/Impact.astro';
+import Leadership from '../components/Leadership.astro';
+import Patents from '../components/Patents.astro';
+import Beyond from '../components/Beyond.astro';
+import Contact from '../components/Contact.astro';
 ---
 
 <Base
   title="Keith Huster · Reliable by design"
   description="Keith Huster, Senior / Staff Software Engineer and Engineering Manager. Distributed .NET platforms, Kubernetes, CI/CD, and 36 US patents. Remote from Orem, Utah."
 >
-  <main id="main" class="hero">
-    <p class="eyebrow">
-      Senior / Staff Software Engineer · Engineering Manager · Remote from Orem, Utah
-    </p>
-    <h1>
-      Reliable <span class="accent">by design.</span>
-    </h1>
-    <p class="intro">The full site is on its way. Meanwhile, find me on LinkedIn or GitHub.</p>
-    <p class="links">
-      <a href="https://www.linkedin.com/in/husterk/">LinkedIn</a>
-      <a href="https://github.com/husterk">GitHub</a>
-    </p>
-  </main>
+  <Nav />
+  <Hero id="main" />
+  <Experience />
+  <Impact />
+  <Leadership />
+  <Patents />
+  <Beyond />
+  <Contact />
 </Base>
-
-<style>
-  .hero {
-    min-height: 100vh;
-    background: var(--bg-spruce);
-    padding: 96px var(--pad) 88px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 28px;
-  }
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 0;
-  }
-  h1 {
-    font-family: var(--font-cond);
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: clamp(76px, 10vw, 148px);
-    line-height: 0.9;
-    letter-spacing: -0.01em;
-    margin: 0;
-    text-wrap: balance;
-  }
-  .accent {
-    color: var(--accent);
-  }
-  .intro {
-    font-size: 20px;
-    line-height: 1.5;
-    color: var(--text-soft);
-    max-width: 560px;
-    margin: 0;
-    text-wrap: pretty;
-  }
-  .links {
-    display: flex;
-    gap: 16px;
-    margin: 0;
-  }
-  .links a {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 17px 28px;
-    border: 1px solid var(--line3);
-  }
-</style>

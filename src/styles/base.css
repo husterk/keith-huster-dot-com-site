@@ -1,0 +1,275 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cond {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  color: var(--accent);
+}
+
+.eb-short {
+  display: none;
+}
+
+.muted {
+  color: var(--mute);
+}
+
+.body {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text-body);
+  text-wrap: pretty;
+  margin: 0;
+}
+
+.lead {
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--text-soft);
+  text-wrap: pretty;
+  margin: 0;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 18px 28px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: var(--dark-on-accent);
+  font-weight: 500;
+}
+
+.btn.ghost {
+  border: 1px solid var(--line3);
+  background: var(--bg-spruce);
+  padding: 17px 28px;
+}
+
+.btns {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 64px;
+}
+
+.head .body {
+  max-width: 440px;
+}
+
+.h2 {
+  font-size: 72px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px var(--pad);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-spruce);
+}
+
+.nav .links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav .links a {
+  text-decoration: none;
+  padding: 14px 0;
+}
+
+.nav .links a.cta {
+  text-decoration: none;
+  padding: 14px 22px;
+  color: var(--dark-on-accent);
+  font-weight: 500;
+  background: var(--accent);
+}
+
+.nav .links .menu {
+  display: none;
+  font: inherit;
+  color: inherit;
+  background: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand .name {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section {
+  padding: 104px var(--pad);
+  position: relative;
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--mute);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1099px) {
+  .section {
+    padding: 80px var(--pad);
+  }
+  .nav {
+    padding: 18px var(--pad);
+  }
+  .nav .links {
+    gap: 12px;
+  }
+  .mono.links {
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .nav .links a.cta {
+    padding: 10px 12px;
+  }
+  .brand {
+    gap: 10px;
+  }
+  .brand .name {
+    font-size: 17px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .brand svg {
+    width: 26px;
+    height: 26px;
+  }
+  .h2 {
+    font-size: 56px;
+  }
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 699px) {
+  .section {
+    padding: 64px var(--pad);
+  }
+  .nav {
+    padding: 14px var(--pad);
+  }
+  .nav .links {
+    gap: 8px;
+  }
+  .nav .links a:not(.cta) {
+    display: none;
+  }
+  .brand .name {
+    font-size: 17px;
+  }
+  .nav .links a.cta {
+    padding: 10px 12px;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .nav .links .menu {
+    display: inline-block;
+    text-decoration: none;
+    padding: 9px 12px;
+    border: 1px solid var(--line3);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .brand .name {
+    font-size: 20px;
+  }
+  .eb-long {
+    display: none;
+  }
+  .eb-short {
+    display: block;
+  }
+  .btn {
+    padding: 16px 20px;
+    font-size: 13px;
+  }
+  .btns {
+    gap: 10px;
+  }
+  .h2 {
+    font-size: 44px;
+  }
+  .lead {
+    font-size: 17px;
+  }
+  .body {
+    font-size: 16px;
+  }
+  .foot {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
