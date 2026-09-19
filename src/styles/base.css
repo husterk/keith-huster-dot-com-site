@@ -131,6 +131,10 @@ ol {
   color: var(--dark-on-accent);
   font-weight: 500;
   background: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  box-sizing: border-box;
 }
 
 .nav .links .menu {
@@ -236,7 +240,10 @@ ol {
     letter-spacing: 0.04em;
   }
   .nav .links .menu {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    box-sizing: border-box;
     text-decoration: none;
     padding: 9px 12px;
     border: 1px solid var(--line3);
