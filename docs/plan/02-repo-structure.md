@@ -9,7 +9,7 @@ keithhuster.com/
 │   │   ├── ci.yml                 # every PR: install, astro check, build, Playwright, axe, Lighthouse; preview deploy
 │   │   └── deploy.yml             # main: build + wrangler deploy + sync Worker secrets from 1Password
 │   └── (Renovate is configured by renovate.json at the repo root)
-├── design-files/                  # the package from the design phase (reference only; excluded from the build)
+├── docs/design/, docs/plan/       # the design package and this plan (reference only; excluded from the build)
 ├── public/
 │   ├── Keith-Huster-Resume.pdf
 │   ├── favicon.svg                # the three-peak mark
@@ -56,7 +56,7 @@ keithhuster.com/
 ├── astro.config.mjs
 ├── wrangler.jsonc
 ├── lighthouserc.json
-├── package.json (packageManager: bun@1.4.x), bun.lock, renovate.json, tsconfig.json, .nvmrc, .bun-version, .prettierrc, .editorconfig
+├── package.json (packageManager: bun@1.4.x), bun.lock, renovate.json, tsconfig.json, mise.toml, mise.lock, .prettierrc, .editorconfig
 ├── .dev.vars.example              # names of the local secrets; .dev.vars itself is gitignored
 └── README.md                      # how to run, how to edit content, how to deploy
 ```
@@ -135,5 +135,5 @@ For a quick fix from a phone, GitHub's web editor on `main` works; the deploy wo
 - The elevation chart is generated from `experience.yaml` in `ElevationChart.astro` (a few lines of arithmetic, no charting library). On phone it's hidden and the cards carry the content, exactly as in the mockup.
 - Mobile menu: a `<button aria-expanded>` toggling a `<dialog>` or an overlay `<nav>`; ~20 lines of vanilla JS in a `<script>` tag. Focus is trapped while open; Escape closes.
 - Motion: CSS-only bob on the rider; optional parallax in a 30-line `<script>` gated on `prefers-reduced-motion: no-preference` and `IntersectionObserver`. Ship the site without parallax first; add it in milestone 5 if it still feels worth it.
-- Local development: `bun install`, then `bun run dev` (`astro dev`, already inside workerd with the rate-limit and vars bindings from `wrangler.jsonc`); `bun run build && bun run preview` (`astro preview`) runs the production Worker locally. Node 24 must be installed too (Bun runs these CLIs on Node; see 01).
+- Local development: `mise install` (Bun and Node from `mise.toml`), `bun install`, then `bun run dev` (`astro dev`, already inside workerd with the rate-limit and vars bindings from `wrangler.jsonc`); `bun run build && bun run preview` (`astro preview`) runs the production Worker locally. Node 24 comes from mise as well (Bun runs these CLIs on Node; see 01). Tasks stay in `package.json` scripts run by `bun run`; mise pins tools only.
 - Metadata: `<title>`, description, canonical, Open Graph and Twitter tags, JSON-LD `Person` (name, jobTitle, sameAs LinkedIn/GitHub), favicon SVG, `theme-color`.

@@ -20,21 +20,20 @@ Build the site with **Astro** as a mostly static site, with every word of conten
 
 ## Versions verified on 2026-09-18
 
-Every version below was checked against the project's own release page on the date above. Pin these (or newer) when the repo is created; Dependabot keeps them moving afterwards.
+Every version below was checked against the project's own release page on the date above. Pin these (or newer) when the repo is created; Renovate keeps them moving afterwards. Re-verified on 2026-09-19 at the start of M1; changed rows are marked.
 
 | Technology | Current | Notes |
 |---|---|---|
 | Astro | **7.3.3** (16 Sep 2026) | Vite 8, Rust compiler, Sätteri Markdown by default, Zod 4 schemas, Content Layer only |
 | @astrojs/cloudflare | **14.x** | Built on `@cloudflare/vite-plugin`; `astro dev` runs in workerd; env via `import { env } from 'cloudflare:workers'` |
-| Wrangler | **4.134.0** (17 Sep 2026) | Rate-limiting binding needs ≥ 4.36; `observability.issues.enabled` new |
-| @cloudflare/vite-plugin | 1.55.0 | Installed by the adapter |
+| Wrangler | **4.135.0** (re-verified 2026-09-19) | Rate-limiting binding needs ≥ 4.36; `observability.issues.enabled` new |
+| @cloudflare/vite-plugin | 1.56.0 (re-verified 2026-09-19) | Installed by the adapter |
 | Bun | **1.4.2** (4 Sep 2026) | Package manager, script runner, `bun.lock`. `bun run` executes Node-shebang CLIs (astro, vite, wrangler, playwright) with Node by default; `--bun` forces the Bun runtime and is not used here |
-| Node.js | **24 LTS** kept alongside Bun; **26** enters LTS in Oct 2026 | Required by Playwright's test runner (Bun support closed as not planned) and used by the Astro/Wrangler CLIs under `bun run` |
-| oven-sh/setup-bun | v2 | |
+| Node.js | **24 LTS** (24.21.0 on 2026-09-19) kept alongside Bun; **26** enters LTS in Oct 2026 | Required by Playwright's test runner (Bun support closed as not planned) and used by the Astro/Wrangler CLIs under `bun run` |
+| jdx/mise-action | v4 | Installs Bun and Node from `mise.toml` in CI (replaces setup-bun and setup-node) |
 | Renovate | hosted app on Keith's GitHub account | Bun manager supports `bun.lock`; lock-file maintenance bug fixed |
-| Playwright | 1.62.x | |
-| actions/checkout | v6 | |
-| actions/setup-node | v7 | |
+| Playwright | 1.63.0 (re-verified 2026-09-19) | |
+| actions/checkout | v7 (re-verified 2026-09-19) | |
 | actions/upload-artifact | v7 | |
 | actions/github-script | v9 | ESM-only; `require('@actions/github')` no longer works inside scripts |
 | 1password/load-secrets-action | v5 | |
@@ -47,7 +46,7 @@ Every version below was checked against the project's own release page on the da
 
 These are the only choices left that I'd want your call on before starting; defaults are in bold.
 
-1. Repository name and visibility: **`keithhuster.com`, public**.
+1. Repository name and visibility: **`keith-huster-dot-com-site`, public** (the plan's prose sometimes says `keithhuster.com`; the repo name is the one that counts).
 2. Package manager: **Bun** (`bun.lock` committed; `bun install --frozen-lockfile` in CI).
 3. The sending address for the contact form: **`contact@keithhuster.com` via a verified Resend domain** (requires three DNS records in the Cloudflare zone) versus Resend's shared test sender, which only delivers to your own address.
 4. Preview deployments on pull requests: **yes**, using Worker preview URLs (free with your Workers plan), so you can review a change on your phone before merging.
