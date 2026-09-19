@@ -19,10 +19,15 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 ## Blocked on Keith
 
-- **`www` redirect.** A proxied `AAAA www 100::` record now exists so the redirect can fire, but Bulk Redirects are account-level and the API token cannot create them. In the dashboard: Account home, Bulk Redirects, Create Bulk Redirect List, name `www-to-apex`, add one URL redirect with source URL `www.keithhuster.com`, target URL `https://keithhuster.com`, status `301`, and tick Preserve query string, Subpath matching and Preserve path suffix. Then Create Bulk Redirect Rule, name `www to apex`, select that list, and enable it. Verify with `curl -sI https://www.keithhuster.com/about` (expect 301 to `https://keithhuster.com/about`). Then issue #17 can close.
-- **One real contact message.** Open https://keithhuster.com/#contact in a real browser, send yourself a message, and confirm it arrives from `contact@keithhuster.com` with your address as reply-to. Turnstile rejects headless Chromium, so I could not do this myself. Then issue #14 can close.
-- **Web Analytics.** Check Analytics & Logs, Web Analytics for your own visit to https://keithhuster.com. Automatic setup injects the beacon at the edge; nothing is in the repo.
-- **LinkedIn.** Point the profile at https://keithhuster.com and check the link preview shows the OG image. Then issue #18 can close.
+- **One real contact message, from a network without a DNS filter.** On the home network the resolver at 100.100.100.100 returns nothing for `brunhild.challenges.cloudflare.com` and refuses `static.cloudflareinsights.com`, so the Turnstile widget cannot complete and the form reports the anti-spam failure. The secret key is valid (siteverify only rejects the token). Test from a phone on cellular, or allow `challenges.cloudflare.com` and `static.cloudflareinsights.com` in the blocker. The form now says so itself when the token is missing. Then issue #14 can close.
+- **`keith-huster-portfolio-astro` Worker.** An older Worker in the account (compatibility date 2024-08-14, two plain-text vars, no route) that looks like an earlier attempt at this site. Say the word and I delete it; everything else from the old site is gone.
+- **LinkedIn.** Add https://keithhuster.com under Contact info, Website on the profile. To check the preview card, paste the URL into https://www.linkedin.com/post-inspector/ and confirm it shows the Open Graph image (the hero scene with the headline). Then issue #18 can close.
+
+## Done at cutover
+
+- `www.keithhuster.com` redirects 301 to the apex with the path preserved (Bulk Redirect created by Keith; proxied placeholder `A 192.0.2.1` and `AAAA 100::` records added for `www`).
+- Old site removed: the `keithhuster-sapper` Worker script, its `keithhuster.com/*` route, and the apex placeholder record.
+- Web Analytics reports visits for keithhuster.com.
 
 ## Repository configuration (done)
 
