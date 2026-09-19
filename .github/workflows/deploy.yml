@@ -37,6 +37,7 @@ jobs:
       - name: Deploy
         id: deploy
         run: |
+          set -o pipefail
           OUT=$(bunx wrangler deploy 2>&1 | tee /dev/stderr)
           URL=$(echo "$OUT" | grep -Eo 'https://keithhuster-com\.[a-z0-9-]+\.workers\.dev' | head -1)
           echo "url=$URL" >> "$GITHUB_OUTPUT"

@@ -1,8 +1,6 @@
 name: ci
 on:
   pull_request:
-  push:
-    branches-ignore: [main]
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -65,8 +63,10 @@ jobs:
           PR_NUMBER: ${{ github.event.number }}
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
+          set -o pipefail
           OUT=$(bunx wrangler versions upload --tag "pr-$PR_NUMBER" --message "$PR_TITLE" 2>&1 | tee /dev/stderr)
           URL=$(echo "$OUT" | grep -Eo 'https://[a-z0-9-]+-keithhuster-com\.[a-z0-9-]+\.workers\.dev' | head -1)
+          test -n "$URL"
           echo "url=$URL" >> "$GITHUB_OUTPUT"
       - name: Comment preview URL
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
@@ -74,7 +74,7 @@ jobs:
           PREVIEW_URL: ${{ steps.upload.outputs.url }}
         with:
           script: |
-            const url = process.env.PREVIEW_URL || '(no URL found in wrangler output)';
+            const url = process.env.PREVIEW_URL;
             const body = `Preview deployed: ${url}\n\n(Worker version for this PR; production is untouched.)`;
             const { data: comments } = await github.rest.issues.listComments({ ...context.repo, issue_number: context.issue.number });
             const mine = comments.find((c) => c.user.type === 'Bot' && c.body.startsWith('Preview deployed:'));
