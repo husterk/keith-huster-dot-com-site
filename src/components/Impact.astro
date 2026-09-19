@@ -1,0 +1,31 @@
+---
+import { getSite, getImpact } from '../lib/content';
+
+const site = await getSite();
+const impact = await getImpact();
+---
+
+<section id="segments" class="section segments">
+  <div class="stack">
+    <div class="mono eyebrow">02 · Impact</div>
+    <h2 class="cond h2">Results, not job descriptions</h2>
+  </div>
+  <ul class="rows">
+    {impact.map((entry, index) => (
+      <li class="row">
+        <div class="num">SEG {String(index + 1).padStart(2, '0')}</div>
+        <div class="t">{entry.title}</div>
+        <p class="body">{entry.body}</p>
+        <div class="res">
+          <div class="n">{entry.result.value}</div>
+          <div class="l">{entry.result.label}</div>
+        </div>
+      </li>
+    ))}
+  </ul>
+  <ul class="chips">
+    {site.chips.map((chip) => (
+      <li>{chip}</li>
+    ))}
+  </ul>
+</section>

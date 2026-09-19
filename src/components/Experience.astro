@@ -1,0 +1,32 @@
+---
+import { getExperience } from '../lib/content';
+import ElevationChart from './ElevationChart.astro';
+
+const experience = await getExperience();
+---
+
+<section id="route" class="section route">
+  <div class="head">
+    <div class="stack">
+      <div class="mono eyebrow">01 · Experience</div>
+      <h2 class="cond h2">From medical devices to cloud platforms</h2>
+    </div>
+    <p class="body">
+      Electrical engineer by training, platform engineer by trade. Twenty-four years across medical
+      devices, EdTech, FinTech and restaurant-platform infrastructure, the last eight at Olo, all of
+      it shipping systems other people depend on.
+    </p>
+  </div>
+  <ElevationChart />
+  <ul class="cards">
+    {experience.map((role) => (
+      <li class={`card${role.current ? ' now' : ''}`}>
+        <div class="mono muted" style="font-size: 12px;">
+          {role.dates}
+        </div>
+        <div class="t">{role.cardTitle}</div>
+        <div class="d">{role.summary}</div>
+      </li>
+    ))}
+  </ul>
+</section>

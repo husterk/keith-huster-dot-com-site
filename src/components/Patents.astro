@@ -1,0 +1,23 @@
+---
+import { getPatents } from '../lib/content';
+
+const patents = await getPatents();
+---
+
+<section id="patents" class="section patents">
+  <div class="big36" aria-hidden="true">
+    {patents.bigNumber}
+  </div>
+  <div class="right">
+    <div class="mono eyebrow">{patents.eyebrow}</div>
+    <h2 class="cond h2">{patents.heading}</h2>
+    {patents.paragraphs.map((paragraph) => (
+      <p class="lead">{paragraph}</p>
+    ))}
+    <div class="edu">
+      {patents.education.map((degree) => (
+        <span>{degree}</span>
+      ))}
+    </div>
+  </div>
+</section>

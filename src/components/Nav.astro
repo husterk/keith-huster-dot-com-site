@@ -1,0 +1,133 @@
+---
+import { getSite } from '../lib/content';
+
+const site = await getSite();
+
+const links = [
+  { href: '#route', label: 'Experience' },
+  { href: '#segments', label: 'Impact' },
+  { href: '#crew', label: 'Leadership' },
+  { href: '#patents', label: 'Patents' },
+  { href: '#offclock', label: 'Beyond work' },
+];
+---
+
+<header class="nav">
+  <div class="brand">
+    <svg width="34" height="34">
+      <path
+        d="M2,28 L12,10 L18,19 L23,12 L32,28 Z"
+        style="fill: none; stroke-width: 2; stroke-linejoin: round;"
+        stroke="var(--accent)"
+      ></path>
+    </svg>
+    <div class="name">{site.name}</div>
+  </div>
+  <nav aria-label="Primary" class="links mono">
+    {links.map((link) => (
+      <a href={link.href}>{link.label}</a>
+    ))}
+    <button type="button" class="menu" aria-expanded="false" aria-controls="mobile-menu">
+      Menu
+    </button>
+    <a href="#contact" class="cta">
+      Get in touch
+    </a>
+  </nav>
+</header>
+
+<nav id="mobile-menu" class="mobile-menu" aria-label="Mobile" hidden>
+  {links.map((link) => (
+    <a href={link.href}>{link.label}</a>
+  ))}
+  <a href="#contact" class="cta">
+    Get in touch
+  </a>
+</nav>
+
+<style>
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 var(--pad);
+    background: var(--bg-spruce);
+  }
+  .mobile-menu:not([hidden]) {
+    display: flex;
+  }
+  .mobile-menu a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-cond);
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 1;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .mobile-menu a.cta {
+    width: fit-content;
+    margin-top: 12px;
+    padding: 0 20px;
+    color: var(--dark-on-accent);
+    background: var(--accent);
+    font-size: 24px;
+  }
+</style>
+
+<script>
+  const menuButton = document.querySelector<HTMLButtonElement>('.nav .menu');
+  const overlay = document.getElementById('mobile-menu');
+
+  if (menuButton && overlay) {
+    const focusable = () => overlay.querySelectorAll<HTMLElement>('a, button');
+
+    const onKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        close();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const items = Array.from(focusable());
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    function open() {
+      overlay!.hidden = false;
+      menuButton!.setAttribute('aria-expanded', 'true');
+      focusable()[0]?.focus();
+      document.addEventListener('keydown', onKeydown);
+    }
+
+    function close() {
+      overlay!.hidden = true;
+      menuButton!.setAttribute('aria-expanded', 'false');
+      document.removeEventListener('keydown', onKeydown);
+      menuButton!.focus();
+    }
+
+    menuButton.addEventListener('click', () => {
+      if (overlay.hidden) open();
+      else close();
+    });
+
+    overlay.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).tagName === 'A') close();
+    });
+  }
+</script>
