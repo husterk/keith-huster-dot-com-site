@@ -1,0 +1,4 @@
+# Copy to .dev.vars (gitignored) or run `bun run secrets:local` to fill it from 1Password.
+RESEND_API_KEY=
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+CONTACT_DRY_RUN=1

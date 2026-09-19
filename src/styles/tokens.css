@@ -1,0 +1,35 @@
+:root {
+  --accent: #ff7a1a;
+  --bone: #ebe6d8;
+  --text-soft: #d3d0c2;
+  --text-body: #c4c5b6;
+  --mute: #9db0a3;
+  --line: rgba(235, 230, 216, 0.14);
+  --line2: rgba(235, 230, 216, 0.24);
+  --line3: rgba(235, 230, 216, 0.38);
+  --panel: rgba(235, 230, 216, 0.05);
+  --bg-spruce: #0e1814;
+  --bg-lake: #0b1b22;
+  --bg-basin: #1e1a11;
+  --bg-alpine: #12152a;
+  --bg-desert: #27150e;
+  --bg-border: #1b0f0b;
+  --dark-on-accent: #0e1814;
+  --font-cond: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body: 'Barlow', 'Helvetica Neue', sans-serif;
+  --font-mono: 'Spline Sans Mono', ui-monospace, monospace;
+  --pad: 80px;
+  --k: 1;
+}
+
+@media (max-width: 1099px) {
+  :root {
+    --pad: 48px;
+  }
+}
+
+@media (max-width: 699px) {
+  :root {
+    --pad: 20px;
+  }
+}
