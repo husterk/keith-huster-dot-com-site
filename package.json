@@ -15,7 +15,8 @@
     "format": "prettier --write .",
     "test": "playwright test",
     "secrets:local": "op inject -i .dev.vars.tpl -o .dev.vars",
-    "types": "wrangler types"
+    "types": "wrangler types",
+    "og": "node scripts/og.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "14.3.2",
