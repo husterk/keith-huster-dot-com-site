@@ -3,7 +3,7 @@
 ## Principles
 
 - The repository is public, so it contains **no secrets and no per-environment config values that matter**. Everything sensitive lives in 1Password; GitHub holds exactly one secret, the 1Password service-account token.
-- Two workflows, both small. Nothing deploys to production except a push to `main`, and `main` only changes through pull requests (branch protection with the `ci` check required).
+- Two workflows, both small. Nothing deploys to production except a push to `main`, and `main` only changes through pull requests (ruleset requiring a PR, linear history and the `ci` check; PRs are rebase-merged).
 - Deploys are idempotent: the deploy job rebuilds from source and runs `wrangler deploy`, so re-running it is always safe.
 
 ## Secrets inventory
@@ -21,7 +21,7 @@ Local development: `.dev.vars` (gitignored) holds the two runtime secrets; `op i
 
 ## Workflow 1: `ci.yml` (pull requests and pushes to non-main branches)
 
-1. `actions/checkout`, `oven-sh/setup-bun@v2` (version from `.bun-version`), `actions/setup-node@v7` (Node from `.nvmrc`; needed because Playwright's runner and the Astro/Wrangler CLIs run on Node under `bun run`), `bun install --frozen-lockfile`.
+1. `actions/checkout`, `jdx/mise-action` + `mise install --locked` (Bun and Node from `mise.toml`, checksums from `mise.lock`; Node is needed because Playwright's runner and the Astro/Wrangler CLIs run on Node under `bun run`), `bun install --frozen-lockfile`.
 2. `bun run check` → `astro check` (TypeScript + content schema validation) and `prettier --check`.
 3. `bun run build` → `dist/`.
 4. `bunx playwright install --with-deps chromium`, then `bun run test` → Playwright starts `astro preview` (the built Worker running locally in workerd) and runs the smoke and a11y specs, so the contact endpoint is exercised too; Turnstile has a testing site key that always passes.
@@ -38,7 +38,7 @@ Local development: `.dev.vars` (gitignored) holds the two runtime secrets; `op i
 
 Concurrency group `production` with `cancel-in-progress: false` so two merges in quick succession deploy in order.
 
-Both workflows are in `samples/github/workflows/` (copy to `.github/` in the repo). They use the current major versions of the official actions as of 2026-09-18: `actions/checkout@v6`, `actions/setup-node@v7`, `actions/upload-artifact@v7`, `actions/github-script@v9` (ESM-only), `1password/load-secrets-action@v5`. Bun is installed with `oven-sh/setup-bun@v2`. Wrangler is run with `bunx wrangler` so the version pinned in `package.json` (4.134+) is what deploys; `cloudflare/wrangler-action@v4` is an equivalent alternative.
+Both workflows are in `samples/github/workflows/` (copy to `.github/` in the repo). They use the current major versions of the official actions as of 2026-09-19: `actions/checkout@v7`, `actions/upload-artifact@v7`, `actions/github-script@v9` (ESM-only), `1password/load-secrets-action@v5`, `jdx/mise-action@v4`. Actions are pinned to commit SHAs with a version comment, the same way Keith's dotfiles repo does; Renovate keeps the digests current. Bun and Node are installed by mise from `mise.toml`, the single source of truth for tool versions locally and in CI. Wrangler is run with `bunx wrangler` so the version pinned in `package.json` (4.134+) is what deploys; `cloudflare/wrangler-action@v4` is an equivalent alternative.
 
 ## Cloudflare configuration
 

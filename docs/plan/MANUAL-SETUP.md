@@ -91,7 +91,7 @@ Repo → Settings:
 
 ## 9. Things the Claude Code session will do once step 1 is complete (no action needed)
 
-Repository settings via API (default branch `main`, squash-merge only with auto-delete of head branches, branch protection requiring the `ci` check and PRs, wiki/projects/discussions toggles, vulnerability alerts, secret scanning + push protection), labels, milestones M0–M5, the user-level GitHub Project board with a Status field and one issue per work item, and the first commit with `docs/`, `LICENSE`, `SECURITY.md`, `CODEOWNERS`, `renovate.json` and `.gitignore`.
+Repository settings via API (default branch `main`, rebase-merge only with auto-delete of head branches, branch protection requiring the `ci` check and PRs, wiki/projects/discussions toggles, vulnerability alerts, secret scanning + push protection), labels, milestones M0–M5, the user-level GitHub Project board with a Status field and one issue per work item, and the first commit with `docs/`, `LICENSE`, `SECURITY.md`, `CODEOWNERS`, `renovate.json` and `.gitignore`.
 
 ---
 

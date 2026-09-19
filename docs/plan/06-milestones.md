@@ -4,7 +4,7 @@ Each milestone ends with something deployable. Estimates assume focused sessions
 
 ## M0 · Accounts and access (≈1 hour, all in dashboards)
 
-- GitHub repo `keithhuster.com` (public), branch protection on `main` requiring the `ci` check.
+- GitHub repo `keith-huster-dot-com-site` (public), ruleset on `main` requiring a PR, linear history and the `ci` check.
 - 1Password: vault `secrets_keith-huster-dot-com-site`; service account with read access to it; items for the Cloudflare API token, Resend key, Turnstile secret. Put `OP_SERVICE_ACCOUNT_TOKEN` in the GitHub repo secrets.
 - Cloudflare: API token (scoped as in `03`), Turnstile widget, Web Analytics site.
 - Resend: add and verify the `keithhuster.com` sending domain (three DNS records in Cloudflare), create the restricted API key.
@@ -13,7 +13,7 @@ Each milestone ends with something deployable. Estimates assume focused sessions
 
 ## M1 · Skeleton that deploys (≈2 hours)
 
-- `bun create astro@latest` (Astro 7, minimal, TypeScript strict), `bun astro add cloudflare` (adapter 14), `wrangler.jsonc` and `renovate.json` from `samples/`, `.bun-version` = 1.4.2, `.nvmrc` = 24, `packageManager` field, Prettier, `.dev.vars.example`. Pin the versions from the README table.
+- `bun create astro@latest` (Astro 7, minimal, TypeScript strict), `bun astro add cloudflare` (adapter 14), `wrangler.jsonc` and `renovate.json` from `samples/`, `mise.toml` pinning Bun 1.4.2 and Node 24 (+ `mise.lock`), `packageManager` field, Prettier, `.dev.vars.example`. Pin the versions from the README table.
 - `Base.astro` with fonts, tokens, a placeholder `index.astro` and `404.astro`.
 - `ci.yml` and `deploy.yml` from `samples/`; first deploy to the `workers.dev` URL (no custom domain yet).
 

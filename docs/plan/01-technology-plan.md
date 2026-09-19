@@ -39,7 +39,7 @@ Bun is the package manager and script runner: `bun install` (with `bun.lock` com
 - By default `bun run` executes a package CLI whose shebang is `#!/usr/bin/env node` with **Node**, not Bun; only `bun --bun …` forces the Bun runtime. Astro, Vite, the Cloudflare Vite plugin, Wrangler and Playwright all have Node shebangs, so under `bun run` they run on Node exactly as they would with npm. That's the configuration Astro documents and the one with the fewest rough edges (Astro's own Bun recipe warns that "some integrations may not work as expected" under the Bun runtime).
 - Playwright's test runner does not run under the Bun runtime; the feature request was closed as not planned. `bunx playwright test` works only because Bun defers to Node.
 
-So: Bun everywhere as the tool, Node 24 present on the machine and in CI (`setup-bun@v2` plus `setup-node@v7`), no `--bun` flag anywhere. The production runtime is workerd on Cloudflare regardless, so this choice affects developer tooling only. If Playwright or the Astro tooling gains Bun-runtime support later, dropping Node is a one-line change in the workflows.
+So: Bun everywhere as the tool, Node 24 present on the machine and in CI (both pinned in `mise.toml` and installed by `mise install`, locally and via `jdx/mise-action` in CI), no `--bun` flag anywhere. The production runtime is workerd on Cloudflare regardless, so this choice affects developer tooling only. If Playwright or the Astro tooling gains Bun-runtime support later, dropping Node is a one-line change in the workflows.
 
 ## Why Workers rather than Pages
 
