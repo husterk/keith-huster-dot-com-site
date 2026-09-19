@@ -6,7 +6,9 @@ updated: 2026-09-19
 
 This site is a static page with one server endpoint, built and deployed the way I would build a small production service: content and layout separated, everything validated in CI, secrets kept out of the repository, and the whole thing reproducible from a `git clone`. The source is public at [github.com/husterk/keith-huster-dot-com-site](https://github.com/husterk/keith-huster-dot-com-site).
 
-## The stack
+🚵 Banff to Antelope Wells in six scenes, one Worker, and about 190 KB.
+
+## 🧭 The stack
 
 | Layer         | What                                                                                                      | Why                                                                                                 |
 | ------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
@@ -23,7 +25,7 @@ This site is a static page with one server endpoint, built and deployed the way 
 | Secrets       | A 1Password service account; Worker secrets synced on every deploy                                        | The repository can be public, and GitHub holds a single token                                       |
 | Upkeep        | Renovate                                                                                                  | Dependencies move on their own; CI is the gate                                                      |
 
-## Decisions
+## ⛰️ Decisions
 
 **Why not React.** There is one interactive element on the page, the phone menu, and one form. A framework runtime would be the largest asset on the site and would buy nothing. Astro leaves the door open for an island if that changes.
 
@@ -37,6 +39,6 @@ This site is a static page with one server endpoint, built and deployed the way 
 
 **What I would change at scale.** For a multi-author site I would add a CMS; for a product I would add an image pipeline and a real design system. For one person and one page, this is the right amount of machinery.
 
-## Credits
+## 🏁 Credits
 
 Design iterated with Claude on a design canvas over three rounds of direction, copy and responsive review, then built with Claude Code from a written plan. Fonts by their foundries under the SIL Open Font License. Hosted on Cloudflare.
