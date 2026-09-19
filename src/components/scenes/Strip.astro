@@ -93,14 +93,36 @@ const { name, h, background } = Astro.props;
 </style>
 
 <script>
-  const TRAVEL = 150;
   const STEP = 6;
+  const HIP: [number, number] = [37, 20];
+  const CRANK: [number, number] = [44, 54];
+  const CRANK_RADIUS = 8;
+  const LIMB = 20;
+  const PEDAL_PITCH = 22;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   document.querySelectorAll<SVGSVGElement>('.scene').forEach((scene) => {
     const rider = scene.querySelector<SVGGElement>('.rider[data-rides]');
     const container = scene.parentElement;
     if (reduced || !rider || !container) return;
+    const isHero = container.classList.contains('hero');
+    const TRAVEL = isHero ? 220 : 150;
+    const legs = rider.querySelectorAll<SVGPathElement>('.leg');
+    const legPath = (theta: number) => {
+      const fx = CRANK[0] + CRANK_RADIUS * Math.cos(theta);
+      const fy = CRANK[1] + CRANK_RADIUS * Math.sin(theta);
+      const vx = fx - HIP[0];
+      const vy = fy - HIP[1];
+      const d = Math.min(Math.hypot(vx, vy), 2 * LIMB - 0.01);
+      const ux = vx / d;
+      const uy = vy / d;
+      const h = Math.sqrt(LIMB * LIMB - (d / 2) ** 2);
+      const mx = HIP[0] + (ux * d) / 2;
+      const my = HIP[1] + (uy * d) / 2;
+      const kx = mx - uy * h > mx + uy * h ? mx - uy * h : mx + uy * h;
+      const ky = mx - uy * h > mx + uy * h ? my + ux * h : my - ux * h;
+      return `M${HIP[0]},${HIP[1]} L${kx.toFixed(1)},${ky.toFixed(1)} L${fx.toFixed(1)},${fy.toFixed(1)}`;
+    };
     const start = /translate\(([-\d.]+),([-\d.]+)\)\s*rotate\([-\d.]+\)\s*scale\(([-\d.]+)\)/.exec(
       rider.getAttribute('transform') ?? '',
     );
@@ -172,11 +194,19 @@ const { name, h, background } = Astro.props;
         'transform',
         `translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${angle.toFixed(1)}) scale(${scale}) translate(-48,-69)`,
       );
+      const theta = (x - first) / PEDAL_PITCH - Math.PI / 4;
+      legs.forEach((leg) =>
+        leg.setAttribute('d', legPath(leg.classList.contains('far') ? theta + Math.PI : theta)),
+      );
     };
 
+    let exitScroll = 0;
     const progress = () => {
       const rect = container.getBoundingClientRect();
-      if (container.classList.contains('hero')) return 0.5 + Math.min(0.5, scrollY / rect.height);
+      if (isHero) {
+        if (!exitScroll) exitScroll = rider.getBoundingClientRect().bottom + scrollY;
+        return Math.min(1, scrollY / exitScroll);
+      }
       return Math.min(1, Math.max(0, (innerHeight - rect.top) / (innerHeight + rect.height)));
     };
 

@@ -134,10 +134,12 @@ test.describe('motion', () => {
       expect(
         await rider(page).evaluate((el) => getComputedStyle(el.children[0]).animationName),
       ).toBe('none');
+      const leg = await rider(page).locator('.leg').first().getAttribute('d');
       await rider(page).evaluate((el) => el.scrollIntoView({ block: 'center' }));
       await page.mouse.wheel(0, 400);
       await page.waitForTimeout(200);
       expect(await rider(page).getAttribute('transform')).toBe(before);
+      expect(await rider(page).locator('.leg').first().getAttribute('d')).toBe(leg);
     });
   });
 
@@ -153,12 +155,15 @@ test.describe('motion', () => {
       await rider(page).evaluate((el) => el.scrollIntoView({ block: 'end' }));
       await page.waitForTimeout(200);
       const low = await rider(page).getAttribute('transform');
+      const legLow = await rider(page).locator('.leg').first().getAttribute('d');
       await page.mouse.wheel(0, 500);
       await page.waitForTimeout(200);
       const high = await rider(page).getAttribute('transform');
+      const legHigh = await rider(page).locator('.leg').first().getAttribute('d');
       expect(low).not.toBe(before);
       expect(high).not.toBe(low);
       expect(x(high)).toBeGreaterThan(x(low));
+      expect(legHigh).not.toBe(legLow);
     });
   });
 });
