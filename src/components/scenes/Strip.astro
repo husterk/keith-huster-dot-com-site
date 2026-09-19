@@ -1,0 +1,78 @@
+---
+interface Props {
+  name: 'lake' | 'basin' | 'pass' | 'nm' | 'finish';
+  h: number;
+  background: string;
+}
+
+const { name, h, background } = Astro.props;
+---
+
+<div class={`strip ${name}`} style={`--h: ${h}px; background: ${background}`}>
+  <slot />
+</div>
+
+<style is:global>
+  .strip {
+    position: relative;
+    overflow: hidden;
+    height: calc(var(--h) * var(--k));
+    line-height: 0;
+    --cx: 720px;
+  }
+
+  .scene {
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - var(--cx) * var(--k));
+    width: 1440px;
+    height: var(--h);
+    transform: scale(var(--k));
+    transform-origin: 0 100%;
+    pointer-events: none;
+  }
+
+  .finish {
+    position: relative;
+    overflow: hidden;
+    height: calc(var(--h) * var(--k));
+    margin: auto calc(var(--pad) * -1) 0;
+    --cx: 720px;
+  }
+
+  @media (max-width: 1099px) {
+    .lbl {
+      display: none;
+    }
+
+    .strip.lake,
+    .strip.basin,
+    .strip.pass,
+    .strip.nm,
+    .finish {
+      --cx: 720px;
+    }
+  }
+
+  @media (max-width: 699px) {
+    .strip.lake {
+      --cx: 330px;
+    }
+
+    .strip.basin {
+      --cx: 860px;
+    }
+
+    .strip.pass {
+      --cx: 640px;
+    }
+
+    .strip.nm {
+      --cx: 1000px;
+    }
+
+    .finish {
+      --cx: 1080px;
+    }
+  }
+</style>
