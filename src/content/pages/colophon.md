@@ -33,6 +33,8 @@ This site is a static page with one server endpoint, built and deployed the way 
 
 **How the contact form stays quiet.** A request has to pass a content-type check, an origin check, a per-address rate limit, a hidden field that humans never see, field validation and a Turnstile verification before Resend sends anything. The endpoint logs one line per request and never the message.
 
+**What the numbers say.** Measured against the live site on 2026-09-19, a cold load of the homepage is 7 requests and about 191 KB: roughly 100 KB of HTML, with the inlined CSS and SVG scenes counted in, and 90 KB of self-hosted fonts. A production build takes 0.9 seconds, the second of two consecutive runs. Lighthouse scores the homepage a perfect 100 for performance, accessibility, best practices and SEO, with a 1.2 second largest contentful paint and zero cumulative layout shift, the median of three runs.
+
 **What I would change at scale.** For a multi-author site I would add a CMS; for a product I would add an image pipeline and a real design system. For one person and one page, this is the right amount of machinery.
 
 ## Credits
