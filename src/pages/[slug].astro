@@ -3,6 +3,8 @@ import type { GetStaticPaths } from 'astro';
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+import Strip from '../components/scenes/Strip.astro';
+import PassColorado from '../components/scenes/PassColorado.astro';
 
 export const getStaticPaths = (async () => {
   const pages = await getCollection('pages');
@@ -21,6 +23,9 @@ const updated = page.data.updated.toLocaleDateString('en-US', {
 
 <Base title={`${page.data.title} · Keith Huster`} description={page.data.description}>
   <Nav />
+  <Strip name="pass" h={420} background="var(--bg-spruce)">
+    <PassColorado />
+  </Strip>
   <main id="main" class="page">
     <article class="prose">
       <p class="mono eyebrow">Colophon</p>
@@ -39,7 +44,7 @@ const updated = page.data.updated.toLocaleDateString('en-US', {
 
 <style>
   .page {
-    background: var(--bg-spruce);
+    background: var(--bg-alpine);
     padding: 80px var(--pad) 64px;
   }
   .prose {
