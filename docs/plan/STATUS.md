@@ -10,7 +10,7 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 ## Merged
 
-- M0 through M5: everything in docs/plan/06-milestones.md except the first case-study page (#21), parked at Keith's request. M5 added the rider bob and, replacing the first parallax, a rider that travels the ground path as each strip scrolls (#44), both behind prefers-reduced-motion, the colophon's measured numbers, and confirmed Renovate's upkeep loop (lock-file PR #39 went through CI and merged on its own; Renovate ignores docs/).
+- M0 through M5: everything in docs/plan/06-milestones.md except the first case-study page (#21), parked at Keith's request. M5 added the rider bob and, replacing the first parallax, a rider that travels the ground path as each strip scrolls, pedaling as it goes, with the hero rider crossing from the left until it leaves the view (#44, #49), both behind prefers-reduced-motion, the colophon's measured numbers, and confirmed Renovate's upkeep loop (lock-file PR #39 went through CI and merged on its own; Renovate ignores docs/).
 - Lighthouse in CI: median of three runs against 95/100/95/100. Playwright: 15 tests at 1440/834/390 including the rider-visible assertion, the phone menu, axe on three pages and the contact endpoint (405, 403, 400, honeypot, dry run, 429, no-JS HTML).
 
 ## Open
