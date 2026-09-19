@@ -1,0 +1,70 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write   # to post the preview URL
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    env:
+      CONTACT_DRY_RUN: "1"
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with: { bun-version-file: .bun-version }
+      - uses: actions/setup-node@v7          # Playwright's runner and the Astro/Wrangler CLIs run on Node under `bun run`
+        with: { node-version-file: .nvmrc }
+      - run: bun install --frozen-lockfile
+      - run: bun run check          # astro check + prettier --check
+      - run: bun run build
+      - run: bunx playwright install --with-deps chromium
+      - run: bun run test           # playwright (on Node via bunx); its webServer starts `astro preview` (the built Worker)
+      - run: bunx lhci autorun       # budgets in lighthouserc.json
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with: { name: test-results, path: test-results/ }
+
+  preview:
+    # Preview deploy for PRs from this repo only (forks never get credentials).
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with: { bun-version-file: .bun-version }
+      - uses: actions/setup-node@v7
+        with: { node-version-file: .nvmrc }
+      - run: bun install --frozen-lockfile && bun run build
+      - name: Load Cloudflare token from 1Password
+        uses: 1password/load-secrets-action@v5
+        with: { export-env: true }
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          CLOUDFLARE_API_TOKEN: op://keithhuster.com/Cloudflare API token/credential
+          CLOUDFLARE_ACCOUNT_ID: op://keithhuster.com/Cloudflare API token/account id
+      - name: Upload preview version
+        id: upload
+        run: |
+          OUT=$(bunx wrangler versions upload --tag "pr-${{ github.event.number }}" --message "${{ github.event.pull_request.title }}" 2>&1 | tee /dev/stderr)
+          URL=$(echo "$OUT" | grep -Eo 'https://[a-z0-9-]+-keithhuster-com\.[a-z0-9-]+\.workers\.dev' | head -1)
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+      - name: Comment preview URL
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const url = "${{ steps.upload.outputs.url }}";
+            const body = `Preview deployed: ${url}\n\n(Worker version for this PR; production is untouched.)`;
+            const { data: comments } = await github.rest.issues.listComments({ ...context.repo, issue_number: context.issue.number });
+            const mine = comments.find(c => c.user.type === 'Bot' && c.body.startsWith('Preview deployed:'));
+            if (mine) await github.rest.issues.updateComment({ ...context.repo, comment_id: mine.id, body });
+            else await github.rest.issues.createComment({ ...context.repo, issue_number: context.issue.number, body });

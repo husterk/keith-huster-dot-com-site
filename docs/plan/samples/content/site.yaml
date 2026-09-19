@@ -1,0 +1,30 @@
+- id: site
+  name: Keith Huster
+  headline: { lead: "Reliable", accent: "by design." }
+  roles: "Senior / Staff Software Engineer · Engineering Manager"
+  rolesShort: "Senior / Staff Engineer · Eng. Manager"
+  location: "Remote from Orem, Utah"
+  intro: >-
+    I'm Keith Huster, Senior Software Engineer II and former Team Lead II on Olo's Software
+    Infrastructure team. For 15+ years I've architected and operated distributed .NET platforms:
+    billions of transactions a year at better than 99.9% availability, a platform-wide move to
+    Kubernetes and modern CI/CD, and shared libraries used by 100+ engineers. I've led the systems
+    and the team that runs them, and I'm looking for a Staff engineering or engineering management
+    role where reliability is the product.
+  cta:
+    primary: { label: "See the impact", href: "#impact" }
+    secondary: { label: "Download résumé", href: "/Keith-Huster-Resume.pdf" }
+  stats:
+    - { value: ">99.9%", label: "availability on services handling billions of transactions a year" }
+    - { value: "100+", label: "engineers building on platform libraries I own" }
+    - { value: "36", label: "US patents, most as lead or sole inventor" }
+    - { value: "2,745 mi", label: "Tour Divide finisher, 2025: self-supported, 27 days" }
+  links:
+    email: husterk@gmail.com
+    linkedin: https://www.linkedin.com/in/husterk/
+    github: https://github.com/husterk
+  contact:
+    eyebrow: "Let's talk"
+    heading: "Hiring a Staff engineer or an engineering manager? Let's talk."
+  footer: "Open to Senior, Staff and engineering management roles · Remote from Orem, Utah"
+  turnstileSiteKey: "1x00000000000000000000AA"   # Cloudflare's always-passes test key; replace with the real widget key

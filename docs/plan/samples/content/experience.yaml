@@ -1,0 +1,37 @@
+# One entry per role, newest first. `end: null` means present.
+- id: olo-infra
+  org: Olo
+  team: Software Infrastructure
+  title: Senior Software Engineer II
+  start: 2021-08
+  end: null
+  location: Remote
+  current: true
+  summary: "Senior Software Engineer II, then Team Lead II (2024 to 2025) for a six-engineer team, now back on the Staff track: reliability, Kubernetes, CI/CD and cross-team RFCs."
+  chartLabel: "Olo · Software Infrastructure"
+- id: olo-menu
+  org: Olo
+  team: Menu team
+  title: Senior Software Engineer II
+  start: 2018-09
+  end: 2021-08
+  location: Remote
+  summary: "Senior Software Engineer II. Menu pricing tools used by tens of thousands of restaurant managers, and the Menu Import Service carved out of the monolith."
+  chartLabel: "Olo · Menu team"
+- id: confluence-curriculum-loft
+  org: Curriculum Loft, then Confluence
+  title: Software Developer, then Senior Software Engineer
+  start: 2014-04
+  end: 2018-08
+  location: Remote
+  summary: "The turn to the web. Full-stack EduTech and FinTech applications in ASP.NET MVC, C#, React, Relay and GraphQL, plus production support."
+  chartLabel: "Curriculum Loft · Confluence"
+- id: hill-rom
+  org: Hill-Rom
+  team: New Product Development
+  title: Software Engineering Specialist
+  start: 2002-05
+  end: 2014-04
+  location: Sunman, IN
+  summary: "Software Engineering Specialist. Embedded firmware, TCP/IP gateways and hospital-bed electronics for the VersaCare and TotalCare lines. Two-time Patent of the Year."
+  chartLabel: "Hill-Rom · new product development"

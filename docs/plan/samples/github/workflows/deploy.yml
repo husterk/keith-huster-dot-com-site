@@ -1,0 +1,49 @@
+name: deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with: { bun-version-file: .bun-version }
+      - uses: actions/setup-node@v7          # Playwright's runner and the Astro/Wrangler CLIs run on Node under `bun run`
+        with: { node-version-file: .nvmrc }
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+      - run: bun run build
+
+      - name: Load secrets from 1Password
+        uses: 1password/load-secrets-action@v5
+        with: { export-env: true }
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          CLOUDFLARE_API_TOKEN: op://keithhuster.com/Cloudflare API token/credential
+          CLOUDFLARE_ACCOUNT_ID: op://keithhuster.com/Cloudflare API token/account id
+          RESEND_API_KEY: op://keithhuster.com/Resend/credential
+          TURNSTILE_SECRET_KEY: op://keithhuster.com/Turnstile/secret key
+
+      - name: Sync Worker secrets (so they always match 1Password)
+        run: |
+          jq -n --arg r "$RESEND_API_KEY" --arg t "$TURNSTILE_SECRET_KEY" \
+            '{RESEND_API_KEY:$r, TURNSTILE_SECRET_KEY:$t}' | bunx wrangler secret bulk
+
+      - name: Deploy
+        run: bunx wrangler deploy
+
+      - name: Smoke check
+        run: |
+          curl -sSf -o /dev/null https://keithhuster.com/
+          curl -sSf -I -o /dev/null https://keithhuster.com/Keith-Huster-Resume.pdf

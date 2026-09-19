@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", "group:allNonMajor", ":pinAllExceptPeerDependencies"],
+  "timezone": "America/Denver",
+  "schedule": ["before 6am on monday"],
+  "labels": ["dependencies"],
+  "lockFileMaintenance": { "enabled": true, "schedule": ["before 6am on the first day of the month"] },
+  "packageRules": [
+    {
+      "description": "Automerge patch updates of dev tooling once CI is green",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    },
+    {
+      "description": "Majors of the framework and the deploy tool get their own PRs and a human look",
+      "matchPackageNames": ["astro", "@astrojs/cloudflare", "wrangler"],
+      "matchUpdateTypes": ["major"],
+      "groupName": null,
+      "prPriority": 5
+    },
+    {
+      "description": "Keep GitHub Actions on major tags",
+      "matchManagers": ["github-actions"],
+      "pinDigests": false
+    }
+  ]
+}
