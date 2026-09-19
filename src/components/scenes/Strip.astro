@@ -75,4 +75,51 @@ const { name, h, background } = Astro.props;
       --cx: 1080px;
     }
   }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .rider > * {
+      animation: bob 1.6s ease-in-out alternate infinite;
+    }
+  }
+
+  @keyframes bob {
+    from {
+      translate: 0 0;
+    }
+    to {
+      translate: 0 -2px;
+    }
+  }
 </style>
+
+<script>
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<SVGElement>('.scene').forEach((scene) => {
+      const riders = scene.querySelectorAll<SVGElement>('.rider');
+      if (!riders.length) return;
+
+      let queued = false;
+      const apply = () => {
+        queued = false;
+        const rect = scene.getBoundingClientRect();
+        const center = rect.top + rect.height / 2 - innerHeight / 2;
+        const offset = Math.max(-10, Math.min(10, -center * 0.05));
+        riders.forEach((rider) => (rider.style.translate = `0 ${offset}px`));
+      };
+      const onScroll = () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(apply);
+      };
+
+      new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
+        } else {
+          removeEventListener('scroll', onScroll);
+        }
+      }).observe(scene);
+    });
+  }
+</script>

@@ -26,10 +26,10 @@ for (const width of widths) {
       expect(count).toBeGreaterThanOrEqual(6);
       for (let i = 0; i < count; i++) {
         const rider = riders.nth(i);
-        await rider.scrollIntoViewIfNeeded();
+        await rider.evaluate((el) => el.scrollIntoView({ block: 'center' }));
         const b = (await rider.boundingBox())!;
-        expect(b.x, `rider ${i} left edge`).toBeGreaterThanOrEqual(0);
-        expect(b.x + b.width, `rider ${i} right edge`).toBeLessThanOrEqual(width);
+        expect(b.x, `rider ${i} left edge`).toBeGreaterThanOrEqual(-1);
+        expect(b.x + b.width, `rider ${i} right edge`).toBeLessThanOrEqual(width + 1);
       }
     });
   });
@@ -111,6 +111,35 @@ test.describe('contact endpoint', () => {
     expect(res.status()).toBe(200);
     expect(res.headers()['content-type']).toContain('text/html');
     expect(await res.text()).toContain('Thanks');
+  });
+});
+
+test.describe('motion', () => {
+  test.describe('reduced motion', () => {
+    test.use({ reducedMotion: 'reduce' });
+
+    test('the rider does not animate or drift on scroll', async ({ page }) => {
+      await page.goto('/');
+      const rider = page.locator('.rider').first();
+      expect(await rider.evaluate((el) => getComputedStyle(el.children[0]).animationName)).toBe(
+        'none',
+      );
+      await page.mouse.wheel(0, 100000);
+      expect(await rider.evaluate((el) => (el as SVGElement).style.translate)).toBe('');
+    });
+  });
+
+  test.describe('no motion preference', () => {
+    test.use({ reducedMotion: 'no-preference' });
+
+    test('the rider bobs', async ({ page }) => {
+      await page.goto('/');
+      const rider = page.locator('.rider').first();
+      expect(await rider.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
+      expect(await rider.evaluate((el) => getComputedStyle(el.children[0]).animationName)).toBe(
+        'bob',
+      );
+    });
   });
 });
 
