@@ -19,7 +19,7 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 ## Blocked on Keith
 
-- **One real contact message, from a network without a DNS filter.** On the home network the resolver at 100.100.100.100 returns nothing for `brunhild.challenges.cloudflare.com` and refuses `static.cloudflareinsights.com`, so the Turnstile widget cannot complete and the form reports the anti-spam failure. The secret key is valid (siteverify only rejects the token). Test from a phone on cellular, or allow `challenges.cloudflare.com` and `static.cloudflareinsights.com` in the blocker. The form now says so itself when the token is missing. Then issue #14 can close.
+- Nothing. M0 through M4 are complete and verified.
 
 ## Done at cutover
 
@@ -27,6 +27,7 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 - Old site removed: the `keithhuster-sapper` and `keith-huster-portfolio-astro` Worker scripts, the `keithhuster.com/*` route, and the apex placeholder record. The remaining Workers in the account (`ghost-knl-*`, `knl-email-forwarder`) belong to the travel blog.
 - LinkedIn Post Inspector shows the Open Graph card correctly. Issues #17 and #18 are closed.
 - Web Analytics reports visits for keithhuster.com.
+- Contact form verified end to end from a real browser: Turnstile passed, Resend delivered, the email arrived from contact@keithhuster.com. Note for home-network testing: NextDNS must allow `*.cloudflare.com` and `*.cloudflareinsights.com`.
 
 ## Repository configuration (done)
 
