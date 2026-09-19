@@ -87,9 +87,17 @@ const { turnstileSiteKey, links } = await getSite();
     const status = form.querySelector<HTMLElement>('[data-status]')!;
     const fallback = form.querySelector<HTMLElement>('[data-fallback]')!;
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const turnstileToken = () =>
+      form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]')?.value ?? '';
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!form.reportValidity()) return;
+      if (!turnstileToken()) {
+        status.textContent =
+          'The anti-spam check could not load. A content blocker or network filter is blocking challenges.cloudflare.com; allow it and try again, or email me directly.';
+        fallback.hidden = false;
+        return;
+      }
       button.disabled = true;
       status.textContent = 'Sending…';
       fallback.hidden = true;
