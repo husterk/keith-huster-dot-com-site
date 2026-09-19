@@ -20,13 +20,12 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 ## Blocked on Keith
 
 - **One real contact message, from a network without a DNS filter.** On the home network the resolver at 100.100.100.100 returns nothing for `brunhild.challenges.cloudflare.com` and refuses `static.cloudflareinsights.com`, so the Turnstile widget cannot complete and the form reports the anti-spam failure. The secret key is valid (siteverify only rejects the token). Test from a phone on cellular, or allow `challenges.cloudflare.com` and `static.cloudflareinsights.com` in the blocker. The form now says so itself when the token is missing. Then issue #14 can close.
-- **`keith-huster-portfolio-astro` Worker.** An older Worker in the account (compatibility date 2024-08-14, two plain-text vars, no route) that looks like an earlier attempt at this site. Say the word and I delete it; everything else from the old site is gone.
-- **LinkedIn.** Add https://keithhuster.com under Contact info, Website on the profile. To check the preview card, paste the URL into https://www.linkedin.com/post-inspector/ and confirm it shows the Open Graph image (the hero scene with the headline). Then issue #18 can close.
 
 ## Done at cutover
 
 - `www.keithhuster.com` redirects 301 to the apex with the path preserved (Bulk Redirect created by Keith; proxied placeholder `A 192.0.2.1` and `AAAA 100::` records added for `www`).
-- Old site removed: the `keithhuster-sapper` Worker script, its `keithhuster.com/*` route, and the apex placeholder record.
+- Old site removed: the `keithhuster-sapper` and `keith-huster-portfolio-astro` Worker scripts, the `keithhuster.com/*` route, and the apex placeholder record. The remaining Workers in the account (`ghost-knl-*`, `knl-email-forwarder`) belong to the travel blog.
+- LinkedIn Post Inspector shows the Open Graph card correctly. Issues #17 and #18 are closed.
 - Web Analytics reports visits for keithhuster.com.
 
 ## Repository configuration (done)
