@@ -4,34 +4,31 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 ## Live
 
-- https://keithhuster-com.husterk.workers.dev serves the full site: homepage, `/colophon`, `/api/contact`, `og.png`, `robots.txt`. No custom domain yet.
+- https://keithhuster.com serves the new site (cut over 2026-09-19): homepage, `/colophon`, `/api/contact`, `og.png`, `robots.txt`, `Keith-Huster-Resume.pdf`. The old `keithhuster-sapper` Worker's route and the placeholder apex A record were removed; the old Worker script itself is still in the account and can be deleted after a month.
+- https://keithhuster-com.husterk.workers.dev still works as a preview host.
 - Every merge to `main` deploys and syncs the Worker secrets from 1Password. Every PR gets a preview URL comment.
 
 ## Merged
 
-- M0, M1, M2, M3 and the M4 launch prep (colophon, metadata, OG image, JSON-LD, robots.txt).
+- M0, M1, M2, M3 and M4 (colophon, metadata, OG image, JSON-LD, robots.txt, résumé PDF, custom domain).
 - Lighthouse in CI: median of three runs against 95/100/95/100. Playwright: 15 tests at 1440/834/390 including the rider-visible assertion, the phone menu, axe on three pages and the contact endpoint (405, 403, 400, honeypot, dry run, 429, no-JS HTML).
 
 ## Open
 
-- Nothing in flight. Next PRs, in order: the résumé PDF, the custom-domain route at cutover, then M5 (parallax and rider bob, colophon numbers, first case study, Renovate's first grouped PR).
+- Nothing in flight. Next: M5 (parallax and rider bob, colophon numbers, first case study, Renovate's first grouped PR).
 
 ## Blocked on Keith
 
-- **Résumé PDF.** Put the export at `public/Keith-Huster-Resume.pdf` on a branch (or hand it to me) so the hero and contact buttons stop pointing at a 404. Keep that filename stable.
-- **One real contact message.** Open https://keithhuster-com.husterk.workers.dev/#contact in a real browser, send yourself a message, and confirm it arrives from `contact@keithhuster.com` with your address as reply-to. Turnstile rejects headless Chromium, so I could not do this myself; the endpoint answered every other case correctly in production. Then issue #14 can close.
-- **Cutover, when you are ready.** Tell me where the old site is hosted and that I may replace the apex record. Then I will: add `routes: [{ pattern: "keithhuster.com", custom_domain: true }]` to `wrangler.jsonc` in a one-line PR (Cloudflare binds the apex and issues the certificate); hand you the exact Bulk Redirect values for `www.keithhuster.com` to `https://keithhuster.com` (301, preserve path); verify apex, www, the old anchors and the résumé PDF; confirm Web Analytics records a visit.
-- **GitHub Project board.** The `gh` token still has scopes `gist, read:org, repo`. Creating the user-level Project needs `project`. Run this in a normal terminal tab and tell me when it finishes:
-
-  ```
-  gh auth refresh -h github.com -s workflow,project
-  ```
+- **`www` redirect.** A proxied `AAAA www 100::` record now exists so the redirect can fire, but Bulk Redirects are account-level and the API token cannot create them. In the dashboard: Account home, Bulk Redirects, Create Bulk Redirect List, name `www-to-apex`, add one URL redirect with source URL `www.keithhuster.com`, target URL `https://keithhuster.com`, status `301`, and tick Preserve query string, Subpath matching and Preserve path suffix. Then Create Bulk Redirect Rule, name `www to apex`, select that list, and enable it. Verify with `curl -sI https://www.keithhuster.com/about` (expect 301 to `https://keithhuster.com/about`). Then issue #17 can close.
+- **One real contact message.** Open https://keithhuster.com/#contact in a real browser, send yourself a message, and confirm it arrives from `contact@keithhuster.com` with your address as reply-to. Turnstile rejects headless Chromium, so I could not do this myself. Then issue #14 can close.
+- **Web Analytics.** Check Analytics & Logs, Web Analytics for your own visit to https://keithhuster.com. Automatic setup injects the beacon at the edge; nothing is in the repo.
+- **LinkedIn.** Point the profile at https://keithhuster.com and check the link preview shows the OG image. Then issue #18 can close.
 
 ## Repository configuration (done)
 
 - Rebase merge only, head branches auto-deleted, wiki/discussions/projects off, vulnerability alerts, secret scanning and push protection on.
 - Ruleset `main`: PR required, linear history, required status check `ci`, no force push or deletion.
-- Labels, milestones M0 to M5, issues #2 to #22, GitHub environment `production`.
+- Labels, milestones M0 to M5, issues #2 to #22, GitHub environment `production`, Project board https://github.com/users/husterk/projects/1 with Status (Todo / In progress / Blocked on Keith / Done).
 
 ## Things a future session should know
 
