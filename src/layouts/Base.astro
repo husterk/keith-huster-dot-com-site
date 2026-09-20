@@ -52,6 +52,10 @@ const imageUrl = new URL(image, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
     <slot name="head" />
+    <script is:inline>
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
+        document.documentElement.classList.add('rides');
+    </script>
   </head>
   <body>
     <a class="skip" href="#main">
