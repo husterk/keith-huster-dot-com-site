@@ -200,6 +200,48 @@ test('the contact form renders with its fields and the honeypot hidden', async (
   await expect(form.locator('#contact-company')).not.toBeInViewport();
 });
 
+test.describe('turnstile widget layout', () => {
+  // Turnstile itself is blocked in headless Chromium, so these inject what
+  // it injects: a flexible-size iframe inside .cf-turnstile plus the
+  // interactive class the before/after-interactive callbacks toggle.
+  for (const width of widths) {
+    test(`the widget never overlaps the form at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/#contact');
+
+      const hiddenHeight = await page.evaluate(
+        () => document.querySelector('.cf-turnstile')!.getBoundingClientRect().height,
+      );
+      expect(hiddenHeight).toBeLessThanOrEqual(1);
+
+      const boxes = await page.evaluate(() => {
+        const widget = document.querySelector('.cf-turnstile')!;
+        const iframe = document.createElement('iframe');
+        iframe.style.cssText = 'width:100%;height:65px;display:block';
+        widget.appendChild(iframe);
+        widget.classList.add('interactive');
+        const rect = (selector: string) => {
+          const box = document.querySelector(selector)!.getBoundingClientRect();
+          return { top: box.top, right: box.right, bottom: box.bottom, left: box.left };
+        };
+        return {
+          widget: rect('.cf-turnstile'),
+          textarea: rect('#contact-message'),
+          submit: rect('.contact-form button[type="submit"]'),
+          status: rect('.contact-form .status'),
+        };
+      });
+
+      const intersects = (a: (typeof boxes)['widget'], b: (typeof boxes)['widget']) =>
+        a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+
+      expect(intersects(boxes.widget, boxes.textarea)).toBe(false);
+      expect(intersects(boxes.widget, boxes.submit)).toBe(false);
+      expect(intersects(boxes.widget, boxes.status)).toBe(false);
+    });
+  }
+});
+
 test.describe('hash scroll', () => {
   test.use({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
   const top = (page: import('@playwright/test').Page, id: string) =>
