@@ -41,6 +41,33 @@ for (const width of widths) {
   });
 }
 
+const heroGridWidths = [1180, 1440];
+
+for (const width of heroGridWidths) {
+  test.describe(`hero intro column at ${width}px`, () => {
+    test.use({ viewport: { width, height: 900 } });
+
+    test('the intro paragraph stays readable and the rider stays on screen', async ({ page }) => {
+      await page.goto('/');
+      const h1Box = (await page.locator('.hero h1').boundingBox())!;
+      const pBox = (await page.locator('.hero .text p').boundingBox())!;
+      expect(pBox.width, 'intro paragraph width').toBeGreaterThanOrEqual(320);
+      expect(
+        h1Box.y - pBox.y,
+        'gap between the headline top and the paragraph top',
+      ).toBeLessThanOrEqual(150);
+
+      const rider = page.locator('.hero .rider').first();
+      await rider.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      const riderBox = (await rider.boundingBox())!;
+      expect(riderBox.x, 'rider left edge').toBeGreaterThanOrEqual(0);
+      expect(riderBox.y, 'rider top edge').toBeGreaterThanOrEqual(0);
+      expect(riderBox.x + riderBox.width, 'rider right edge').toBeLessThanOrEqual(width);
+      expect(riderBox.y + riderBox.height, 'rider bottom edge').toBeLessThanOrEqual(900);
+    });
+  });
+}
+
 test.describe('phone menu', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
