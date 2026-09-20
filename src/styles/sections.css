@@ -45,6 +45,23 @@
   margin: 0;
 }
 
+/* The 720px + 1fr grid below only has room for both columns once the second
+   one reaches roughly 500px; below 1440px it wraps the intro into a tall,
+   narrow stack that rises above the headline. Stay single-column, matching
+   the sub-1100 layout, until the two-column grid has room. */
+@media (min-width: 1100px) and (max-width: 1439px) {
+  .hero .text {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .hero h1 {
+    font-size: 112px;
+  }
+  .hero p {
+    max-width: 640px;
+  }
+}
+
 .spacer {
   height: calc(500px * var(--k));
 }
