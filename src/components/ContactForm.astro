@@ -72,6 +72,17 @@ const { turnstileSiteKey, links } = await getSite();
     let widgetId: string | undefined;
     let token = '';
     let loadTimer: number | undefined;
+    let pending: ((value: string) => void) | undefined;
+    const waitForToken = () =>
+      new Promise<string>((resolve) => {
+        pending = resolve;
+        window.setTimeout(() => {
+          if (pending === resolve) {
+            pending = undefined;
+            resolve('');
+          }
+        }, 12000);
+      });
 
     const note = (text: string, showRetry = false) => {
       status.textContent = text;
@@ -94,10 +105,15 @@ const { turnstileSiteKey, links } = await getSite();
         sitekey: widget.dataset.sitekey,
         theme: 'dark',
         size: 'flexible',
+        appearance: 'interaction-only',
+        'before-interactive-callback': () => widget.classList.add('interactive'),
+        'after-interactive-callback': () => widget.classList.remove('interactive'),
         callback: (value: string) => {
           token = value;
           clearTimeout(loadTimer);
           if (status.textContent && !status.textContent.startsWith('Thanks')) note('');
+          pending?.(value);
+          pending = undefined;
         },
         'error-callback': (code: string) => {
           token = '';
@@ -169,12 +185,17 @@ const { turnstileSiteKey, links } = await getSite();
       event.preventDefault();
       if (!form.reportValidity()) return;
       const turnstile = (window as unknown as { turnstile?: Turnstile }).turnstile;
-      const current =
-        token || (widgetId !== undefined ? turnstile?.getResponse(widgetId) : '') || '';
+      let current = token || (widgetId !== undefined ? turnstile?.getResponse(widgetId) : '') || '';
+      if (!current && turnstile && widgetId !== undefined && retry.hidden) {
+        button.disabled = true;
+        note('Checking that you are human…');
+        current = await waitForToken();
+        button.disabled = false;
+      }
       if (!current) {
         note(
           turnstile
-            ? 'The anti-spam check has not finished. Wait for it, retry, or email me directly.'
+            ? 'The anti-spam check has not finished. Complete it above if it asks, retry, or email me directly.'
             : 'The anti-spam script never loaded. Something on this device or network is blocking challenges.cloudflare.com; allow it and retry, or email me directly.',
           true,
         );
