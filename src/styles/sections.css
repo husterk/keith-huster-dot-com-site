@@ -576,11 +576,13 @@
 }
 
 .contact-form .cf-turnstile {
-  margin-top: -24px;
+  overflow: hidden;
+  max-height: 0;
 }
 
 .contact-form .cf-turnstile.interactive {
-  margin-top: 0;
+  max-height: none;
+  overflow: visible;
 }
 
 .contact-form label {
