@@ -57,6 +57,14 @@ const imageUrl = new URL(image, Astro.site);
     <a class="skip" href="#main">
       Skip to content
     </a>
+    <script is:inline>
+      if ('serviceWorker' in navigator)
+        navigator.serviceWorker
+          .getRegistrations()
+          .then((registrations) =>
+            registrations.forEach((registration) => registration.unregister()),
+          );
+    </script>
     <slot />
   </body>
 </html>
