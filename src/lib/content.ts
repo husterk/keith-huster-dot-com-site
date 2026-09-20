@@ -1,6 +1,6 @@
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 
-async function single<C extends 'site' | 'leadership' | 'patents' | 'beyond'>(
+async function single<C extends 'site' | 'leadership' | 'patents' | 'beyond' | 'colophon'>(
   collection: C,
   id: C,
 ): Promise<CollectionEntry<C>['data']> {
@@ -13,6 +13,7 @@ export const getSite = () => single('site', 'site');
 export const getLeadership = () => single('leadership', 'leadership');
 export const getPatents = () => single('patents', 'patents');
 export const getBeyond = () => single('beyond', 'beyond');
+export const getColophon = () => single('colophon', 'colophon');
 
 export const getExperience = async () =>
   (await getCollection('experience'))

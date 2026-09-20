@@ -1,0 +1,128 @@
+- id: colophon
+  eyebrow: Colophon
+  title: How this site was built
+  intro: >-
+    This site is a static page with one server endpoint, built and deployed the way I would build a
+    small production service: content and layout separated, everything validated in CI, secrets kept
+    out of the repository, and the whole thing reproducible from a git clone.
+  summary: '🚵 Banff to Antelope Wells in six scenes, one Worker, and about 190 KB.'
+  repo: https://github.com/husterk/keith-huster-dot-com-site
+  updated: 2026-09-19
+  stats:
+    - { value: '191 KB', label: 'cold load of the homepage, fonts included' }
+    - { value: '7', label: 'requests on that first load' }
+    - { value: '0.9 s', label: 'production build, second of two runs' }
+    - { value: '100', label: 'Lighthouse in all four categories, median of three' }
+  kit:
+    - {
+        emoji: '🏗️',
+        label: 'Generator',
+        title: 'Astro 7',
+        why: 'Static output, zero JavaScript by default. Content collections validate every YAML and Markdown file at build time.',
+      }
+    - {
+        emoji: '🗂️',
+        label: 'Content',
+        title: 'YAML + Markdown',
+        why: 'Updating a role or a number is a one-line commit, and the schema catches mistakes before they ship.',
+      }
+    - {
+        emoji: '🎨',
+        label: 'Styling',
+        title: 'Plain CSS',
+        why: 'The design is expressed as about thirty custom properties. No framework needed.',
+      }
+    - {
+        emoji: '🖼️',
+        label: 'Illustrations',
+        title: 'Inline SVG',
+        why: 'Six scenes and the bikepacker, recolorable from one CSS variable, lighter than a photograph.',
+      }
+    - {
+        emoji: '🔤',
+        label: 'Fonts',
+        title: 'Self-hosted',
+        why: 'Barlow, Barlow Condensed and Spline Sans Mono. No third-party requests; the headline face is preloaded.',
+      }
+    - {
+        emoji: '☁️',
+        label: 'Hosting',
+        title: 'Cloudflare Workers',
+        why: 'Static assets from the edge and one Worker for the contact endpoint, custom domain on the apex.',
+      }
+    - {
+        emoji: '🛡️',
+        label: 'Contact form',
+        title: 'Turnstile + Resend',
+        why: 'Honeypot, per-address rate limit, Turnstile, then Resend. Spam is handled at the edge.',
+      }
+    - {
+        emoji: '📈',
+        label: 'Analytics',
+        title: 'Cloudflare Web Analytics',
+        why: 'Cookieless, no consent banner, injected at the edge.',
+      }
+    - {
+        emoji: '🧰',
+        label: 'Tooling',
+        title: 'Bun + mise',
+        why: 'Bun for packages and scripts, Node underneath, both pinned by mise. One command sets up a clone.',
+      }
+    - {
+        emoji: '🚦',
+        label: 'CI/CD',
+        title: 'GitHub Actions',
+        why: 'Type and schema checks, Playwright, axe, Lighthouse CI; a preview per pull request; deploy on merge.',
+      }
+    - {
+        emoji: '🔐',
+        label: 'Secrets',
+        title: '1Password',
+        why: 'A service account; Worker secrets synced on every deploy. GitHub holds a single token.',
+      }
+    - {
+        emoji: '🔁',
+        label: 'Upkeep',
+        title: 'Renovate',
+        why: 'Dependencies move on their own and CI is the gate.',
+      }
+  decisions:
+    - emoji: '⚛️'
+      title: Why not React
+      body: >-
+        There is one interactive element on the page, the phone menu, and one form. A framework
+        runtime would be the largest asset on the site and would buy nothing. Astro leaves the door
+        open for an island if that changes.
+    - emoji: '✏️'
+      title: Why the illustrations are code
+      body: >-
+        The six scenes and the bikepacker are SVG, so the whole route from Banff to Antelope Wells
+        weighs less than one photograph, scales to any screen, and picks up the accent color from
+        CSS. On phones each scene re-frames around the rider instead of shrinking.
+    - emoji: '🔀'
+      title: How content updates work
+      body: >-
+        Edit a YAML file, open a pull request, get a preview URL, merge. If a field is missing or a
+        date is malformed, the build fails with a message pointing at the line.
+    - emoji: '🤫'
+      title: How the contact form stays quiet
+      body: >-
+        A request has to pass a content-type check, an origin check, a per-address rate limit, a
+        hidden field that humans never see, field validation and a Turnstile verification before
+        Resend sends anything. The endpoint logs one line per request and never the message.
+    - emoji: '🏔️'
+      title: What I would change at scale
+      body: >-
+        For a multi-author site I would add a CMS; for a product I would add an image pipeline and a
+        real design system. For one person and one page, this is the right amount of machinery.
+  legend:
+    - { emoji: '🏔️', place: 'Banff', section: 'Hero', color: 'var(--bg-spruce)' }
+    - { emoji: '🏞️', place: 'Montana', section: 'Experience', color: 'var(--bg-lake)' }
+    - { emoji: '☀️', place: 'Wyoming', section: 'Impact', color: 'var(--bg-basin)' }
+    - { emoji: '🌙', place: 'Colorado', section: 'Leadership', color: 'var(--bg-alpine)' }
+    - { emoji: '🌄', place: 'New Mexico', section: 'Patents', color: 'var(--bg-desert)' }
+    - { emoji: '🏁', place: 'Antelope Wells', section: 'Contact', color: 'var(--bg-border)' }
+  credits: >-
+    Design iterated with Claude on a design canvas over three rounds of direction, copy and
+    responsive review, then built with Claude Code from a written plan. Fonts by their foundries
+    under the SIL Open Font License. Hosted on Cloudflare.
