@@ -1,5 +1,5 @@
 :root {
-  --k: 1;
+  --k: clamp(0.58, tan(atan2(100vw, 1440px)), 1.3334);
 }
 
 .hero {
@@ -669,12 +669,8 @@
   .chart-legend {
     display: grid;
   }
-  :root {
-    --k: 0.58;
-  }
-
   .hero .scene {
-    --k: 0.75;
+    --k: max(0.75, tan(atan2(100vw, 1440px)));
     bottom: 70px;
   }
   .hero {

@@ -106,14 +106,6 @@ const { name, h, background } = Astro.props;
 
 <script>
   const STEP = 6;
-  const fitScenes = () => {
-    const root = document.documentElement;
-    if (innerWidth >= 1100)
-      root.style.setProperty('--k', String(Math.min(innerWidth / 1440, 4 / 3)));
-    else root.style.removeProperty('--k');
-  };
-  fitScenes();
-  addEventListener('resize', fitScenes);
   const HIP: [number, number] = [37, 20];
   const CRANK: [number, number] = [44, 54];
   const CRANK_RADIUS = 8;
