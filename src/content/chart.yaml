@@ -9,11 +9,11 @@
   title: Software Developer
   team: null
   start: 2014-04
-  end: 2015-07
+  end: 2015-02
 - org: Confluence
   title: Senior Software Engineer
   team: null
-  start: 2015-07
+  start: 2015-03
   end: 2018-08
 - org: Olo
   title: Senior Software Engineer II
@@ -24,9 +24,14 @@
   title: Senior Software Engineer II
   team: Software Infrastructure
   start: 2021-08
-  end: 2024-01
+  end: 2024-04
 - org: Olo
   title: Team Lead II
   team: Software Infrastructure
-  start: 2024-01
+  start: 2024-04
+  end: 2025-09
+- org: Olo
+  title: Senior Software Engineer II
+  team: Software Infrastructure
+  start: 2025-09
   end: null

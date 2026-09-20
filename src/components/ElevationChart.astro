@@ -51,7 +51,9 @@ const labels = points.map((p) => {
     .map((anchor) => {
       const x0 = anchor === 'start' ? p.x : anchor === 'middle' ? p.x - width / 2 : p.x - width;
       const x1 = x0 + width;
-      const covered = points.filter((o) => o !== p && o.x > x0 && o.x < x1).length;
+      const covered = points
+        .filter((o) => o !== p && o.x > x0 && o.x < x1)
+        .reduce((sum, o) => sum + (o.x > p.x ? 2 : 1), 0);
       return { anchor, x0, x1, covered };
     })
     .filter((c) => c.x0 >= -8 && c.x1 <= WIDTH + 8);
