@@ -446,6 +446,14 @@
   grid-column: 1 / -1;
 }
 
+.contact-form .cf-turnstile {
+  margin-top: -24px;
+}
+
+.contact-form .cf-turnstile.interactive {
+  margin-top: 0;
+}
+
 .contact-form label {
   color: var(--mute);
 }
