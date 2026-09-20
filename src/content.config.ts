@@ -47,8 +47,8 @@ const chart = defineCollection({
     x: z.number().min(0).max(1280),
     y: z.number().min(0).max(300),
     year: z.string(),
-    label: z.string().optional(),
-    note: z.string().optional(),
+    org: z.string().optional(),
+    title: z.string().optional(),
     labelAnchor: z.enum(['start', 'middle', 'end']).default('middle'),
   }),
 });

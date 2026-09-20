@@ -3,35 +3,40 @@
   x: 0
   y: 270
   year: '2002'
-  label: 'Hill-Rom · new product development'
-  note: '36 patents · 10 products commercialized'
+  org: Hill-Rom
+  title: Software Engineering Specialist
   labelAnchor: start
 - id: curriculum-loft
   x: 640
   y: 182
   year: '2014'
-  label: 'Curriculum Loft'
+  org: Curriculum Loft
+  title: Software Developer
   labelAnchor: end
 - id: confluence
   x: 693
   y: 168
   year: '2015'
-  label: 'Confluence'
+  org: Confluence
+  title: Senior Software Engineer
 - id: olo-menu
   x: 890
   y: 132
   year: '2018'
-  label: 'Olo · Menu team'
+  org: Olo
+  title: Senior Software Engineer II, Menu team
 - id: olo-infra
   x: 1045
   y: 104
   year: '2021'
-  label: 'Olo · Software Infrastructure'
+  org: Olo
+  title: Senior Software Engineer II, Software Infrastructure
 - id: team-lead
   x: 1188
   y: 70
   year: '2024'
-  label: 'Team Lead II'
+  org: Olo
+  title: Team Lead II
 - id: now
   x: 1262
   y: 52

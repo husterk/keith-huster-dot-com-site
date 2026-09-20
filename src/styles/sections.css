@@ -90,9 +90,9 @@
 }
 
 .chart {
-  width: 1280px;
-  height: 360px;
-  transform-origin: 0 0;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .chartwrap {
@@ -508,12 +508,6 @@
   }
   .stat .n {
     font-size: 48px;
-  }
-  .chartwrap {
-    height: calc(360px * 0.575);
-  }
-  .chart {
-    transform: scale(0.575);
   }
   .cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
