@@ -40,6 +40,10 @@ const { name, h, background } = Astro.props;
     --cx: 720px;
   }
 
+  html.rides .strip .rider[data-rides]:not(.placed) {
+    visibility: hidden;
+  }
+
   .lbl {
     fill: var(--bone);
     paint-order: stroke;
@@ -210,6 +214,7 @@ const { name, h, background } = Astro.props;
         'transform',
         `translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${angle.toFixed(1)}) scale(${scale}) translate(-48,-69)`,
       );
+      rider.classList.add('placed');
       const theta = (x - first) / PEDAL_PITCH - Math.PI / 4;
       legs.forEach((leg) =>
         leg.setAttribute('d', legPath(leg.classList.contains('far') ? theta + Math.PI : theta)),
