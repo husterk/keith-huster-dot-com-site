@@ -93,11 +93,140 @@
   width: 100%;
   height: auto;
   display: block;
+  overflow: visible;
 }
 
 .chartwrap {
   width: 100%;
-  overflow: hidden;
+}
+
+.chart .grid line {
+  stroke: rgba(235, 230, 216, 0.07);
+}
+
+.chart .area {
+  fill: rgba(235, 230, 216, 0.05);
+}
+
+.chart .line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.chart .axis {
+  stroke: var(--line3);
+}
+
+.chart .drops line {
+  stroke: var(--line3);
+  stroke-dasharray: 3 5;
+}
+
+.chart .leaders line {
+  stroke: var(--line3);
+}
+
+.chart .dots circle {
+  fill: var(--bg-spruce);
+  stroke: var(--accent);
+  stroke-width: 2.5;
+}
+
+.chart text {
+  paint-order: stroke;
+  stroke: var(--bg-spruce);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+
+.chart .org {
+  font-family: var(--font-cond);
+  font-weight: 600;
+  font-size: 20px;
+  fill: var(--bone);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.chart .ttl,
+.chart .years text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  fill: var(--mute);
+  letter-spacing: 0.06em;
+}
+
+.chart-narrow .years text {
+  font-size: 10px;
+}
+
+.chart .nums text {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 10px;
+  fill: var(--bone);
+  stroke: none;
+}
+
+.chart-narrow,
+.chart-legend {
+  display: none;
+}
+
+.chart-legend {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line2);
+}
+
+.chart-legend li {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  column-gap: 12px;
+  row-gap: 2px;
+  padding: 16px 16px 16px 0;
+  border-bottom: 1px solid var(--line);
+  min-width: 0;
+}
+
+.chart-legend .n {
+  grid-row: 1 / span 3;
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--accent);
+  padding-top: 2px;
+}
+
+.chart-legend .yrs {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.chart-legend .o {
+  font-family: var(--font-cond);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.chart-legend .t {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--text-soft);
+  line-height: 1.45;
 }
 
 .cards {
@@ -531,6 +660,15 @@
 }
 
 @media (max-width: 1099px) {
+  .chart-wide {
+    display: none;
+  }
+  .chart-narrow {
+    display: block;
+  }
+  .chart-legend {
+    display: grid;
+  }
   :root {
     --k: 0.58;
   }
@@ -680,8 +818,8 @@
   .stat .l {
     font-size: 12px;
   }
-  .chartwrap {
-    display: none;
+  .chart-legend {
+    grid-template-columns: 1fr;
   }
   .cards {
     grid-template-columns: 1fr;

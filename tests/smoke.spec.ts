@@ -238,3 +238,20 @@ test.describe('hash scroll', () => {
     });
   });
 });
+
+test.describe('career chart', () => {
+  test('wide screens get labeled waypoints, narrow screens get a numbered legend', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    await expect(page.locator('.chart-wide')).toBeVisible();
+    await expect(page.locator('.chart-wide .org')).toHaveCount(6);
+    await expect(page.locator('.chart-legend')).toBeHidden();
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(page.locator('.chart-wide')).toBeHidden();
+    await expect(page.locator('.chart-narrow')).toBeVisible();
+    await expect(page.locator('.chart-legend li')).toHaveCount(6);
+    await expect(page.locator('.chart-legend li').first()).toContainText('Hill-Rom');
+  });
+});
