@@ -55,6 +55,18 @@ const imageUrl = new URL(image, Astro.site);
     <script is:inline>
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
         document.documentElement.classList.add('rides');
+      history.scrollRestoration = location.hash ? 'manual' : 'auto';
+      if (location.hash) {
+        const settle = () => {
+          const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+          if (target) target.scrollIntoView({ block: 'start' });
+        };
+        addEventListener('load', () => {
+          settle();
+          requestAnimationFrame(settle);
+          if (document.fonts) document.fonts.ready.then(settle);
+        });
+      }
     </script>
   </head>
   <body>

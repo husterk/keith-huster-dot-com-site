@@ -135,7 +135,6 @@ const links = [
 <script>
   document.querySelector<HTMLAnchorElement>('[data-home]')?.addEventListener('click', (event) => {
     event.preventDefault();
-    history.scrollRestoration = 'manual';
     if (location.pathname === '/') {
       history.replaceState(null, '', '/');
       scrollTo(0, 0);
