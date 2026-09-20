@@ -1,6 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
-import { file, glob } from 'astro/loaders';
+import { file } from 'astro/loaders';
 
 const link = z.object({ label: z.string(), href: z.string() });
 const stat = z.object({ value: z.string(), label: z.string() });
@@ -96,9 +96,36 @@ const beyond = defineCollection({
   }),
 });
 
-const pages = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
-  schema: z.object({ title: z.string(), description: z.string(), updated: z.coerce.date() }),
+const colophon = defineCollection({
+  loader: file('src/content/colophon.yaml'),
+  schema: z.object({
+    eyebrow: z.string(),
+    title: z.string(),
+    intro: z.string(),
+    summary: z.string(),
+    repo: z.url(),
+    updated: z.coerce.date(),
+    stats: z.array(stat).length(4),
+    kit: z
+      .array(z.object({ emoji: z.string(), label: z.string(), title: z.string(), why: z.string() }))
+      .min(6),
+    decisions: z.array(z.object({ emoji: z.string(), title: z.string(), body: z.string() })).min(3),
+    legend: z
+      .array(
+        z.object({ emoji: z.string(), place: z.string(), section: z.string(), color: z.string() }),
+      )
+      .length(6),
+    credits: z.string(),
+  }),
 });
 
-export const collections = { site, experience, chart, impact, leadership, patents, beyond, pages };
+export const collections = {
+  site,
+  experience,
+  chart,
+  impact,
+  leadership,
+  patents,
+  beyond,
+  colophon,
+};

@@ -1,0 +1,371 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import RouteMap from '../components/RouteMap.astro';
+import { getColophon } from '../lib/content';
+
+const c = await getColophon();
+const updated = c.updated.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+const repoLabel = c.repo.replace(/^https?:\/\//, '');
+---
+
+<Base
+  title={`${c.title} · Keith Huster`}
+  description="The stack behind keithhuster.com and why each piece is there, with the Tour Divide route it follows."
+>
+  <Nav />
+  <main id="main" class="colophon">
+    <div class="layout">
+      <aside class="rail" aria-label="The Tour Divide route">
+        <RouteMap />
+        <p class="mono muted rail-note">
+          🚵 2,745 miles from Banff to Antelope Wells. Each state wears the color of its section on
+          the homepage.
+        </p>
+      </aside>
+      <article class="content">
+        <p class="mono eyebrow">{c.eyebrow}</p>
+        <h1 class="cond">{c.title}</h1>
+        <p class="lead">
+          {c.intro} The source is public at{' '}
+          <a href={c.repo} target="_blank" rel="noopener">
+            {repoLabel}
+          </a>
+          .
+        </p>
+        <p class="summary">{c.summary}</p>
+
+        <ul class="tiles" aria-label="Measured on the live site">
+          {c.stats.map((s) => (
+            <li class="tile">
+              <span class="n">{s.value}</span>
+              <span class="l">{s.label}</span>
+            </li>
+          ))}
+        </ul>
+
+        <section class="block">
+          <h2 class="cond h2">
+            <span aria-hidden="true">🧭</span> The kit
+          </h2>
+          <ul class="kit">
+            {c.kit.map((k) => (
+              <li class="k">
+                <span class="k-emoji" aria-hidden="true">
+                  {k.emoji}
+                </span>
+                <span class="mono muted w">{k.label}</span>
+                <span class="t">{k.title}</span>
+                <span class="d">{k.why}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="block">
+          <h2 class="cond h2">
+            <span aria-hidden="true">⛰️</span> Decisions
+          </h2>
+          <dl class="dec">
+            {c.decisions.map((d) => (
+              <>
+                <dt class="q">
+                  <span aria-hidden="true">{d.emoji}</span> {d.title}
+                </dt>
+                <dd>{d.body}</dd>
+              </>
+            ))}
+          </dl>
+        </section>
+
+        <section class="block">
+          <h2 class="cond h2">
+            <span aria-hidden="true">🗺️</span> The route, section by section
+          </h2>
+          <ol class="legend">
+            {c.legend.map((l) => (
+              <li style={`background: ${l.color}`}>
+                <span aria-hidden="true">{l.emoji}</span>
+                <span class="place">{l.place}</span>
+                <span class="mono muted sec">{l.section}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section class="block">
+          <h2 class="cond h2">
+            <span aria-hidden="true">🏁</span> Credits
+          </h2>
+          <p class="body">{c.credits}</p>
+          <p class="mono muted updated">Updated {updated}</p>
+        </section>
+      </article>
+    </div>
+  </main>
+  <footer class="foot page-foot">
+    <span>
+      <a href="/">Back to the site</a>
+    </span>
+    <span>© 2026</span>
+  </footer>
+</Base>
+
+<style>
+  .colophon {
+    background: var(--bg-spruce);
+    padding: 72px var(--pad) 64px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: 64px;
+    align-items: start;
+  }
+  .rail {
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .rail-note {
+    font-size: 11px;
+    line-height: 1.5;
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 880px;
+  }
+  .content h1 {
+    font-size: clamp(44px, 6vw, 88px);
+    line-height: 0.95;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .content .h2 {
+    font-size: 40px;
+    margin: 0 0 20px;
+  }
+  .lead {
+    color: var(--text-soft);
+    font-size: 19px;
+    line-height: 1.6;
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .lead a {
+    color: var(--accent);
+  }
+  .summary {
+    margin: 0;
+    color: var(--text-body);
+    font-size: 17px;
+  }
+  .tiles {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--line2);
+  }
+  .tile {
+    padding: 20px 20px 0;
+    border-left: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .tile:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .tile .n {
+    font-family: var(--font-cond);
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1;
+  }
+  .tile .l {
+    color: var(--mute);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .block {
+    margin-top: 32px;
+  }
+  .kit {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .k {
+    border: 1px solid var(--line2);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+  }
+  .k-emoji {
+    font-size: 22px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .k .w {
+    font-size: 11px;
+  }
+  .k .t {
+    font-family: var(--font-cond);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .k .d {
+    color: var(--text-body);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .dec {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 18px 32px;
+    align-items: start;
+  }
+  .dec .q {
+    font-family: var(--font-cond);
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .dec dd {
+    margin: 0;
+    color: var(--text-body);
+    font-size: 16px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    border: 1px solid var(--line2);
+  }
+  .legend li {
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-left: 1px solid var(--line2);
+    font-size: 15px;
+  }
+  .legend li:first-child {
+    border-left: 0;
+  }
+  .legend .place {
+    font-family: var(--font-cond);
+    font-weight: 600;
+    font-size: 20px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .legend .sec {
+    font-size: 11px;
+  }
+  .updated {
+    margin: 16px 0 0;
+  }
+  .page-foot {
+    background: var(--bg-spruce);
+    padding: 24px var(--pad);
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 1099px) {
+    .layout {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .rail {
+      position: static;
+      order: 2;
+      max-width: 520px;
+    }
+    .kit {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .legend {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .legend li:nth-child(4) {
+      border-left: 0;
+    }
+    .legend li:nth-child(n + 4) {
+      border-top: 1px solid var(--line2);
+    }
+  }
+  @media (max-width: 699px) {
+    .colophon {
+      padding: 48px var(--pad) 48px;
+    }
+    .content .h2 {
+      font-size: 32px;
+    }
+    .tiles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .tile {
+      padding: 16px 12px 16px;
+      border-top: 0;
+    }
+    .tile:nth-child(odd) {
+      padding-left: 0;
+      border-left: 0;
+    }
+    .tile:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+    .tile .n {
+      font-size: 36px;
+    }
+    .kit {
+      grid-template-columns: 1fr;
+    }
+    .dec {
+      grid-template-columns: 1fr;
+      gap: 6px 0;
+    }
+    .dec dd {
+      margin-bottom: 12px;
+    }
+    .legend {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .legend li:nth-child(4) {
+      border-left: 1px solid var(--line2);
+    }
+    .legend li:nth-child(odd) {
+      border-left: 0;
+    }
+    .legend li:nth-child(n + 3) {
+      border-top: 1px solid var(--line2);
+    }
+  }
+</style>
