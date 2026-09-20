@@ -7,19 +7,21 @@ const { contact, links, footer } = site;
 ---
 
 <section id="contact" class="contact">
-  <div class="stack" style="gap: 32px;">
-    <div class="mono eyebrow">{contact.eyebrow}</div>
-    <h2 class="cond h2">{contact.heading}</h2>
-    <div class="btns">
-      <a href={`mailto:${links.email}`} class="btn primary">
-        {links.email}
-      </a>
-      <a href={links.linkedin} class="btn ghost" target="_blank" rel="noopener">
-        LinkedIn
-      </a>
-      <a href={links.github} class="btn ghost" target="_blank" rel="noopener">
-        GitHub
-      </a>
+  <div class="contact-grid">
+    <div class="stack" style="gap: 32px;">
+      <div class="mono eyebrow">{contact.eyebrow}</div>
+      <h2 class="cond h2">{contact.heading}</h2>
+      <div class="btns">
+        <a href={`mailto:${links.email}`} class="btn primary">
+          {links.email}
+        </a>
+        <a href={links.linkedin} class="btn ghost" target="_blank" rel="noopener">
+          LinkedIn
+        </a>
+        <a href={links.github} class="btn ghost" target="_blank" rel="noopener">
+          GitHub
+        </a>
+      </div>
     </div>
     <ContactForm />
   </div>
