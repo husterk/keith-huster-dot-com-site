@@ -11,15 +11,15 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 ## Merged
 
 - M0 through M5: everything in docs/plan/06-milestones.md except the first case-study page (#21), parked at Keith's request. M5 added the rider bob and, replacing the first parallax, a rider that travels the ground path as each strip scrolls, pedaling as it goes, with the hero rider crossing from the left until it leaves the view (#44, #49), both behind prefers-reduced-motion, the colophon's measured numbers, and confirmed Renovate's upkeep loop (lock-file PR #39 went through CI and merged on its own; Renovate ignores docs/).
-- Lighthouse in CI: median of three runs against 95/100/95/100. Playwright: 15 tests at 1440/834/390 including the rider-visible assertion, the phone menu, axe on three pages and the contact endpoint (405, 403, 400, honeypot, dry run, 429, no-JS HTML).
+- Lighthouse in CI: median of three runs against 95/100/95/100. Playwright: 21 tests at 1440/834/390 including the rider-visible assertion, the phone menu, axe on three pages, the contact endpoint (405, 403, 400, honeypot, dry run, 429, no-JS HTML), rider motion under both motion preferences, and the eased hash scroll.
 
 ## Open
 
-- Nothing in flight. Site improvements batch merged 2026-09-19: sticky nav with a home link, scenes that fill wide screens, responsive elevation chart with company/position labels, footer cleanup, external links in new tabs, a 404 page with the rider at a fork, the résumé button opening in a new tab, and the colophon rebuilt around a projected Tour Divide route map with content in src/content/colophon.yaml (wide-screen rail, separated decisions, a theme note). Company and product names in body copy link to their sites through the lookup in src/lib/links.ts. The only open work item is #21 (first case-study page); the pages collection and the [slug] route are ready for it. Renovate's weekly grouped PR lands Monday before 6am Denver time; patch updates of dev tooling automerge, everything else waits for a merge.
+- Nothing in flight. Polish merged 2026-09-19 after the improvements batch: riders no longer flash on load (the hero pose is baked, strip riders stay hidden until placed), the contact form sits in a right column with an intro line and an interaction-only Turnstile, and a hashed URL glides from the top onto its section with ease-in-out instead of jumping (the head script in src/layouts/Base.astro strips the hash before the browser can act on it; same-page links and back/forward use the same glide). Site improvements batch merged 2026-09-19: sticky nav with a home link, scenes that fill wide screens, responsive elevation chart with company/position labels, footer cleanup, external links in new tabs, a 404 page with the rider at a fork, the résumé button opening in a new tab, and the colophon rebuilt around a projected Tour Divide route map with content in src/content/colophon.yaml (wide-screen rail, separated decisions, a theme note). Company and product names in body copy link to their sites through the lookup in src/lib/links.ts. The only open work item is #21 (first case-study page); the pages collection and the [slug] route are ready for it. Renovate's weekly grouped PR lands Monday before 6am Denver time; patch updates of dev tooling automerge, everything else waits for a merge.
 
 ## Blocked on Keith
 
-- Nothing. M0 through M4 are complete and verified.
+- Nothing. M0 through M5 are complete and verified.
 
 ## Done at cutover
 
