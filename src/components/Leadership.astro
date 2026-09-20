@@ -1,5 +1,6 @@
 ---
 import { getLeadership } from '../lib/content';
+import { linkify } from '../lib/links';
 
 const leadership = await getLeadership();
 ---
@@ -9,7 +10,7 @@ const leadership = await getLeadership();
     <div class="mono eyebrow">{leadership.eyebrow}</div>
     <h2 class="cond h2">{leadership.heading}</h2>
     {leadership.paragraphs.map((paragraph) => (
-      <p class="lead">{paragraph}</p>
+      <p class="lead" set:html={linkify(paragraph)} />
     ))}
   </div>
   <ul class="grid2">

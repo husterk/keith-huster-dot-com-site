@@ -115,6 +115,7 @@ const colophon = defineCollection({
         z.object({ emoji: z.string(), place: z.string(), section: z.string(), color: z.string() }),
       )
       .length(6),
+    themeNote: z.string(),
     credits: z.string(),
   }),
 });

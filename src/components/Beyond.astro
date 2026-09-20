@@ -1,5 +1,6 @@
 ---
 import { getBeyond } from '../lib/content';
+import { linkify } from '../lib/links';
 
 const beyond = await getBeyond();
 const { feature, boxes } = beyond;
@@ -16,7 +17,7 @@ const { feature, boxes } = beyond;
         {feature.caption}
       </div>
       <div class="t">{feature.title}</div>
-      <p class="body">{feature.body}</p>
+      <p class="body" set:html={linkify(feature.body)} />
       <svg class="profile" width="720" height="90" preserveAspectRatio="none" aria-hidden="true">
         <path
           d="M0,70 L30,58 60,64 90,40 120,52 150,30 180,46 210,24 240,44 270,34 300,56 330,28 360,18 390,36 420,14 450,32 480,22 510,44 540,38 570,56 600,50 630,64 660,60 690,74 720,78"
@@ -52,7 +53,7 @@ const { feature, boxes } = beyond;
             )}
           </div>
           <div class="t">{box.title}</div>
-          <div class="d">{box.body}</div>
+          <div class="d" set:html={linkify(box.body)} />
         </li>
       ))}
     </ul>

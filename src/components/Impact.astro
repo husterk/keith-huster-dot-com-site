@@ -1,5 +1,6 @@
 ---
 import { getSite, getImpact } from '../lib/content';
+import { linkify } from '../lib/links';
 
 const site = await getSite();
 const impact = await getImpact();
@@ -15,7 +16,7 @@ const impact = await getImpact();
       <li class="row">
         <div class="num">SEG {String(index + 1).padStart(2, '0')}</div>
         <div class="t">{entry.title}</div>
-        <p class="body">{entry.body}</p>
+        <p class="body" set:html={linkify(entry.body)} />
         <div class="res">
           <div class="n">{entry.result.value}</div>
           <div class="l">{entry.result.label}</div>

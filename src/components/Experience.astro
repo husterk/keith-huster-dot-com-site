@@ -1,5 +1,6 @@
 ---
 import { getExperience } from '../lib/content';
+import { linkify } from '../lib/links';
 import ElevationChart from './ElevationChart.astro';
 
 const experience = await getExperience();
@@ -25,7 +26,7 @@ const experience = await getExperience();
           {role.dates}
         </div>
         <div class="t">{role.cardTitle}</div>
-        <div class="d">{role.summary}</div>
+        <div class="d" set:html={linkify(role.summary)} />
       </li>
     ))}
   </ul>

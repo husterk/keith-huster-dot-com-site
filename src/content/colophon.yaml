@@ -115,6 +115,12 @@
       body: >-
         For a multi-author site I would add a CMS; for a product I would add an image pipeline and a
         real design system. For one person and one page, this is the right amount of machinery.
+  themeNote: >-
+    Why a bike route on an engineering site? In 2025 I rode the Tour Divide, 2,745 miles of dirt
+    from Banff, Alberta to the Mexican border at Antelope Wells, self-supported, in 27 days. It is
+    the best picture I have of how I work: plan carefully, keep things running when nobody can hand
+    you the problem, and finish. The homepage follows that route north to south, one scene per
+    section, and the map on this page is the whole thing.
   legend:
     - { emoji: '🏔️', place: 'Banff', section: 'Hero', color: 'var(--bg-spruce)' }
     - { emoji: '🏞️', place: 'Montana', section: 'Experience', color: 'var(--bg-lake)' }

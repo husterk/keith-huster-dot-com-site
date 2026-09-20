@@ -302,3 +302,19 @@ ol {
     gap: 8px;
   }
 }
+
+.body a,
+.lead a,
+.d a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--line3);
+  text-underline-offset: 3px;
+}
+
+.body a:hover,
+.lead a:hover,
+.d a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
