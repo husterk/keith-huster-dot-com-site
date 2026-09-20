@@ -19,7 +19,7 @@ const site = defineCollection({
     stats: z.array(stat).length(4),
     chips: z.array(z.string()).min(1),
     links: z.object({ email: z.email(), linkedin: z.url(), github: z.url() }),
-    contact: z.object({ eyebrow: z.string(), heading: z.string() }),
+    contact: z.object({ eyebrow: z.string(), heading: z.string(), formIntro: z.string() }),
     footer: z.string(),
     turnstileSiteKey: z.string(),
   }),

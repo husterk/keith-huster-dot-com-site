@@ -23,7 +23,10 @@ const { contact, links, footer } = site;
         </a>
       </div>
     </div>
-    <ContactForm />
+    <div class="form-col">
+      <p class="mono muted form-intro">{contact.formIntro}</p>
+      <ContactForm />
+    </div>
   </div>
   <slot name="scene" />
   <footer class="foot">

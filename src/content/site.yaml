@@ -37,5 +37,6 @@
   contact:
     eyebrow: "Let's talk"
     heading: "Hiring a Staff engineer or an engineering manager? Let's talk."
+    formIntro: 'Send a note straight from this page, or use the buttons: email me, find the full history on LinkedIn, or read the code on GitHub.'
   footer: 'Keith Huster · Open to Senior, Staff and engineering management roles · Remote from Orem, Utah'
   turnstileSiteKey: '0x4AAAAAAE9H4_9aeIf8uo-Q'
