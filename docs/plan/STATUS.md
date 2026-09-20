@@ -15,7 +15,7 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 ## Open
 
-- Nothing in flight. A root CLAUDE.md now requires a GitHub issue before any work (#45). The only open work item is #21 (first case-study page); the pages collection and the [slug] route are ready for it. Renovate's weekly grouped PR lands Monday before 6am Denver time; patch updates of dev tooling automerge, everything else waits for a merge.
+- Nothing in flight. Site improvements batch merged 2026-09-19: sticky nav with a home link, scenes that fill wide screens, responsive elevation chart with company/position labels, footer cleanup, external links in new tabs, a 404 page with the rider at a fork, the résumé button opening in a new tab, and the colophon rebuilt around a projected Tour Divide route map with content in src/content/colophon.yaml. The only open work item is #21 (first case-study page); the pages collection and the [slug] route are ready for it. Renovate's weekly grouped PR lands Monday before 6am Denver time; patch updates of dev tooling automerge, everything else waits for a merge.
 
 ## Blocked on Keith
 
