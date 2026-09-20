@@ -143,8 +143,8 @@ const { name, h, background } = Astro.props;
       rider.getAttribute('transform') ?? '',
     );
     if (!start) return;
-    const x0 = Number(start[1]);
-    const y0 = Number(start[2]);
+    const x0 = Number(rider.dataset.x0 ?? start[1]);
+    const y0 = Number(rider.dataset.y0 ?? start[2]);
     const scale = start[3];
     const point = scene.createSVGPoint();
     const base = (rider.parentNode as SVGGraphicsElement).getCTM() ?? scene.createSVGMatrix();
