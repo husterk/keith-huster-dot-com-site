@@ -1,5 +1,6 @@
 ---
 import { getPatents } from '../lib/content';
+import { linkify } from '../lib/links';
 
 const patents = await getPatents();
 ---
@@ -12,7 +13,7 @@ const patents = await getPatents();
     <div class="mono eyebrow">{patents.eyebrow}</div>
     <h2 class="cond h2">{patents.heading}</h2>
     {patents.paragraphs.map((paragraph) => (
-      <p class="lead">{paragraph}</p>
+      <p class="lead" set:html={linkify(paragraph)} />
     ))}
     <div class="edu">
       {patents.education.map((degree) => (
