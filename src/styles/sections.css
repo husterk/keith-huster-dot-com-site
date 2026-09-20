@@ -492,6 +492,15 @@
   cursor: pointer;
 }
 
+.contact-form .btn.ghost {
+  border: 1px solid var(--line3);
+  color: var(--bone);
+}
+
+.contact-form .btn[hidden] {
+  display: none;
+}
+
 .contact-form .btn:disabled {
   opacity: 0.6;
   cursor: default;
