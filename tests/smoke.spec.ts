@@ -255,3 +255,17 @@ test.describe('career chart', () => {
     await expect(page.locator('.chart-legend li').first()).toContainText('Hill-Rom');
   });
 });
+
+test.describe('scene width', () => {
+  for (const width of [834, 1024, 1180, 1440, 1920]) {
+    test(`every strip scene spans the viewport at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/');
+      for (const scene of await page.locator('.strip .scene, .finish .scene').all()) {
+        const box = (await scene.boundingBox())!;
+        expect(box.x).toBeLessThanOrEqual(1);
+        expect(box.x + box.width).toBeGreaterThanOrEqual(width - 1);
+      }
+    });
+  }
+});
