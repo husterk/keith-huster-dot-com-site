@@ -137,6 +137,7 @@ const links = [
     event.preventDefault();
     if (location.pathname === '/') {
       history.replaceState(null, '', '/');
+      history.scrollRestoration = 'manual';
       scrollTo(0, 0);
       location.reload();
     } else {

@@ -199,3 +199,42 @@ test('the contact form renders with its fields and the honeypot hidden', async (
   await expect(form.locator('#contact-message')).toBeVisible();
   await expect(form.locator('#contact-company')).not.toBeInViewport();
 });
+
+test.describe('hash scroll', () => {
+  test.use({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
+  const top = (page: import('@playwright/test').Page, id: string) =>
+    page.evaluate((id) => document.getElementById(id)!.getBoundingClientRect().top, id);
+
+  test('a hashed load starts at the top and eases onto its section', async ({ page }) => {
+    await page.goto('/#crew');
+    await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(0);
+    const early = await page.evaluate(() => scrollY);
+    await page.waitForTimeout(1200);
+    expect(await page.evaluate(() => scrollY)).toBeGreaterThan(early);
+    expect(Math.abs((await top(page, 'crew')) - 104)).toBeLessThanOrEqual(1);
+    expect(page.url()).toContain('#crew');
+    await page.reload();
+    await page.waitForTimeout(1500);
+    expect(Math.abs((await top(page, 'crew')) - 104)).toBeLessThanOrEqual(1);
+  });
+
+  test('a nav click eases to its section and updates the hash', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('header.nav a[href="/#segments"]').click();
+    await page.waitForTimeout(1200);
+    expect(Math.abs((await top(page, 'segments')) - 104)).toBeLessThanOrEqual(1);
+    expect(new URL(page.url()).hash).toBe('#segments');
+    await page.goBack();
+    await page.waitForTimeout(1200);
+    expect(await page.evaluate(() => scrollY)).toBe(0);
+  });
+
+  test.describe('reduced motion', () => {
+    test.use({ reducedMotion: 'reduce' });
+    test('a hashed load lands at once', async ({ page }) => {
+      await page.goto('/#segments');
+      await page.waitForTimeout(100);
+      expect(Math.abs((await top(page, 'segments')) - 104)).toBeLessThanOrEqual(1);
+    });
+  });
+});
