@@ -41,17 +41,15 @@ const { turnstileSiteKey, links } = await getSite();
     <label for="contact-company">Company</label>
     <input id="contact-company" name="company" type="text" tabindex="-1" autocomplete="off" />
   </div>
-  <div
-    class="cf-turnstile"
-    data-sitekey={turnstileSiteKey}
-    data-theme="dark"
-    data-size="flexible"
-  ></div>
+  <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
   <div class="actions">
     <button class="btn primary" type="submit">
       Send message
     </button>
     <p class="status mono" role="status" aria-live="polite" data-status></p>
+    <button class="btn ghost" type="button" data-retry hidden>
+      Retry check
+    </button>
   </div>
   <p class="fallback body" data-fallback hidden>
     Or email me directly at <a href={`mailto:${links.email}`}>{links.email}</a>.
@@ -59,14 +57,81 @@ const { turnstileSiteKey, links } = await getSite();
 </form>
 
 <script>
+  type Turnstile = {
+    render: (el: Element, options: Record<string, unknown>) => string;
+    reset: (id?: string) => void;
+    getResponse: (id?: string) => string | undefined;
+  };
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
   if (form) {
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const fallback = form.querySelector<HTMLElement>('[data-fallback]')!;
+    const retry = form.querySelector<HTMLButtonElement>('[data-retry]')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const widget = form.querySelector<HTMLElement>('.cf-turnstile')!;
+    let widgetId: string | undefined;
+    let token = '';
+    let loadTimer: number | undefined;
+
+    const note = (text: string, showRetry = false) => {
+      status.textContent = text;
+      retry.hidden = !showRetry;
+      fallback.hidden = !showRetry;
+    };
+    const renderWidget = () => {
+      const turnstile = (window as unknown as { turnstile?: Turnstile }).turnstile;
+      if (!turnstile) return;
+      token = '';
+      clearTimeout(loadTimer);
+      loadTimer = window.setTimeout(() => {
+        if (!token)
+          note(
+            'The anti-spam check is taking a while. It needs challenges.cloudflare.com to load; if it never finishes, retry or email me directly.',
+            true,
+          );
+      }, 15000);
+      widgetId = turnstile.render(widget, {
+        sitekey: widget.dataset.sitekey,
+        theme: 'dark',
+        size: 'flexible',
+        callback: (value: string) => {
+          token = value;
+          clearTimeout(loadTimer);
+          if (status.textContent && !status.textContent.startsWith('Thanks')) note('');
+        },
+        'error-callback': (code: string) => {
+          token = '';
+          clearTimeout(loadTimer);
+          note(
+            `The anti-spam check failed (Turnstile error ${code}). Retry, or email me directly.`,
+            true,
+          );
+          return true;
+        },
+        'expired-callback': () => {
+          token = '';
+          note('The anti-spam check expired. Retry before sending.', true);
+        },
+        'timeout-callback': () => {
+          token = '';
+          note('The anti-spam check timed out. Retry, or email me directly.', true);
+        },
+      });
+    };
+    (window as unknown as { onTurnstileReady?: () => void }).onTurnstileReady = renderWidget;
+
     const loadTurnstile = () => {
       if (document.querySelector('script[data-turnstile]')) return;
       const script = document.createElement('script');
-      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      script.src =
+        'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileReady&render=explicit';
       script.async = true;
       script.dataset.turnstile = '';
+      script.onerror = () =>
+        note(
+          'The anti-spam script could not load. Something on this device or network is blocking challenges.cloudflare.com; allow it and retry, or email me directly.',
+          true,
+        );
       document.head.appendChild(script);
     };
     if ('IntersectionObserver' in window) {
@@ -84,23 +149,39 @@ const { turnstileSiteKey, links } = await getSite();
       loadTurnstile();
     }
     form.addEventListener('focusin', loadTurnstile, { once: true });
-    const status = form.querySelector<HTMLElement>('[data-status]')!;
-    const fallback = form.querySelector<HTMLElement>('[data-fallback]')!;
-    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
-    const turnstileToken = () =>
-      form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]')?.value ?? '';
+
+    retry.addEventListener('click', () => {
+      const turnstile = (window as unknown as { turnstile?: Turnstile }).turnstile;
+      note('Retrying the anti-spam check…');
+      if (turnstile && widgetId !== undefined) {
+        token = '';
+        turnstile.reset(widgetId);
+        clearTimeout(loadTimer);
+        loadTimer = window.setTimeout(() => {
+          if (!token) note('Still no answer from the anti-spam check. Email me directly.', true);
+        }, 15000);
+      } else {
+        loadTurnstile();
+      }
+    });
+
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!form.reportValidity()) return;
-      if (!turnstileToken()) {
-        status.textContent =
-          'The anti-spam check could not load. A content blocker or network filter is blocking challenges.cloudflare.com; allow it and try again, or email me directly.';
-        fallback.hidden = false;
+      const turnstile = (window as unknown as { turnstile?: Turnstile }).turnstile;
+      const current =
+        token || (widgetId !== undefined ? turnstile?.getResponse(widgetId) : '') || '';
+      if (!current) {
+        note(
+          turnstile
+            ? 'The anti-spam check has not finished. Wait for it, retry, or email me directly.'
+            : 'The anti-spam script never loaded. Something on this device or network is blocking challenges.cloudflare.com; allow it and retry, or email me directly.',
+          true,
+        );
         return;
       }
       button.disabled = true;
-      status.textContent = 'Sending…';
-      fallback.hidden = true;
+      note('Sending…');
       try {
         const response = await fetch(form.action, {
           method: 'POST',
@@ -108,20 +189,20 @@ const { turnstileSiteKey, links } = await getSite();
           headers: { accept: 'application/json' },
         });
         const data = (await response.json()) as { ok: boolean; message: string };
-        status.textContent = data.message;
         if (data.ok) {
+          note(data.message);
           form.reset();
           form
             .querySelectorAll('input, textarea')
             .forEach((el) => ((el as HTMLInputElement).disabled = true));
         } else {
+          note(data.message, true);
           button.disabled = false;
-          fallback.hidden = false;
-          (window as unknown as { turnstile?: { reset: () => void } }).turnstile?.reset();
+          token = '';
+          if (widgetId !== undefined) turnstile?.reset(widgetId);
         }
       } catch {
-        status.textContent = 'Something went wrong sending your message.';
-        fallback.hidden = false;
+        note('Something went wrong sending your message. Retry, or email me directly.', true);
         button.disabled = false;
       }
     });
