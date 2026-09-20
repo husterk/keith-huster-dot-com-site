@@ -382,12 +382,47 @@
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   gap: 48px clamp(48px, 6vw, 112px);
-  align-items: start;
+  align-items: stretch;
+}
+
+.form-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-intro {
+  margin: 0;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 60ch;
 }
 
 .contact-grid .contact-form {
   margin-top: 0;
   max-width: none;
+  flex: 1;
+  grid-template-rows: auto minmax(160px, 1fr) auto auto;
+  align-content: stretch;
+}
+
+.contact-grid .stack {
+  height: 100%;
+}
+
+.contact-grid .stack .btns {
+  margin-top: auto;
+}
+
+.contact-form .wide {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form .wide textarea {
+  flex: 1;
 }
 
 .contact-form {
@@ -570,8 +605,12 @@
     grid-template-columns: 1fr;
   }
   .contact-grid .contact-form {
-    margin-top: 16px;
+    margin-top: 0;
     max-width: 760px;
+    grid-template-rows: none;
+  }
+  .form-col {
+    margin-top: 8px;
   }
   .contact .h2 {
     font-size: 80px;
