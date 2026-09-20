@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { file } from 'astro/loaders';
+import { parse } from 'yaml';
 
 const link = z.object({ label: z.string(), href: z.string() });
 const stat = z.object({ value: z.string(), label: z.string() });
@@ -42,14 +43,19 @@ const experience = defineCollection({
 });
 
 const chart = defineCollection({
-  loader: file('src/content/chart.yaml'),
+  loader: file('src/content/chart.yaml', {
+    parser: (text) =>
+      (parse(text) as Record<string, unknown>[]).map((row, index) => ({
+        id: String(index),
+        ...row,
+      })),
+  }),
   schema: z.object({
-    x: z.number().min(0).max(1280),
-    y: z.number().min(0).max(300),
-    year: z.string(),
-    org: z.string().optional(),
-    title: z.string().optional(),
-    labelAnchor: z.enum(['start', 'middle', 'end']).default('middle'),
+    org: z.string(),
+    title: z.string(),
+    team: z.string().nullable(),
+    start: yearMonth,
+    end: yearMonth.nullable(),
   }),
 });
 

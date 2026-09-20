@@ -21,7 +21,7 @@ export const getExperience = async () =>
     .sort((a, b) => a.start.localeCompare(b.start));
 
 export const getChart = async () =>
-  (await getCollection('chart')).map((e) => e.data).sort((a, b) => a.x - b.x);
+  (await getCollection('chart')).map((e) => e.data).sort((a, b) => a.start.localeCompare(b.start));
 
 export const getImpact = async () =>
   (await getCollection('impact')).map((e) => e.data).sort((a, b) => a.order - b.order);

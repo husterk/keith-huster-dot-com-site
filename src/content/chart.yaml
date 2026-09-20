@@ -1,44 +1,32 @@
-# Waypoints on the 1280 x 360 elevation profile (x left to right, y down; the baseline is y=300).
-- id: hill-rom
-  x: 0
-  y: 270
-  year: '2002'
-  org: Hill-Rom
+# One row per position, oldest first. Every row has org, title, team (null when there is none), start and end (null means today).
+# The chart derives the rest: the horizontal position from the dates, the climb from time, the labels from the words.
+- org: Hill-Rom
   title: Software Engineering Specialist
-  labelAnchor: start
-- id: curriculum-loft
-  x: 640
-  y: 182
-  year: '2014'
-  org: Curriculum Loft
+  team: New Product Development
+  start: 2002-05
+  end: 2014-04
+- org: Curriculum Loft
   title: Software Developer
-  labelAnchor: end
-- id: confluence
-  x: 693
-  y: 168
-  year: '2015'
-  org: Confluence
+  team: null
+  start: 2014-04
+  end: 2015-07
+- org: Confluence
   title: Senior Software Engineer
-- id: olo-menu
-  x: 890
-  y: 132
-  year: '2018'
-  org: Olo
-  title: Senior Software Engineer II, Menu team
-- id: olo-infra
-  x: 1045
-  y: 104
-  year: '2021'
-  org: Olo
-  title: Senior Software Engineer II, Software Infrastructure
-- id: team-lead
-  x: 1188
-  y: 70
-  year: '2024'
-  org: Olo
+  team: null
+  start: 2015-07
+  end: 2018-08
+- org: Olo
+  title: Senior Software Engineer II
+  team: Menu team
+  start: 2018-09
+  end: 2021-08
+- org: Olo
+  title: Senior Software Engineer II
+  team: Software Infrastructure
+  start: 2021-08
+  end: 2024-01
+- org: Olo
   title: Team Lead II
-- id: now
-  x: 1262
-  y: 52
-  year: 'NOW'
-  labelAnchor: end
+  team: Software Infrastructure
+  start: 2024-01
+  end: null
