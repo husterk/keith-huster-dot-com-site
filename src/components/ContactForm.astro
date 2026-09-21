@@ -60,6 +60,7 @@ const { turnstileSiteKey, links, form: copy } = await getSite();
   type Turnstile = {
     render: (el: Element, options: Record<string, unknown>) => string;
     reset: (id?: string) => void;
+    execute: (id?: string) => void;
     getResponse: (id?: string) => string | undefined;
   };
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
@@ -78,7 +79,12 @@ const { turnstileSiteKey, links, form: copy } = await getSite();
     let token = '';
     let loadTimer: number | undefined;
     let pending: ((value: string) => void) | undefined;
-    const waitForToken = () =>
+    let markReady: (() => void) | undefined;
+    const ready = new Promise<void>((resolve) => {
+      markReady = resolve;
+    });
+    const api = () => (window as unknown as { turnstile?: Turnstile }).turnstile;
+    const waitForToken = (ms: number) =>
       new Promise<string>((resolve) => {
         pending = resolve;
         window.setTimeout(() => {
@@ -86,7 +92,7 @@ const { turnstileSiteKey, links, form: copy } = await getSite();
             pending = undefined;
             resolve('');
           }
-        }, 12000);
+        }, ms);
       });
 
     const note = (text: string, showRetry = false) => {
@@ -94,19 +100,25 @@ const { turnstileSiteKey, links, form: copy } = await getSite();
       retry.hidden = !showRetry;
       fallback.hidden = !showRetry;
     };
-    const renderWidget = () => {
-      const turnstile = (window as unknown as { turnstile?: Turnstile }).turnstile;
-      if (!turnstile) return;
+    const challenge = () => {
+      const turnstile = api();
+      if (!turnstile || widgetId === undefined) return;
       token = '';
       clearTimeout(loadTimer);
       loadTimer = window.setTimeout(() => {
         if (!token) note(copy.slow, true);
       }, 15000);
+      turnstile.execute(widgetId);
+    };
+    const renderWidget = () => {
+      const turnstile = api();
+      if (!turnstile) return;
       widgetId = turnstile.render(widget, {
         sitekey: widget.dataset.sitekey,
         theme: 'dark',
         size: 'flexible',
         appearance: 'interaction-only',
+        execution: 'execute',
         'before-interactive-callback': () => widget.classList.add('interactive'),
         'after-interactive-callback': () => widget.classList.remove('interactive'),
         callback: (value: string) => {
@@ -124,13 +136,14 @@ const { turnstileSiteKey, links, form: copy } = await getSite();
         },
         'expired-callback': () => {
           token = '';
-          note(copy.expired, true);
         },
         'timeout-callback': () => {
           token = '';
+          clearTimeout(loadTimer);
           note(copy.timedOut, true);
         },
       });
+      markReady?.();
     };
     (window as unknown as { onTurnstileReady?: () => void }).onTurnstileReady = renderWidget;
 
@@ -161,11 +174,11 @@ const { turnstileSiteKey, links, form: copy } = await getSite();
     form.addEventListener('focusin', loadTurnstile, { once: true });
 
     retry.addEventListener('click', () => {
-      const turnstile = (window as unknown as { turnstile?: Turnstile }).turnstile;
+      const turnstile = api();
       note(copy.retrying);
       if (turnstile && widgetId !== undefined) {
-        token = '';
         turnstile.reset(widgetId);
+        challenge();
         clearTimeout(loadTimer);
         loadTimer = window.setTimeout(() => {
           if (!token) note(copy.stillNoAnswer, true);
@@ -178,19 +191,21 @@ const { turnstileSiteKey, links, form: copy } = await getSite();
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!form.reportValidity()) return;
-      const turnstile = (window as unknown as { turnstile?: Turnstile }).turnstile;
+      loadTurnstile();
+      button.disabled = true;
+      note(copy.checking);
+      await Promise.race([ready, new Promise((resolve) => setTimeout(resolve, 12000))]);
+      const turnstile = api();
       let current = token || (widgetId !== undefined ? turnstile?.getResponse(widgetId) : '') || '';
-      if (!current && turnstile && widgetId !== undefined && retry.hidden) {
-        button.disabled = true;
-        note(copy.checking);
-        current = await waitForToken();
-        button.disabled = false;
+      if (!current && turnstile && widgetId !== undefined) {
+        challenge();
+        current = await waitForToken(30000);
       }
       if (!current) {
+        button.disabled = false;
         note(turnstile ? copy.notFinished : copy.neverLoaded, true);
         return;
       }
-      button.disabled = true;
       note(copy.sending);
       try {
         const response = await fetch(form.action, {
