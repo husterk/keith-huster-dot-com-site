@@ -92,7 +92,6 @@
         The anti-spam check is taking a while. It needs challenges.cloudflare.com to load; if it
         never finishes, retry or email me directly.
       failed: 'The anti-spam check failed (Turnstile error {code}). Retry, or email me directly.'
-      expired: 'The anti-spam check expired. Retry before sending.'
       timedOut: 'The anti-spam check timed out. Retry, or email me directly.'
       scriptFailed: >-
         The anti-spam script could not load. Something on this device or network is blocking
