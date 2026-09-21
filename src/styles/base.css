@@ -44,6 +44,7 @@ ol {
   color: var(--text-body);
   text-wrap: pretty;
   margin: 0;
+  max-width: var(--measure);
 }
 
 .lead {
@@ -52,6 +53,7 @@ ol {
   color: var(--text-soft);
   text-wrap: pretty;
   margin: 0;
+  max-width: var(--measure);
 }
 
 .btn {
