@@ -1,6 +1,8 @@
 ---
-const label =
-  'The Tour Divide route from Banff, Alberta to Antelope Wells, New Mexico, crossing Montana, Idaho, Wyoming, Colorado and New Mexico';
+import { getColophon } from '../lib/content';
+
+const { map } = await getColophon();
+const className = { place: 'lbl', big: 'lbl-big', mile: 'mile' } as const;
 ---
 
 <svg
@@ -8,7 +10,7 @@ const label =
   viewBox="0 0 632 1090"
   class="route-map"
   role="img"
-  aria-label={label}
+  aria-label={map.label}
 >
   <rect width="632" height="1090" fill="var(--bg-spruce)" />
   <rect x="0" y="0" width="632" height="170.0" fill="#101d18" />
@@ -135,12 +137,6 @@ const label =
     stroke-width="1.5"
     stroke-dasharray="6 6"
   />
-  <text x="14" y="160.0" class="mile">
-    CANADA
-  </text>
-  <text x="14" y="188.0" class="mile">
-    UNITED STATES
-  </text>
   <polyline
     points="108.9,61.0 115.2,75.0 128.2,100.0 133.0,119.0 134.5,133.5 127.8,145.0 127.8,170.0 128.2,176.0 154.6,199.5 160.5,201.5 164.6,217.0 170.9,235.0 186.5,261.0 199.5,269.0 216.3,272.5 240.0,290.5 231.9,306.5 221.8,320.0 204.4,330.5 200.6,345.0 204.7,362.5 219.6,388.0 234.1,392.5 263.8,399.0 290.9,415.0 304.7,432.5 319.6,450.0 321.0,476.5 363.0,495.0 390.2,510.0 418.4,530.5 416.2,550.0 412.4,567.5 433.6,595.5 450.0,617.0 461.9,638.5 462.6,646.0 468.6,654.5 471.9,669.0 464.5,693.5 449.6,700.0 451.5,736.0 442.2,745.0 444.8,752.5 449.6,770.0 445.9,785.0 452.6,809.5 428.8,819.0 416.2,840.0 395.7,862.5 390.2,880.0 385.3,905.0 382.7,940.0 379.7,981.5 375.3,1010.0 378.3,1024.0 370.5,1053.5"
     fill="none"
@@ -157,12 +153,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="122.9" y="66.0" class="lbl-big" text-anchor="start">
-    Banff, AB
-  </text>
-  <text x="122.9" y="82.0" class="mile" text-anchor="start">
-    MILE 0
-  </text>
   <circle
     cx="127.8"
     cy="170.0"
@@ -171,9 +161,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="141.8" y="175.0" class="lbl" text-anchor="start">
-    Roosville · US border
-  </text>
   <circle
     cx="154.6"
     cy="199.5"
@@ -182,9 +169,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="168.6" y="204.5" class="lbl" text-anchor="start">
-    Whitefish, MT
-  </text>
   <circle
     cx="240.0"
     cy="290.5"
@@ -193,9 +177,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="254.0" y="295.5" class="lbl" text-anchor="start">
-    Helena, MT
-  </text>
   <circle
     cx="221.8"
     cy="320.0"
@@ -204,9 +185,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="207.8" y="325.0" class="lbl" text-anchor="end">
-    Butte, MT
-  </text>
   <circle
     cx="219.6"
     cy="388.0"
@@ -215,9 +193,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="205.6" y="393.0" class="lbl" text-anchor="end">
-    Lima, MT
-  </text>
   <circle
     cx="321.0"
     cy="476.5"
@@ -226,12 +201,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="335.0" y="481.5" class="lbl" text-anchor="start">
-    Pinedale, WY
-  </text>
-  <text x="335.0" y="497.5" class="mile" text-anchor="start">
-    MILE 1,100
-  </text>
   <circle
     cx="390.2"
     cy="510.0"
@@ -240,9 +209,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="404.2" y="515.0" class="lbl" text-anchor="start">
-    Great Divide Basin
-  </text>
   <circle
     cx="418.4"
     cy="530.5"
@@ -251,9 +217,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="432.4" y="535.5" class="lbl" text-anchor="start">
-    Rawlins, WY
-  </text>
   <circle
     cx="433.6"
     cy="595.5"
@@ -262,9 +225,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="447.6" y="600.5" class="lbl" text-anchor="start">
-    Steamboat Springs, CO
-  </text>
   <circle
     cx="462.6"
     cy="646.0"
@@ -273,9 +233,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="476.6" y="651.0" class="lbl" text-anchor="start">
-    Breckenridge, CO
-  </text>
   <circle
     cx="464.5"
     cy="693.5"
@@ -284,9 +241,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="478.5" y="698.5" class="lbl" text-anchor="start">
-    Salida, CO
-  </text>
   <circle
     cx="442.2"
     cy="745.0"
@@ -295,12 +249,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="456.2" y="750.0" class="lbl-big" text-anchor="start">
-    Indiana Pass · 11,910 ft
-  </text>
-  <text x="456.2" y="766.0" class="mile" text-anchor="start">
-    MILE 1,720
-  </text>
   <circle
     cx="452.6"
     cy="809.5"
@@ -309,12 +257,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="466.6" y="814.5" class="lbl" text-anchor="start">
-    Abiquiu, NM
-  </text>
-  <text x="466.6" y="830.5" class="mile" text-anchor="start">
-    MILE 1,900
-  </text>
   <circle
     cx="395.7"
     cy="862.5"
@@ -323,9 +265,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="381.7" y="867.5" class="lbl" text-anchor="end">
-    Grants, NM
-  </text>
   <circle
     cx="385.3"
     cy="905.0"
@@ -334,9 +273,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="399.3" y="910.0" class="lbl" text-anchor="start">
-    Pie Town, NM
-  </text>
   <circle
     cx="379.7"
     cy="981.5"
@@ -345,9 +281,6 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="393.7" y="986.5" class="lbl" text-anchor="start">
-    Silver City, NM
-  </text>
   <circle
     cx="370.5"
     cy="1053.5"
@@ -356,15 +289,11 @@ const label =
     stroke="var(--accent)"
     stroke-width="2.5"
   />
-  <text x="384.5" y="1058.5" class="lbl-big" text-anchor="start">
-    Antelope Wells, NM
-  </text>
-  <text x="384.5" y="1074.5" class="mile" text-anchor="start">
-    MILE 2,745
-  </text>
-  <text x="618" y="1074" class="mile" text-anchor="end">
-    2,745 MI · 27 DAYS · SELF-SUPPORTED
-  </text>
+  {map.labels.map((l) => (
+    <text x={l.x} y={l.y} class={className[l.kind]} text-anchor={l.anchor}>
+      {l.text}
+    </text>
+  ))}
 </svg>
 
 <style is:global>

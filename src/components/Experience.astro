@@ -1,22 +1,19 @@
 ---
-import { getExperience } from '../lib/content';
+import { getExperience, getSite } from '../lib/content';
 import { linkify } from '../lib/links';
 import ElevationChart from './ElevationChart.astro';
 
 const experience = await getExperience();
+const { experience: copy } = await getSite();
 ---
 
 <section id="route" class="section route">
   <div class="head">
     <div class="stack">
-      <div class="mono eyebrow">01 · Experience</div>
-      <h2 class="cond h2">From medical devices to cloud platforms</h2>
+      <div class="mono eyebrow">{copy.eyebrow}</div>
+      <h2 class="cond h2">{copy.heading}</h2>
     </div>
-    <p class="body">
-      Electrical engineer by training, platform engineer by trade. Twenty-four years across medical
-      devices, EdTech, FinTech and restaurant-platform infrastructure, the last eight at Olo, all of
-      it shipping systems other people depend on.
-    </p>
+    <p class="body">{copy.intro}</p>
   </div>
   <ElevationChart />
   <ul class="cards">

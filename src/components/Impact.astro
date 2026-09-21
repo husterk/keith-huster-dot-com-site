@@ -4,17 +4,20 @@ import { linkify } from '../lib/links';
 
 const site = await getSite();
 const impact = await getImpact();
+const copy = site.impact;
 ---
 
 <section id="segments" class="section segments">
   <div class="stack">
-    <div class="mono eyebrow">02 · Impact</div>
-    <h2 class="cond h2">Results, not job descriptions</h2>
+    <div class="mono eyebrow">{copy.eyebrow}</div>
+    <h2 class="cond h2">{copy.heading}</h2>
   </div>
   <ul class="rows">
     {impact.map((entry, index) => (
       <li class="row">
-        <div class="num">SEG {String(index + 1).padStart(2, '0')}</div>
+        <div class="num">
+          {copy.segmentLabel} {String(index + 1).padStart(2, '0')}
+        </div>
         <div class="t">{entry.title}</div>
         <p class="body" set:html={linkify(entry.body)} />
         <div class="res">

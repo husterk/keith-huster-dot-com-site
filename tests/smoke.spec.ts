@@ -52,10 +52,7 @@ for (const width of heroGridWidths) {
       const h1Box = (await page.locator('.hero h1').boundingBox())!;
       const pBox = (await page.locator('.hero .text p').boundingBox())!;
       expect(pBox.width, 'intro paragraph width').toBeGreaterThanOrEqual(400);
-      expect(
-        h1Box.y - pBox.y,
-        'gap between the headline top and the paragraph top',
-      ).toBeLessThanOrEqual(250);
+      expect(pBox.x, 'paragraph sits beside the headline').toBeGreaterThan(h1Box.x + h1Box.width);
 
       const rider = page.locator('.hero .rider').first();
       await rider.evaluate((el) => el.scrollIntoView({ block: 'center' }));

@@ -3,7 +3,8 @@ import { getSite } from '../lib/content';
 import ContactForm from './ContactForm.astro';
 
 const site = await getSite();
-const { contact, links, footer } = site;
+const { contact, links, footer, footerLinks } = site;
+const year = new Date().getFullYear();
 ---
 
 <section id="contact" class="contact">
@@ -16,10 +17,10 @@ const { contact, links, footer } = site;
           {links.email}
         </a>
         <a href={links.linkedin} class="btn ghost" target="_blank" rel="noopener">
-          LinkedIn
+          {contact.linkedinLabel}
         </a>
         <a href={links.github} class="btn ghost" target="_blank" rel="noopener">
-          GitHub
+          {contact.githubLabel}
         </a>
       </div>
     </div>
@@ -32,7 +33,7 @@ const { contact, links, footer } = site;
   <footer class="foot">
     <span>{footer}</span>
     <span>
-      <a href="/colophon">How this site was built</a> · © 2026
+      <a href="/colophon">{footerLinks.colophon}</a> · © {year}
     </span>
   </footer>
 </section>

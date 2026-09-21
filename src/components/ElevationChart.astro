@@ -1,7 +1,8 @@
 ---
-import { getChart } from '../lib/content';
+import { getChart, getSite } from '../lib/content';
 
 const rows = await getChart();
+const { nowLabel } = (await getSite()).experience;
 
 const WIDTH = 1280;
 const BASE = 300;
@@ -173,7 +174,7 @@ const summary = points.map((p) => `${p.org} from ${p.year}`).join(', then ');
         </text>
       ))}
       <text x={WIDTH} y={baselineY + 26} text-anchor="end">
-        NOW
+        {nowLabel}
       </text>
     </g>
   </svg>
@@ -208,7 +209,7 @@ const summary = points.map((p) => `${p.org} from ${p.year}`).join(', then ');
         {points[0].year}
       </text>
       <text x={narrowX(WIDTH)} y={Number(narrowY(BASE)) + 18} text-anchor="end">
-        NOW
+        {nowLabel}
       </text>
     </g>
   </svg>
