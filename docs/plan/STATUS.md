@@ -37,6 +37,7 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 ## Things a future session should know
 
+- Pages build as files (`colophon.html`, `404.html`) so `/colophon` serves without a trailing-slash redirect; canonical URLs strip the extension. Lighthouse CI pins Lighthouse 12 through @lhci/cli; spot-check new audits with `bunx lighthouse@13 <url> --preset=desktop`. Lighthouse cannot score a real 404 response, so audit the 404 page at `/404`, which serves it with status 200.
 - `astro preview` backgrounds itself when it detects an AI agent; the Playwright config passes `--ignore-lock` to keep it in the foreground. Stop a stray one with `bunx astro preview stop`.
 - `.dev.vars` must exist before `astro build` for the preview Worker to see the Turnstile test secret; CI copies `.dev.vars.example` into place. Locally run `bun run secrets:local` (needs the 1Password CLI) or copy the example.
 - Worker secrets sync after `wrangler deploy`, because PR preview uploads leave a newer undeployed version and Cloudflare refuses secret edits in that state (error 10215).

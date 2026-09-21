@@ -24,7 +24,7 @@ export default defineConfig({
   output: 'static',
   adapter: cloudflare({ imageService: 'passthrough' }),
   session: false,
-  build: { inlineStylesheets: 'always' },
+  build: { inlineStylesheets: 'always', format: 'file' },
   prefetch: false,
   markdown: { processor: satteri({ hastPlugins: [externalLinks] }) },
 });
