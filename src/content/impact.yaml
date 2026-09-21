@@ -1,30 +1,41 @@
 - id: eks
   order: 1
-  title: Five core services moved to Kubernetes
-  body: 'Initiated and led the migration of five core services from EC2 to Amazon EKS, introducing HPA and KEDA autoscaling so peak traffic scales out automatically instead of paging an engineer.'
-  result: { value: '5', label: 'core services migrated' }
+  title: Five core services migrated to Kubernetes
+  body: >-
+    Core team member involved in Olo's Kubernetes migration project development. Handled the migration of five core services
+    from EC2 to Amazon EKS, introducing HPA and KEDA autoscaling so peak traffic scales out automatically instead of paging
+    an engineer.
+  result: { value: '5', label: 'core services migrated to Kubernetes' }
   tags: [AWS, EKS, HPA, KEDA, Terraform]
 - id: cicd
   order: 2
   title: CI/CD handed back to the teams
-  body: 'Migrated approximately ten services and libraries from centralized TeamCity to GitHub Actions, removing a delivery bottleneck so each team owns and ships its own pipeline.'
-  result: { value: '~10', label: 'pipelines decentralized' }
-  tags: [GitHub Actions, GitOps]
+  body: >-
+    Migrated approximately ten services and libraries from centralized TeamCity projects to team-managed GitHub Actions,
+    removing a delivery bottleneck so each team owns and ships its own pipeline.
+  result: { value: '~10', label: 'CI/CD pipelines decentralized to GitHub Actions' }
+  tags: [GitHub Actions, GitOps, CI/CD]
 - id: payload-logging
   order: 3
-  title: $12K a month off the AWS bill
-  body: 'Led a system-optimization initiative for the Payload Logging service that reduced AWS S3 upload costs by more than $12K per month while preserving the data incident responders rely on.'
-  result: { value: '$12K+', label: 'saved every month' }
+  title: $22K a month off the AWS bill
+  body: >-
+    Led a system-optimization initiative for the Payload Logging Service that reduced AWS S3 upload costs by more than $22K
+    per month while preserving the data incident responders rely on.
+  result: { value: '$22K+', label: 'saved every month' }
   tags: ['C#', .NET, AWS S3]
 - id: menu-import
   order: 4
   title: Menu ingestion decoupled from the monolith
-  body: "Designed and built the Menu Import Service, a service-oriented extraction from Olo's legacy monolith, plus POS and brand integrations for Panda Express, Denny's and others."
+  body: >-
+    Designed and built the Menu Import Service, a microservice extraction from Olo's legacy monolith, plus associated POS and
+    menu integrations for Panda Express, Denny's and other major restaurant brands.
   result: { value: '10,000s', label: 'of restaurant managers served' }
   tags: ['C#', 'F#', React, SQL, Docker]
 - id: flags-config
   order: 5
   title: Safer deploys, faster recovery
-  body: 'Introduced LaunchDarkly feature flags and centralized configuration in Consul across core services, raising deployment success rates and cutting incident MTTR.'
+  body: >-
+    Implemented LaunchDarkly feature flags and centralized configuration in Consul across multiple core services, raising
+    deployment success rates and cutting incident MTTR.
   result: { value: 'Lower MTTR', label: 'safer deploys, faster recovery' }
   tags: [LaunchDarkly, Consul, Datadog]

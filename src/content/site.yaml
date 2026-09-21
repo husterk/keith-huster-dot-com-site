@@ -7,10 +7,10 @@
   intro: >-
     I'm Keith Huster, Senior Software Engineer II and former Team Lead II on Olo's Software
     Infrastructure team. For 15+ years I've architected and operated distributed .NET platforms:
-    billions of transactions a year at better than 99.9% availability, a platform-wide move to
-    Kubernetes and modern CI/CD, and shared libraries used by 100+ engineers. I've led the systems
-    and the team that runs them, and I'm looking for a Staff engineering or engineering management
-    role where reliability is the product.
+    processing billions of transactions a year at better than 99.9% availability, drove a platform-wide
+    move to Kubernetes and modern CI/CD via GitHub Actions, and developed shared libraries used by 100+
+    engineers. I've led the systems and the team that runs them, and I'm looking for a Staff Engineering
+    or Engineering Management role where reliability is the product.
   cta:
     primary: { label: 'See the impact', href: '#segments' }
     secondary: { label: 'Download résumé', href: '/Keith-Huster-Resume.pdf' }
@@ -20,13 +20,13 @@
         label: 'availability on services handling billions of transactions a year',
       }
     - { value: '100+', label: 'engineers building on platform libraries I own' }
-    - { value: '36', label: 'US patents, most as lead or sole inventor' }
+    - { value: '36+', label: 'US patents, most as lead or sole inventor' }
     - { value: '2,745 mi', label: 'Tour Divide finisher, 2025: self-supported, 27 days' }
   chips:
     - 'C# · F# · .NET'
     - 'AWS · EKS · HPA · KEDA'
     - 'Terraform · Consul · GitOps'
-    - 'GitHub Actions'
+    - 'GitHub Actions · CI/CD'
     - 'Datadog · Sumo Logic · Raygun'
     - 'React · GraphQL · TypeScript'
     - 'MSSQL · PostgreSQL'
@@ -36,7 +36,97 @@
     github: https://github.com/husterk
   contact:
     eyebrow: "Let's talk"
-    heading: "Hiring a Staff engineer or an engineering manager? Let's talk."
-    formIntro: 'Send a note straight from this page, or use the buttons: email me, find the full history on LinkedIn, or read the code on GitHub.'
-  footer: 'Keith Huster · Open to Senior, Staff and engineering management roles · Remote from Orem, Utah'
+    heading: "Hiring a Staff Engineer or an Engineering Manager? Let's talk."
+    formIntro: >-
+      Send a note straight from this page, or use the buttons to: email me, find my full history on LinkedIn,
+      or check out my code on GitHub.
+    linkedinLabel: 'LinkedIn'
+    githubLabel: 'GitHub'
+  footer: 'Keith Huster · Open to Senior, Staff and Engineering Management roles · Remote from Orem, Utah'
+  footerLinks:
+    colophon: 'How this site was built'
+    back: 'Back to the site'
+  seo:
+    title: 'Keith Huster · Reliable by design'
+    description: >-
+      Keith Huster, Senior / Staff Software Engineer and Engineering Manager. Distributed .NET
+      platforms, Kubernetes, CI/CD, and 36+ US patents. Remote from Orem, Utah.
+  person:
+    jobTitle: 'Senior Software Engineer II'
+    employer: 'Olo'
+    city: 'Orem'
+    region: 'UT'
+    country: 'US'
+  nav:
+    links:
+      - { label: 'Experience', href: '/#route' }
+      - { label: 'Impact', href: '/#segments' }
+      - { label: 'Leadership', href: '/#crew' }
+      - { label: 'Patents', href: '/#patents' }
+      - { label: 'Beyond work', href: '/#offclock' }
+    menu: 'Menu'
+    cta: { label: 'Get in touch', href: '/#contact' }
+    skip: 'Skip to content'
+  experience:
+    eyebrow: '01 · Experience'
+    heading: 'From medical devices to cloud platforms'
+    intro: >-
+      Formally trained electrical and software engineer. Twenty-four years across medical
+      devices, EdTech, FinTech and restaurant-platform infrastructure, the last eight at Olo,
+      all of it shipping systems other people depend on every day.
+    nowLabel: 'NOW'
+  impact:
+    eyebrow: '02 · Impact'
+    heading: 'Results, not job descriptions'
+    segmentLabel: 'SEG'
+  form:
+    name: 'Name'
+    email: 'Email'
+    message: 'Message'
+    company: 'Company'
+    submit: 'Send message'
+    retry: 'Retry check'
+    fallback: 'Or email me directly at'
+    messages:
+      slow: >-
+        The anti-spam check is taking a while. It needs challenges.cloudflare.com to load; if it
+        never finishes, retry or email me directly.
+      failed: 'The anti-spam check failed (Turnstile error {code}). Retry, or email me directly.'
+      expired: 'The anti-spam check expired. Retry before sending.'
+      timedOut: 'The anti-spam check timed out. Retry, or email me directly.'
+      scriptFailed: >-
+        The anti-spam script could not load. Something on this device or network is blocking
+        challenges.cloudflare.com; allow it and retry, or email me directly.
+      retrying: 'Retrying the anti-spam check…'
+      stillNoAnswer: 'Still no answer from the anti-spam check. Email me directly.'
+      checking: 'Checking that you are human…'
+      notFinished: >-
+        The anti-spam check has not finished. Complete it above if it asks, retry, or email me
+        directly.
+      neverLoaded: >-
+        The anti-spam script never loaded. Something on this device or network is blocking
+        challenges.cloudflare.com; allow it and retry, or email me directly.
+      sending: 'Sending…'
+      sendFailed: 'Something went wrong sending your message. Retry, or email me directly.'
+  endpoint:
+    thanks: 'Thanks, your message is on its way. I reply to everything within a couple of days.'
+    direct: 'Please email me directly at {email}.'
+    unsupported: 'Unsupported form encoding.'
+    blocked: 'Request blocked.'
+    rateLimited: 'Too many messages in a short time. Please try again in a minute.'
+    nameError: 'Please add your name.'
+    emailError: "That email address doesn't look right."
+    messageError: 'Please write at least a sentence (and under 3,000 characters).'
+    checkFields: 'Please check the highlighted fields.'
+    sendFailed: 'Something went wrong sending your message. {direct}'
+    turnstileFailed: "The anti-spam check didn't pass. Please try again, or email me directly."
+    pageThanks: 'Thanks'
+    pageSorry: 'Sorry'
+  notFound:
+    title: 'Not found'
+    description: 'That page does not exist.'
+    eyebrow: '404'
+    heading: 'Off route.'
+    body: 'That page is not on the map. Head back to the trailhead.'
+    cta: 'Back to the trail'
   turnstileSiteKey: '0x4AAAAAAE9H4_9aeIf8uo-Q'

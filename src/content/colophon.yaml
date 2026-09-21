@@ -1,18 +1,63 @@
 - id: colophon
   eyebrow: Colophon
   title: How this site was built
+  description: >-
+    The stack behind keithhuster.com and why each piece is there, with the Tour Divide route it
+    follows.
+  sourceNote: 'The source is public at'
+  statsLabel: 'Measured on the live site'
+  updatedLabel: 'Updated'
+  sections:
+    kit: { emoji: '🧭', title: 'The kit' }
+    decisions: { emoji: '⛰️', title: 'Decisions' }
+    route: { emoji: '🗺️', title: 'The route, section by section' }
+    credits: { emoji: '🏁', title: 'Credits' }
+  map:
+    label: >-
+      The Tour Divide route from Banff, Alberta to Antelope Wells, New Mexico, crossing Montana,
+      Idaho, Wyoming, Colorado and New Mexico
+    railNote: >-
+      🚵 2,745 miles from Banff to Antelope Wells. Each state wears the color of its section on the
+      homepage.
+    labels:
+      - { text: 'CANADA', kind: mile, x: 14, y: 160.0, anchor: start }
+      - { text: 'UNITED STATES', kind: mile, x: 14, y: 188.0, anchor: start }
+      - { text: 'Banff, AB', kind: big, x: 122.9, y: 66.0, anchor: start }
+      - { text: 'MILE 0', kind: mile, x: 122.9, y: 82.0, anchor: start }
+      - { text: 'Roosville · US border', kind: place, x: 141.8, y: 175.0, anchor: start }
+      - { text: 'Whitefish, MT', kind: place, x: 168.6, y: 204.5, anchor: start }
+      - { text: 'Helena, MT', kind: place, x: 254.0, y: 295.5, anchor: start }
+      - { text: 'Butte, MT', kind: place, x: 207.8, y: 325.0, anchor: end }
+      - { text: 'Lima, MT', kind: place, x: 205.6, y: 393.0, anchor: end }
+      - { text: 'Pinedale, WY', kind: place, x: 335.0, y: 481.5, anchor: start }
+      - { text: 'MILE 1,100', kind: mile, x: 335.0, y: 497.5, anchor: start }
+      - { text: 'Great Divide Basin', kind: place, x: 404.2, y: 515.0, anchor: start }
+      - { text: 'Rawlins, WY', kind: place, x: 432.4, y: 535.5, anchor: start }
+      - { text: 'Steamboat Springs, CO', kind: place, x: 447.6, y: 600.5, anchor: start }
+      - { text: 'Breckenridge, CO', kind: place, x: 476.6, y: 651.0, anchor: start }
+      - { text: 'Salida, CO', kind: place, x: 478.5, y: 698.5, anchor: start }
+      - { text: 'Indiana Pass · 11,910 ft', kind: big, x: 456.2, y: 750.0, anchor: start }
+      - { text: 'MILE 1,720', kind: mile, x: 456.2, y: 766.0, anchor: start }
+      - { text: 'Abiquiu, NM', kind: place, x: 466.6, y: 814.5, anchor: start }
+      - { text: 'MILE 1,900', kind: mile, x: 466.6, y: 830.5, anchor: start }
+      - { text: 'Grants, NM', kind: place, x: 381.7, y: 867.5, anchor: end }
+      - { text: 'Pie Town, NM', kind: place, x: 399.3, y: 910.0, anchor: start }
+      - { text: 'Silver City, NM', kind: place, x: 393.7, y: 986.5, anchor: start }
+      - { text: 'Antelope Wells, NM', kind: big, x: 384.5, y: 1058.5, anchor: start }
+      - { text: 'MILE 2,745', kind: mile, x: 384.5, y: 1074.5, anchor: start }
+      - { text: '2,745 MI · 27 DAYS · SELF-SUPPORTED', kind: mile, x: 618, y: 1074, anchor: end }
   intro: >-
-    This site is a static page with one server endpoint, built and deployed the way I would build a
-    small production service: content and layout separated, everything validated in CI, secrets kept
-    out of the repository, and the whole thing reproducible from a git clone.
+    This site is a static page with one server endpoint for sending emails, built and deployed the way
+    I would build a small production service: content and layout separated, everything validated in CI,
+    secrets kept out of the repository, and the whole thing reproducible from a git clone.
   summary: '🚵 Banff to Antelope Wells in six scenes, one Worker, and about 190 KB.'
   repo: https://github.com/husterk/keith-huster-dot-com-site
   updated: 2026-09-19
   stats:
-    - { value: '191 KB', label: 'cold load of the homepage, fonts included' }
-    - { value: '7', label: 'requests on that first load' }
-    - { value: '0.9 s', label: 'production build, second of two runs' }
-    - { value: '100', label: 'Lighthouse in all four categories, median of three' }
+    - { value: '<200 KB', label: 'cold load of the homepage, fonts included' }
+    - { value: '<10', label: 'requests on that first load' }
+    - { value: '<1 s', label: 'production build, second of two runs' }
+    - { value: '100%', label: 'Lighthouse score in all four categories' }
   kit:
     - {
         emoji: '🏗️',
@@ -66,7 +111,7 @@
         emoji: '🧰',
         label: 'Tooling',
         title: 'Bun + mise',
-        why: 'Bun for packages and scripts, Node underneath, both pinned by mise. One command sets up a clone.',
+        why: 'Bun for packages and scripts, Node underneath, both pinned by Mise. One command sets up a clone.',
       }
     - {
         emoji: '🚦',
@@ -92,7 +137,7 @@
       body: >-
         There is one interactive element on the page, the phone menu, and one form. A framework
         runtime would be the largest asset on the site and would buy nothing. Astro leaves the door
-        open for an island if that changes.
+        open for an island containing React elements if that changes.
     - emoji: '✏️'
       title: Why the illustrations are code
       body: >-
@@ -117,10 +162,10 @@
         real design system. For one person and one page, this is the right amount of machinery.
   themeNote: >-
     Why a bike route on an engineering site? In 2025 I rode the Tour Divide, 2,745 miles of dirt
-    from Banff, Alberta to the Mexican border at Antelope Wells, self-supported, in 27 days. It is
-    the best picture I have of how I work: plan carefully, keep things running when nobody can hand
-    you the problem, and finish. The homepage follows that route north to south, one scene per
-    section, and the map on this page is the whole thing.
+    from Banff, Alberta to the Mexican border at Antelope Wells, NM, self-supported, in 27 days. It is
+    the best picture I have of how I work: plan carefully, keep things running when nobody else is
+    around to help you, and finish. The homepage follows that route north to south, one scene per
+    section, and the map on this page is shows the entirety and scale of the route.
   legend:
     - { emoji: '🏔️', place: 'Banff', section: 'Hero', color: 'var(--bg-spruce)' }
     - { emoji: '🏞️', place: 'Montana', section: 'Experience', color: 'var(--bg-lake)' }
@@ -129,6 +174,6 @@
     - { emoji: '🌄', place: 'New Mexico', section: 'Patents', color: 'var(--bg-desert)' }
     - { emoji: '🏁', place: 'Antelope Wells', section: 'Contact', color: 'var(--bg-border)' }
   credits: >-
-    Design iterated with Claude on a design canvas over three rounds of direction, copy and
-    responsive review, then built with Claude Code from a written plan. Fonts by their foundries
-    under the SIL Open Font License. Hosted on Cloudflare.
+    Design iterated with Claude Fable 5.1 on a design canvas over three rounds of direction, copy and
+    responsive review, then built with Claude Code using lower-cost subagent sessions (Opus 5/Sonnet 5)
+    from a written plan. Fonts by their foundries under the SIL Open Font License. Hosted on Cloudflare.

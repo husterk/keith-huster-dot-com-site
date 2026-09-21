@@ -8,7 +8,10 @@
   location: Sunman, IN
   dates: '2002 – 2014 · Sunman, IN'
   cardTitle: Hill-Rom
-  summary: 'Software Engineering Specialist. Embedded firmware, TCP/IP gateways and hospital-bed electronics for the VersaCare and TotalCare lines. Two-time Patent of the Year.'
+  summary: >-
+    Software Engineering Specialist. Embedded firmware, TCP/IP gateways, hospital-bed electronics
+    for the VersaCare and TotalCare lines, and nurse communication systems. Two-time "Patent of the Year"
+    and "President's Innovation" award winner.
 - id: curriculum-loft-confluence
   org: Curriculum Loft, then Confluence
   title: Software Developer, then Senior Software Engineer
@@ -17,20 +20,24 @@
   location: Remote
   dates: '2014 – 2018 · Remote'
   cardTitle: Curriculum Loft, then Confluence
-  summary: 'The turn to the web. Full-stack EduTech and FinTech applications in ASP.NET MVC, C#, React, Relay and GraphQL, plus production support.'
+  summary: >-
+    Transition from electronics/embedded firmware to SaaS software development. Full-stack EduTech and FinTech
+    applications in ASP.NET MVC, C#, React, Relay and GraphQL, plus production support.
 - id: olo-menu
   org: Olo
-  team: Menu team
+  team: Menu Team
   title: Senior Software Engineer II
   start: 2018-09
   end: 2021-08
   location: Remote
   dates: '2018 – 2021 · Remote'
   cardTitle: Olo · Menu team
-  summary: 'Senior Software Engineer II. Menu pricing tools used by tens of thousands of restaurant managers, and the Menu Import Service carved out of the monolith.'
+  summary: >-
+    Senior Software Engineer II. Menu structure and pricing tools used by tens of thousands of restaurant managers,
+    and the Menu Import Service microservice carved out of the monolith.
 - id: olo-infra
   org: Olo
-  team: Software Infrastructure
+  team: Software Infrastructure Team
   title: Senior Software Engineer II
   start: 2021-08
   end: null
@@ -38,4 +45,6 @@
   current: true
   dates: '2021 – Now · Remote'
   cardTitle: Olo · Software Infrastructure
-  summary: 'Senior Software Engineer II, then Team Lead II (2024 to 2025) for a six-engineer team, now back on the Staff track: reliability, Kubernetes, CI/CD and cross-team RFCs.'
+  summary: >-
+    Senior Software Engineer II, then Team Lead II (2024 to 2025) for a six-engineer team, now back on the Staff track:
+    focused on reliability, Kubernetes, CI/CD and cross-team RFCs.

@@ -2,10 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import RouteMap from '../components/RouteMap.astro';
-import { getColophon } from '../lib/content';
+import { getColophon, getSite } from '../lib/content';
 import { linkify } from '../lib/links';
 
 const c = await getColophon();
+const site = await getSite();
+const year = new Date().getFullYear();
 const updated = c.updated.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
@@ -15,25 +17,19 @@ const updated = c.updated.toLocaleDateString('en-US', {
 const repoLabel = c.repo.replace(/^https?:\/\//, '');
 ---
 
-<Base
-  title={`${c.title} · Keith Huster`}
-  description="The stack behind keithhuster.com and why each piece is there, with the Tour Divide route it follows."
->
+<Base title={`${c.title} · ${site.name}`} description={c.description}>
   <Nav />
   <main id="main" class="colophon">
     <div class="layout">
-      <aside class="rail" aria-label="The Tour Divide route">
+      <aside class="rail" aria-label={c.map.label}>
         <RouteMap />
-        <p class="mono muted rail-note">
-          🚵 2,745 miles from Banff to Antelope Wells. Each state wears the color of its section on
-          the homepage.
-        </p>
+        <p class="mono muted rail-note">{c.map.railNote}</p>
       </aside>
       <article class="content">
         <p class="mono eyebrow">{c.eyebrow}</p>
         <h1 class="cond">{c.title}</h1>
         <p class="lead">
-          {c.intro} The source is public at{' '}
+          {c.intro} {c.sourceNote}{' '}
           <a href={c.repo} target="_blank" rel="noopener">
             {repoLabel}
           </a>
@@ -41,7 +37,7 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
         </p>
         <p class="summary">{c.summary}</p>
 
-        <ul class="tiles" aria-label="Measured on the live site">
+        <ul class="tiles" aria-label={c.statsLabel}>
           {c.stats.map((s) => (
             <li class="tile">
               <span class="n">{s.value}</span>
@@ -52,7 +48,7 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
 
         <section class="block">
           <h2 class="cond h2">
-            <span aria-hidden="true">🧭</span> The kit
+            <span aria-hidden="true">{c.sections.kit.emoji}</span> {c.sections.kit.title}
           </h2>
           <ul class="kit">
             {c.kit.map((k) => (
@@ -70,7 +66,8 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
 
         <section class="block">
           <h2 class="cond h2">
-            <span aria-hidden="true">⛰️</span> Decisions
+            <span aria-hidden="true">{c.sections.decisions.emoji}</span>{' '}
+            {c.sections.decisions.title}
           </h2>
           <dl class="dec">
             {c.decisions.map((d) => (
@@ -86,7 +83,7 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
 
         <section class="block">
           <h2 class="cond h2">
-            <span aria-hidden="true">🗺️</span> The route, section by section
+            <span aria-hidden="true">{c.sections.route.emoji}</span> {c.sections.route.title}
           </h2>
           <p class="body theme" set:html={linkify(c.themeNote)} />
           <ol class="legend">
@@ -102,19 +99,21 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
 
         <section class="block">
           <h2 class="cond h2">
-            <span aria-hidden="true">🏁</span> Credits
+            <span aria-hidden="true">{c.sections.credits.emoji}</span> {c.sections.credits.title}
           </h2>
           <p class="body" set:html={linkify(c.credits)} />
-          <p class="mono muted updated">Updated {updated}</p>
+          <p class="mono muted updated">
+            {c.updatedLabel} {updated}
+          </p>
         </section>
       </article>
     </div>
   </main>
   <footer class="foot page-foot">
     <span>
-      <a href="/">Back to the site</a>
+      <a href="/">{site.footerLinks.back}</a>
     </span>
-    <span>© 2026</span>
+    <span>© {year}</span>
   </footer>
 </Base>
 

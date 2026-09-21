@@ -22,23 +22,20 @@ const person = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: site.name,
-  jobTitle: 'Senior Software Engineer II',
-  worksFor: { '@type': 'Organization', name: 'Olo' },
+  jobTitle: site.person.jobTitle,
+  worksFor: { '@type': 'Organization', name: site.person.employer },
   url: Astro.site?.href,
   sameAs: [site.links.linkedin, site.links.github],
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Orem',
-    addressRegion: 'UT',
-    addressCountry: 'US',
+    addressLocality: site.person.city,
+    addressRegion: site.person.region,
+    addressCountry: site.person.country,
   },
 };
 ---
 
-<Base
-  title="Keith Huster · Reliable by design"
-  description="Keith Huster, Senior / Staff Software Engineer and Engineering Manager. Distributed .NET platforms, Kubernetes, CI/CD, and 36 US patents. Remote from Orem, Utah."
->
+<Base title={site.seo.title} description={site.seo.description}>
   <script
     type="application/ld+json"
     slot="head"

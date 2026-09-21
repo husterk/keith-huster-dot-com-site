@@ -20,8 +20,55 @@ const site = defineCollection({
     stats: z.array(stat).length(4),
     chips: z.array(z.string()).min(1),
     links: z.object({ email: z.email(), linkedin: z.url(), github: z.url() }),
-    contact: z.object({ eyebrow: z.string(), heading: z.string(), formIntro: z.string() }),
+    contact: z.object({
+      eyebrow: z.string(),
+      heading: z.string(),
+      formIntro: z.string(),
+      linkedinLabel: z.string(),
+      githubLabel: z.string(),
+    }),
     footer: z.string(),
+    footerLinks: z.object({ colophon: z.string(), back: z.string() }),
+    seo: z.object({ title: z.string(), description: z.string() }),
+    person: z.object({
+      jobTitle: z.string(),
+      employer: z.string(),
+      city: z.string(),
+      region: z.string(),
+      country: z.string(),
+    }),
+    nav: z.object({
+      links: z.array(link).min(1),
+      menu: z.string(),
+      cta: link,
+      skip: z.string(),
+    }),
+    experience: z.object({
+      eyebrow: z.string(),
+      heading: z.string(),
+      intro: z.string(),
+      nowLabel: z.string(),
+    }),
+    impact: z.object({ eyebrow: z.string(), heading: z.string(), segmentLabel: z.string() }),
+    form: z.object({
+      name: z.string(),
+      email: z.string(),
+      message: z.string(),
+      company: z.string(),
+      submit: z.string(),
+      retry: z.string(),
+      fallback: z.string(),
+      messages: z.record(z.string(), z.string()),
+    }),
+    endpoint: z.record(z.string(), z.string()),
+    notFound: z.object({
+      title: z.string(),
+      description: z.string(),
+      eyebrow: z.string(),
+      heading: z.string(),
+      body: z.string(),
+      cta: z.string(),
+    }),
     turnstileSiteKey: z.string(),
   }),
 });
@@ -88,7 +135,7 @@ const patents = defineCollection({
 
 const beyond = defineCollection({
   loader: file('src/content/beyond.yaml'),
-  schema: section.extend({
+  schema: section.omit({ paragraphs: true }).extend({
     feature: z.object({
       caption: z.string(),
       title: z.string(),
@@ -107,6 +154,27 @@ const colophon = defineCollection({
   schema: z.object({
     eyebrow: z.string(),
     title: z.string(),
+    description: z.string(),
+    sourceNote: z.string(),
+    statsLabel: z.string(),
+    updatedLabel: z.string(),
+    sections: z.record(
+      z.enum(['kit', 'decisions', 'route', 'credits']),
+      z.object({ emoji: z.string(), title: z.string() }),
+    ),
+    map: z.object({
+      label: z.string(),
+      railNote: z.string(),
+      labels: z.array(
+        z.object({
+          text: z.string(),
+          kind: z.enum(['place', 'big', 'mile']),
+          x: z.number(),
+          y: z.number(),
+          anchor: z.enum(['start', 'middle', 'end']),
+        }),
+      ),
+    }),
     intro: z.string(),
     summary: z.string(),
     repo: z.url(),

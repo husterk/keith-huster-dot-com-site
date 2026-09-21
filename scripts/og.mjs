@@ -1,9 +1,15 @@
 import { chromium } from '@playwright/test';
 import { readFile, writeFile } from 'node:fs/promises';
+import { parse } from 'yaml';
 import { fileURLToPath } from 'node:url';
 
 const root = new URL('../', import.meta.url);
 const hero = await readFile(new URL('src/components/scenes/HeroBanff.astro', root), 'utf8');
+const site = parse(await readFile(new URL('src/content/site.yaml', root), 'utf8'))[0];
+const accentAt = site.headline.accent.lastIndexOf(' ');
+const accentLead = site.headline.accent.slice(0, accentAt);
+const accentWord = site.headline.accent.slice(accentAt + 1);
+const tag = site.rolesShort.replace(/ · Remote.*$/, '');
 const svg = hero.slice(hero.indexOf('<svg'), hero.lastIndexOf('</svg>') + 6);
 const font = (file) =>
   readFile(new URL(`node_modules/@fontsource/barlow-condensed/files/${file}`, root)).then((b) =>
@@ -21,8 +27,8 @@ h1 span{color:#ff7a1a}
 .tag span{color:#9db0a3}
 </style></head><body>
 ${svg.replace('class="scene"', 'class="scene"')}
-<h1>Reliable<br>by <span>design.</span></h1>
-<p class="tag">Keith Huster <span>· Senior / Staff Engineer · Eng. Manager · Remote</span></p>
+<h1>${site.headline.lead}<br>${accentLead} <span>${accentWord}</span></h1>
+<p class="tag">${site.name} <span>· ${tag} · ${site.location.split(' ')[0]}</span></p>
 </body></html>`;
 
 const browser = await chromium.launch();
