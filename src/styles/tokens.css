@@ -20,6 +20,7 @@
   --font-mono: 'Spline Sans Mono', ui-monospace, monospace;
   --pad: 80px;
   --k: 1;
+  --measure: 72ch;
 }
 
 @media (max-width: 1099px) {

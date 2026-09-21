@@ -141,6 +141,7 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     line-height: 1.5;
     text-transform: none;
     letter-spacing: 0.04em;
+    max-width: var(--measure);
   }
   .content {
     display: flex;
@@ -149,7 +150,7 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     min-width: 0;
   }
   .theme {
-    max-width: 72ch;
+    max-width: var(--measure);
     margin: 0 0 20px;
   }
   .content h1 {
@@ -167,7 +168,7 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     font-size: 19px;
     line-height: 1.6;
     margin: 0;
-    max-width: 72ch;
+    max-width: var(--measure);
     text-wrap: pretty;
   }
   .lead a {
@@ -177,6 +178,8 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     margin: 0;
     color: var(--text-body);
     font-size: 17px;
+    max-width: var(--measure);
+    text-wrap: pretty;
   }
   .tiles {
     list-style: none;
@@ -283,7 +286,7 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     color: var(--text-body);
     font-size: 16px;
     line-height: 1.55;
-    max-width: 72ch;
+    max-width: var(--measure);
     text-wrap: pretty;
   }
   .legend {
