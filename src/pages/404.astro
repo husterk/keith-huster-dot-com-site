@@ -33,11 +33,26 @@ const year = new Date().getFullYear();
   </footer>
 </Base>
 
+<style is:global>
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+  body > main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
 <style>
   .off-route {
     background: var(--bg-alpine);
     display: flex;
+    flex: 1;
     flex-direction: column;
+    justify-content: center;
     align-items: flex-start;
     gap: 12px;
     padding-top: 40px;
