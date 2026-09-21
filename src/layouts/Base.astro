@@ -21,7 +21,7 @@ interface Props {
 
 const { title, description, image = '/og.png' } = Astro.props;
 const site = await getSite();
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const canonical = new URL(Astro.url.pathname.replace(/(index)?\.html$/, ''), Astro.site);
 const imageUrl = new URL(image, Astro.site);
 ---
 
