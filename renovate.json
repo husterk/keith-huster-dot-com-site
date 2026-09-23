@@ -27,6 +27,11 @@
       "matchUpdateTypes": ["major"],
       "groupName": null,
       "prPriority": 5
+    },
+    {
+      "description": "astro check needs the TypeScript programmatic API, which the native TypeScript 7 compiler does not ship yet; lift once Astro supports it (withastro/roadmap discussion 1321)",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
     }
   ]
 }
