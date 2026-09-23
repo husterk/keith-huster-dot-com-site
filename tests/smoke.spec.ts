@@ -335,3 +335,35 @@ test.describe('scene width', () => {
     });
   }
 });
+
+test.describe('content security policy', () => {
+  for (const path of ['/', '/colophon', '/404']) {
+    test(`${path} loads with no CSP violations, Turnstile included`, async ({ page }) => {
+      const violations: string[] = [];
+      page.on('console', (msg) => {
+        if (/Content Security Policy/i.test(msg.text())) violations.push(msg.text());
+      });
+      await page.addInitScript(() => {
+        document.addEventListener('securitypolicyviolation', (event) =>
+          console.error(
+            `Content Security Policy violation: ${event.violatedDirective} ${event.blockedURI}`,
+          ),
+        );
+      });
+      await page.goto(path);
+      await expect(page.locator('meta[http-equiv="content-security-policy"]')).toHaveCount(1);
+      await page.evaluate(async () => {
+        for (let y = 0; y < document.body.scrollHeight; y += 600) {
+          scrollTo(0, y);
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
+      });
+      if (path === '/') {
+        await page.locator('#contact-name').focus();
+        await expect(page.locator('script[data-turnstile]')).toHaveCount(1);
+        await page.waitForTimeout(1500);
+      }
+      expect(violations).toEqual([]);
+    });
+  }
+});
