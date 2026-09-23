@@ -10,7 +10,7 @@ const { notFound, footerLinks } = site;
 const year = new Date().getFullYear();
 ---
 
-<Base title={`${notFound.title} · ${site.name}`} description={notFound.description}>
+<Base title={`${notFound.title} · ${site.name}`} description={notFound.description} noindex>
   <Nav />
   <main id="main">
     <section class="section off-route">

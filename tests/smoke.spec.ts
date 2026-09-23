@@ -367,3 +367,14 @@ test.describe('content security policy', () => {
     });
   }
 });
+
+test('only the 404 page is kept out of search indexes', async ({ page }) => {
+  await page.goto('/404');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+  await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+  for (const path of ['/', '/colophon']) {
+    await page.goto(path);
+    await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
+  }
+});
