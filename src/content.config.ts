@@ -58,6 +58,7 @@ const site = defineCollection({
       submit: z.string(),
       retry: z.string(),
       fallback: z.string(),
+      noscript: z.string(),
       messages: z.record(z.string(), z.string()),
     }),
     endpoint: z.record(z.string(), z.string()),

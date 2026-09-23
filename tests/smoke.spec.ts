@@ -378,3 +378,13 @@ test('only the 404 page is kept out of search indexes', async ({ page }) => {
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
   }
 });
+
+test.describe('without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+  test('the contact form points to email', async ({ page }) => {
+    await page.goto('/');
+    const note = page.locator('.contact-form p.fallback', { hasText: 'needs JavaScript' });
+    await expect(note).toBeVisible();
+    await expect(note.locator('a[href^="mailto:"]')).toBeVisible();
+  });
+});
