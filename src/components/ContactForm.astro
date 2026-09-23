@@ -51,6 +51,11 @@ const { turnstileSiteKey, links, form: copy } = await getSite();
       {copy.retry}
     </button>
   </div>
+  <noscript>
+    <p class="fallback body">
+      {copy.noscript} <a href={`mailto:${links.email}`}>{links.email}</a>.
+    </p>
+  </noscript>
   <p class="fallback body" data-fallback hidden>
     {copy.fallback} <a href={`mailto:${links.email}`}>{links.email}</a>.
   </p>

@@ -87,6 +87,7 @@
     submit: 'Send message'
     retry: 'Retry check'
     fallback: 'Or email me directly at'
+    noscript: 'This form needs JavaScript for its anti-spam check. Email me directly at'
     messages:
       slow: >-
         The anti-spam check is taking a while. It needs challenges.cloudflare.com to load; if it
