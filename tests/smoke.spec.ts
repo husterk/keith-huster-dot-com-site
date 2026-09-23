@@ -388,3 +388,17 @@ test.describe('without JavaScript', () => {
     await expect(note.locator('a[href^="mailto:"]')).toBeVisible();
   });
 });
+
+test.describe('link targets on the phone', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+  for (const path of ['/', '/colophon', '/404']) {
+    test(`standalone links on ${path} are at least 24px tall`, async ({ page }) => {
+      await page.goto(path);
+      const heights = await page
+        .locator('.foot a, .box .mono a')
+        .evaluateAll((links) => links.map((link) => link.getBoundingClientRect().height));
+      expect(heights.length).toBeGreaterThan(0);
+      for (const height of heights) expect(height).toBeGreaterThanOrEqual(24);
+    });
+  }
+});
