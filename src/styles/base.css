@@ -185,6 +185,13 @@ ol {
   position: relative;
 }
 
+.foot a,
+.box .mono a {
+  display: inline-block;
+  padding-block: 6px;
+  margin-block: -6px;
+}
+
 .foot {
   display: flex;
   justify-content: space-between;
