@@ -1,8 +1,9 @@
 ---
-import { getPatents } from '../lib/content';
+import { getPatents, getResume } from '../lib/content';
 import { linkify } from '../lib/links';
 
 const patents = await getPatents();
+const { education } = await getResume();
 ---
 
 <section id="patents" class="section patents">
@@ -16,8 +17,10 @@ const patents = await getPatents();
       <p class="lead" set:html={linkify(paragraph)} />
     ))}
     <div class="edu">
-      {patents.education.map((degree) => (
-        <span>{degree}</span>
+      {education.map((e) => (
+        <span>
+          {e.degree} · {e.school}
+        </span>
       ))}
     </div>
   </div>

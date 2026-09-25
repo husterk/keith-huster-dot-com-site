@@ -1,7 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { file } from 'astro/loaders';
-import { parse } from 'yaml';
 
 const link = z.object({ label: z.string(), href: z.string() });
 const stat = z.object({ value: z.string(), label: z.string() });
@@ -31,8 +30,6 @@ const site = defineCollection({
     footerLinks: z.object({ resume: z.string(), colophon: z.string(), back: z.string() }),
     seo: z.object({ title: z.string(), description: z.string() }),
     person: z.object({
-      jobTitle: z.string(),
-      employer: z.string(),
       city: z.string(),
       region: z.string(),
       country: z.string(),
@@ -82,33 +79,10 @@ const site = defineCollection({
 const experience = defineCollection({
   loader: file('src/content/experience.yaml'),
   schema: z.object({
-    org: z.string(),
+    orgs: z.array(z.string()).min(1),
     team: z.string().optional(),
-    title: z.string(),
-    start: yearMonth,
-    end: yearMonth.nullable(),
-    location: z.string(),
-    current: z.boolean().default(false),
-    dates: z.string(),
     cardTitle: z.string(),
     summary: z.string(),
-  }),
-});
-
-const chart = defineCollection({
-  loader: file('src/content/chart.yaml', {
-    parser: (text) =>
-      (parse(text) as Record<string, unknown>[]).map((row, index) => ({
-        id: String(index),
-        ...row,
-      })),
-  }),
-  schema: z.object({
-    org: z.string(),
-    title: z.string(),
-    team: z.string().nullable(),
-    start: yearMonth,
-    end: yearMonth.nullable(),
   }),
 });
 
@@ -136,7 +110,7 @@ const leadership = defineCollection({
 
 const patents = defineCollection({
   loader: file('src/content/patents.yaml'),
-  schema: section.extend({ bigNumber: z.string(), education: z.array(z.string()).min(1) }),
+  schema: section.extend({ bigNumber: z.string() }),
 });
 
 const beyond = defineCollection({
@@ -172,6 +146,7 @@ const resume = defineCollection({
         z.string(),
       ),
       present: z.string(),
+      facts: z.record(z.string().regex(/^\w+$/), z.union([z.string(), z.number()])),
       headline: z.string(),
       tagline: z.string(),
       location: z.string(),
@@ -264,7 +239,6 @@ const colophon = defineCollection({
 export const collections = {
   site,
   experience,
-  chart,
   impact,
   leadership,
   patents,

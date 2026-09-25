@@ -1,5 +1,6 @@
 # The résumé, and the source of the PDF at /Keith-Huster-Resume.pdf. The name, email and profile links come from site.yaml.
 # Positions run newest first, the way the résumé reads. `end: null` means present. There is never a phone number here.
+# `facts` are the numbers the résumé and the site both state. Write {{name}} in any content file to use one.
 - id: resume
   page:
     title: Résumé
@@ -16,26 +17,35 @@
     projects: Personal Projects
     beyond: Beyond Engineering
   present: Present
+  facts:
+    years: '15+'
+    availability: '99.9%'
+    libraryEngineers: '100+'
+    patents: '36+'
+    mentored: '20+'
+    teamSize: 6
+    hires: 2
+    highSeverityIncidents: 0
   headline: Senior Software Engineer II
   tagline: Staff-Track Platform Engineer · Distributed Systems · .NET · Technical Leadership
   location: Orem, UT, USA
   summary: >-
-    15+ years architecting and scaling distributed .NET platforms: service-oriented architecture,
+    {{years}} years architecting and scaling distributed .NET platforms: service-oriented architecture,
     large-scale modernization, and Staff-level technical leadership across architecture, reliability,
     and team enablement.
   highlights:
     - >-
       Designed and operated mission-critical .NET services processing billions of transactions annually
-      at >99.9% availability across a multi-team platform.
+      at >{{availability}} availability across a multi-team platform.
     - >-
-      Promoted to Team Lead II and managed a 6-engineer Software Infrastructure team for ~1.5 years as a
-      hands-on player-coach; hired 2 engineers and sustained zero high-severity incidents in production.
+      Promoted to Team Lead II and managed a {{teamSize}}-engineer Software Infrastructure team for ~1.5 years as a
+      hands-on player-coach; hired {{hires}} engineers and sustained zero high-severity incidents in production.
     - >-
       Drove org-wide modernization and service-oriented rearchitecture: migrated 5 core services from EC2
       to Kubernetes (EKS), decentralized TeamCity-to-GitHub Actions CI/CD, and shared platform libraries
-      used by 100+ engineers.
+      used by {{libraryEngineers}} engineers.
     - >-
-      Lead or sole inventor on the majority of 36+ US patents; two-time recipient of "Patent of the Year"
+      Lead or sole inventor on the majority of {{patents}} US patents; two-time recipient of "Patent of the Year"
       and the President's Innovation Award.
   positions:
     - org: Olo
@@ -62,9 +72,9 @@
       end: 2025-09
       bullets:
         - >-
-          Managed a 6-engineer Software Infrastructure team as a hands-on player-coach, sustaining >99.9%
+          Managed a {{teamSize}}-engineer Software Infrastructure team as a hands-on player-coach, sustaining >{{availability}}
           availability on mission-critical .NET services processing billions of transactions annually.
-        - Hired and onboarded 2 engineers; sustained zero high-severity incidents in production during tenure.
+        - Hired and onboarded {{hires}} engineers; sustained zero high-severity incidents in production during tenure.
         - >-
           Designed and implemented the Software Infrastructure team's first L2 on-call practice, translating
           a senior-leadership mandate for 24/7 coverage into a weekly rotation calibrated for engineer
@@ -78,7 +88,7 @@
         - Authored and shepherded RFCs and scoped cross-team epics, setting technical direction adopted across teams.
         - >-
           Owned and grew shared platform libraries and service integrations (auth, email, SMS) relied on by
-          100+ engineers across nearly every team at Olo.
+          {{libraryEngineers}} engineers across nearly every team at Olo.
     - org: Olo
       industry: Restaurant Technology
       title: Senior Software Engineer II
@@ -117,8 +127,8 @@
           Delivered POS and direct-brand partner integrations (Panda Express, Denny's, and others), connecting
           Olo's ordering platform with enterprise restaurant systems.
         - >-
-          Containerized applications with Docker and mentored engineers onboarding to Olo's stack, part of 20+
-          engineers mentored across my career.
+          Containerized applications with Docker and mentored engineers onboarding to Olo's stack, part of
+          {{mentored}} engineers mentored across my career.
     - org: Confluence
       industry: FinTech
       title: Senior Software Engineer
@@ -151,7 +161,7 @@
       end: 2014-04
       bullets:
         - >-
-          Lead or sole inventor on the majority of 36+ US patents granted over this period; two-time recipient
+          Lead or sole inventor on the majority of {{patents}} US patents granted over this period; two-time recipient
           of Hill-Rom's "Patent of the Year" and recipient of the President's Innovation Award.
   education:
     - degree: M.Sc. Software Engineering

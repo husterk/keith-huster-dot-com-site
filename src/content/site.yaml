@@ -6,9 +6,9 @@
   location: 'Remote from Orem, Utah'
   intro: >-
     I'm Keith Huster, Senior Software Engineer II and former Team Lead II on Olo's Software
-    Infrastructure team. For 15+ years I've architected and operated distributed .NET platforms:
-    processing billions of transactions a year at better than 99.9% availability, drove a platform-wide
-    move to Kubernetes and modern CI/CD via GitHub Actions, and developed shared libraries used by 100+
+    Infrastructure team. For {{years}} years I've architected and operated distributed .NET platforms:
+    processing billions of transactions a year at better than {{availability}} availability, drove a platform-wide
+    move to Kubernetes and modern CI/CD via GitHub Actions, and developed shared libraries used by {{libraryEngineers}}
     engineers. I've led the systems and the team that runs them, and I'm looking for a Staff Engineering
     or Engineering Management role where reliability is the product.
   cta:
@@ -16,11 +16,11 @@
     secondary: { label: 'Download résumé', href: '/Keith-Huster-Resume.pdf' }
   stats:
     - {
-        value: '>99.9%',
+        value: '>{{availability}}',
         label: 'availability on services handling billions of transactions a year',
       }
-    - { value: '100+', label: 'engineers building on platform libraries I own' }
-    - { value: '36+', label: 'US patents, most as lead or sole inventor' }
+    - { value: '{{libraryEngineers}}', label: 'engineers building on platform libraries I own' }
+    - { value: '{{patents}}', label: 'US patents, most as lead or sole inventor' }
     - { value: '2,745 mi', label: 'Tour Divide finisher, 2025: self-supported, 27 days' }
   chips:
     - 'C# · F# · .NET'
@@ -51,10 +51,8 @@
     title: 'Keith Huster · Reliable by design'
     description: >-
       Keith Huster, Senior / Staff Software Engineer and Engineering Manager. Distributed .NET
-      platforms, Kubernetes, CI/CD, and 36+ US patents. Remote from Orem, Utah.
+      platforms, Kubernetes, CI/CD, and {{patents}} US patents. Remote from Orem, Utah.
   person:
-    jobTitle: 'Senior Software Engineer II'
-    employer: 'Olo'
     city: 'Orem'
     region: 'UT'
     country: 'US'
