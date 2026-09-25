@@ -1,6 +1,21 @@
 # The résumé, and the source of the PDF at /Keith-Huster-Resume.pdf. The name, email and profile links come from site.yaml.
 # Positions run newest first, the way the résumé reads. `end: null` means present. There is never a phone number here.
 - id: resume
+  page:
+    title: Résumé
+    description: >-
+      Keith Huster's résumé: Senior Software Engineer II and former Team Lead II at Olo, 15+ years of
+      distributed .NET platforms, Kubernetes, CI/CD and 36+ US patents.
+    eyebrow: Résumé
+    download: Download PDF
+  sections:
+    summary: Professional Summary
+    experience: Work Experience
+    education: Education
+    skills: Languages, Technologies & Skills
+    projects: Personal Projects
+    beyond: Beyond Engineering
+  present: Present
   headline: Senior Software Engineer II
   tagline: Staff-Track Platform Engineer · Distributed Systems · .NET · Technical Leadership
   location: Orem, UT, USA
