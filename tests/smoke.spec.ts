@@ -402,3 +402,14 @@ test.describe('link targets on the phone', () => {
     });
   }
 });
+
+test('Google Analytics stays off outside the production domain', async ({ page }) => {
+  const requests: string[] = [];
+  page.on('request', (request) => {
+    if (/googletagmanager|google-analytics/.test(request.url())) requests.push(request.url());
+  });
+  await page.goto('/');
+  await expect(page.locator('meta[name="ga-measurement-id"]')).toHaveAttribute('content', /^G-/);
+  await page.waitForTimeout(1000);
+  expect(requests).toEqual([]);
+});

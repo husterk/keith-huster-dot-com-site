@@ -1,0 +1,32 @@
+---
+import { getSite } from '../lib/content';
+
+const { analytics } = await getSite();
+const host = new URL(Astro.site!).hostname;
+---
+
+<meta name="ga-measurement-id" content={analytics.googleMeasurementId} data-host={host} />
+
+<script>
+  type Gtag = (...args: unknown[]) => void;
+  const meta = document.querySelector<HTMLMetaElement>('meta[name="ga-measurement-id"]');
+  const id = meta?.content;
+  if (id && location.hostname === meta.dataset.host) {
+    const start = () => {
+      const w = window as unknown as { dataLayer: unknown[]; gtag: Gtag };
+      w.dataLayer = w.dataLayer || [];
+      w.gtag = function gtag() {
+        // gtag.js only processes Arguments objects; an array from rest parameters is ignored.
+        w.dataLayer.push(arguments);
+      };
+      w.gtag('js', new Date());
+      w.gtag('config', id);
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
+      document.head.appendChild(script);
+    };
+    if (document.readyState === 'complete') start();
+    else addEventListener('load', start, { once: true });
+  }
+</script>

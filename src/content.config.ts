@@ -70,6 +70,11 @@ const site = defineCollection({
       body: z.string(),
       cta: z.string(),
     }),
+    analytics: z.object({
+      googleMeasurementId: z
+        .string()
+        .regex(/^G-[A-Z0-9]+$/, 'use the GA4 measurement ID, G-XXXXXXXXXX'),
+    }),
     turnstileSiteKey: z.string(),
   }),
 });
