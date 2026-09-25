@@ -337,7 +337,7 @@ test.describe('scene width', () => {
 });
 
 test.describe('content security policy', () => {
-  for (const path of ['/', '/colophon', '/404']) {
+  for (const path of ['/', '/colophon', '/resume', '/404']) {
     test(`${path} loads with no CSP violations, Turnstile included`, async ({ page }) => {
       const violations: string[] = [];
       page.on('console', (msg) => {
@@ -372,7 +372,7 @@ test('only the 404 page is kept out of search indexes', async ({ page }) => {
   await page.goto('/404');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
-  for (const path of ['/', '/colophon']) {
+  for (const path of ['/', '/colophon', '/resume']) {
     await page.goto(path);
     await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
@@ -391,7 +391,7 @@ test.describe('without JavaScript', () => {
 
 test.describe('link targets on the phone', () => {
   test.use({ viewport: { width: 390, height: 844 } });
-  for (const path of ['/', '/colophon', '/404']) {
+  for (const path of ['/', '/colophon', '/resume', '/404']) {
     test(`standalone links on ${path} are at least 24px tall`, async ({ page }) => {
       await page.goto(path);
       const heights = await page

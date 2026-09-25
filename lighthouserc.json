@@ -5,6 +5,7 @@
       "url": [
         "http://localhost/index.html",
         "http://localhost/colophon.html",
+        "http://localhost/resume.html",
         "http://localhost/404.html"
       ],
       "numberOfRuns": 3

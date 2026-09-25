@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/resume-pdf.mjs",
     "preview": "astro preview",
     "check": "wrangler types && astro check && prettier --check .",
     "format": "prettier --write .",

@@ -1,0 +1,368 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import { getResume, getSite } from '../lib/content';
+
+const r = await getResume();
+const site = await getSite();
+const { links } = site;
+const bare = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+const month = (ym: string) =>
+  new Date(`${ym}-01T00:00:00Z`).toLocaleDateString('en-US', {
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+const year = new Date().getFullYear();
+---
+
+<Base title={`${r.page.title} · ${site.name}`} description={r.page.description}>
+  <Nav />
+  <main id="main" class="resume-page">
+    <div class="resume-bar">
+      <p class="mono eyebrow">{r.page.eyebrow}</p>
+      <a class="btn primary" href={site.cta.secondary.href} download>
+        {r.page.download}
+      </a>
+    </div>
+
+    <article class="sheet">
+      <header class="sheet-head">
+        <ul class="rs-contact rs-contact-left">
+          <li>{r.location}</li>
+          <li>
+            <a href={`mailto:${links.email}`}>{links.email}</a>
+          </li>
+        </ul>
+        <div class="rs-who">
+          <h1>{site.name}</h1>
+          <p class="rs-headline">{r.headline}</p>
+          <p class="rs-tagline">{r.tagline}</p>
+        </div>
+        <ul class="rs-contact rs-contact-right">
+          <li>
+            <a href={links.linkedin}>{bare(links.linkedin)}</a>
+          </li>
+          <li>
+            <a href={links.github}>{bare(links.github)}</a>
+          </li>
+        </ul>
+      </header>
+
+      <section>
+        <h2>{r.sections.summary}</h2>
+        <p>{r.summary}</p>
+        <ul class="rs-bullets">
+          {r.highlights.map((h) => (
+            <li>{h}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>{r.sections.experience}</h2>
+        {r.positions.map((p) => (
+          <div class="rs-role">
+            <h3 class="rs-row">
+              <span class="rs-title">{p.title}</span>
+              <span class="rs-org">{p.org}</span>
+              <span class="rs-dates">
+                {month(p.start)} – {p.end ? month(p.end) : r.present}
+              </span>
+            </h3>
+            <p class="rs-row rs-sub">
+              <span>{[p.team, p.industry].filter(Boolean).join(' · ')}</span>
+              <span>{p.location}</span>
+            </p>
+            <ul class="rs-bullets">
+              {p.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h2>{r.sections.education}</h2>
+        <ul class="rs-plain">
+          {r.education.map((e) => (
+            <li class="rs-row">
+              <span>
+                <strong>{e.degree}</strong>, {e.school}, {e.location}
+              </span>
+              <span class="rs-dates">
+                {e.start} – {e.end}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>{r.sections.skills}</h2>
+        <ul class="rs-plain">
+          {r.skills.map((s) => (
+            <li>
+              <strong>{s.label}:</strong> {s.items}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>{r.sections.projects}</h2>
+        <ul class="rs-plain">
+          {r.projects.map((p) => (
+            <li>
+              <strong>{p.name}:</strong> {p.body}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>{r.sections.beyond}</h2>
+        <ul class="rs-bullets">
+          {r.beyond.map((b) => (
+            <li>{b}</li>
+          ))}
+        </ul>
+      </section>
+    </article>
+  </main>
+  <footer class="foot page-foot">
+    <span>
+      <a href="/">{site.footerLinks.back}</a>
+    </span>
+    <span>© {year}</span>
+  </footer>
+</Base>
+
+<style>
+  .resume-page {
+    --paper: #fbfaf6;
+    --ink: #1a1f1c;
+    --ink-soft: #3f4843;
+    --rule: #c9cbc2;
+    padding: 40px var(--pad) 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .resume-bar {
+    width: 100%;
+    max-width: 8.5in;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .resume-bar .eyebrow {
+    margin: 0;
+  }
+  .sheet {
+    width: 100%;
+    max-width: 8.5in;
+    box-sizing: border-box;
+    padding: 0.55in 0.6in;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 9.6pt;
+    line-height: 1.38;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+  .sheet a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .sheet a:hover {
+    text-decoration: underline;
+  }
+  .sheet p,
+  .sheet ul {
+    margin: 0;
+  }
+  .sheet-head {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: start;
+    gap: 16px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--accent);
+    color: var(--ink-soft);
+    font-size: 9pt;
+  }
+  @media screen {
+    .sheet-head a {
+      display: inline-block;
+      padding-block: 6px;
+    }
+  }
+  .rs-contact-right {
+    text-align: right;
+  }
+  .rs-who {
+    text-align: center;
+  }
+  .rs-who h1 {
+    margin: 0;
+    font-family: var(--font-cond);
+    font-weight: 700;
+    font-size: 26pt;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bg-spruce);
+  }
+  .rs-headline {
+    margin-top: 4px;
+    font-family: var(--font-cond);
+    font-weight: 600;
+    font-size: 12.5pt;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .rs-tagline {
+    font-size: 9pt;
+    max-width: 4.4in;
+    margin-inline: auto;
+  }
+  .sheet section {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .sheet h2 {
+    margin: 0;
+    font-size: 10.5pt;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--rule);
+    break-after: avoid;
+  }
+  .rs-role {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    break-inside: avoid;
+  }
+  .rs-role + .rs-role {
+    margin-top: 6px;
+  }
+  .rs-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .sheet h3 {
+    margin: 0;
+    font-size: inherit;
+    font-weight: 600;
+  }
+  .rs-row .rs-title,
+  .rs-row .rs-org,
+  .rs-row .rs-dates {
+    flex: 1;
+  }
+  .rs-row .rs-org {
+    text-align: center;
+  }
+  .rs-row .rs-dates,
+  .rs-sub span:last-child {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .rs-sub {
+    color: var(--ink-soft);
+  }
+  .rs-bullets {
+    list-style: disc;
+    padding-left: 1.3em;
+    margin-top: 2px;
+  }
+  .rs-bullets li + li {
+    margin-top: 1px;
+  }
+  .rs-plain {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .rs-plain strong,
+  .sheet strong {
+    font-weight: 600;
+  }
+  .page-foot {
+    margin: 0 var(--pad);
+  }
+
+  @media (max-width: 699px) {
+    .resume-page {
+      padding-top: 24px;
+    }
+    .sheet {
+      padding: 24px 20px;
+      font-size: 14px;
+    }
+    .sheet-head {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 8px;
+    }
+    .rs-who {
+      order: -1;
+    }
+    .rs-contact-right {
+      text-align: center;
+    }
+    .rs-row {
+      flex-direction: column;
+      gap: 0;
+    }
+    .rs-row .rs-org,
+    .rs-row .rs-dates,
+    .rs-sub span:last-child {
+      text-align: left;
+    }
+  }
+
+  @page {
+    size: letter;
+    margin: 0.5in 0.55in;
+  }
+  @media print {
+    .resume-page {
+      padding: 0;
+      display: block;
+    }
+    .resume-bar,
+    .page-foot {
+      display: none;
+    }
+    .sheet {
+      max-width: none;
+      padding: 0;
+      box-shadow: none;
+      background: #fff;
+    }
+  }
+</style>
+
+<style is:global>
+  @media print {
+    html,
+    body {
+      background: #fff !important;
+    }
+    .nav,
+    .skip {
+      display: none !important;
+    }
+  }
+</style>
