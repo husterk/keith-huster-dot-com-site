@@ -155,6 +155,56 @@ const beyond = defineCollection({
   }),
 });
 
+const phoneNumber = /\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}/;
+
+const resume = defineCollection({
+  loader: file('src/content/resume.yaml'),
+  schema: z
+    .object({
+      headline: z.string(),
+      tagline: z.string(),
+      location: z.string(),
+      summary: z.string().min(50),
+      highlights: z.array(z.string()).min(1),
+      positions: z
+        .array(
+          z.object({
+            org: z.string(),
+            industry: z.string(),
+            title: z.string(),
+            team: z.string().nullable(),
+            location: z.string(),
+            start: yearMonth,
+            end: yearMonth.nullable(),
+            bullets: z.array(z.string()).min(1),
+          }),
+        )
+        .min(1)
+        .refine(
+          (positions) => positions.every((p, i) => i === 0 || p.start <= positions[i - 1].start),
+          'list positions newest first',
+        ),
+      education: z
+        .array(
+          z.object({
+            degree: z.string(),
+            school: z.string(),
+            location: z.string(),
+            start: z.number().int(),
+            end: z.number().int(),
+          }),
+        )
+        .min(1),
+      skills: z.array(z.object({ label: z.string(), items: z.string() })).min(1),
+      projects: z.array(z.object({ name: z.string(), body: z.string() })),
+      beyond: z.array(z.string()),
+    })
+    .refine(
+      (resume) => !phoneNumber.test(JSON.stringify(resume)),
+      'no phone numbers in the résumé',
+    ),
+});
+
 const colophon = defineCollection({
   loader: file('src/content/colophon.yaml'),
   schema: z.object({
@@ -208,5 +258,6 @@ export const collections = {
   leadership,
   patents,
   beyond,
+  resume,
   colophon,
 };

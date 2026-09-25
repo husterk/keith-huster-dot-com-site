@@ -1,0 +1,184 @@
+# The résumé, and the source of the PDF at /Keith-Huster-Resume.pdf. The name, email and profile links come from site.yaml.
+# Positions run newest first, the way the résumé reads. `end: null` means present. There is never a phone number here.
+- id: resume
+  headline: Senior Software Engineer II
+  tagline: Staff-Track Platform Engineer · Distributed Systems · .NET · Technical Leadership
+  location: Orem, UT, USA
+  summary: >-
+    15+ years architecting and scaling distributed .NET platforms: service-oriented architecture,
+    large-scale modernization, and Staff-level technical leadership across architecture, reliability,
+    and team enablement.
+  highlights:
+    - >-
+      Designed and operated mission-critical .NET services processing billions of transactions annually
+      at >99.9% availability across a multi-team platform.
+    - >-
+      Promoted to Team Lead II and managed a 6-engineer Software Infrastructure team for ~1.5 years as a
+      hands-on player-coach; hired 2 engineers and sustained zero high-severity incidents in production.
+    - >-
+      Drove org-wide modernization and service-oriented rearchitecture: migrated 5 core services from EC2
+      to Kubernetes (EKS), decentralized TeamCity-to-GitHub Actions CI/CD, and shared platform libraries
+      used by 100+ engineers.
+    - >-
+      Lead or sole inventor on the majority of 36+ US patents; two-time recipient of "Patent of the Year"
+      and the President's Innovation Award.
+  positions:
+    - org: Olo
+      industry: Restaurant Technology
+      title: Senior Software Engineer II
+      team: Software Infrastructure Team
+      location: Orem, UT (Remote)
+      start: 2025-09
+      end: null
+      bullets:
+        - >-
+          Sustain and operate the L2 on-call practice I designed under Team Lead II, owning observability
+          and platform reliability across the Software Infrastructure stack.
+        - >-
+          Drive in-flight EC2-to-Kubernetes (EKS) and CI/CD modernization to completion across remaining
+          services and libraries; contribute to cross-team architectural direction through RFCs and design
+          reviews.
+    - org: Olo
+      industry: Restaurant Technology
+      title: Team Lead II
+      team: Software Infrastructure Team
+      location: Orem, UT (Remote)
+      start: 2024-04
+      end: 2025-09
+      bullets:
+        - >-
+          Managed a 6-engineer Software Infrastructure team as a hands-on player-coach, sustaining >99.9%
+          availability on mission-critical .NET services processing billions of transactions annually.
+        - Hired and onboarded 2 engineers; sustained zero high-severity incidents in production during tenure.
+        - >-
+          Designed and implemented the Software Infrastructure team's first L2 on-call practice, translating
+          a senior-leadership mandate for 24/7 coverage into a weekly rotation calibrated for engineer
+          well-being.
+        - >-
+          Initiated and drove migration of 5 core services from EC2 to Kubernetes (EKS), introducing HPA and
+          KEDA autoscaling for peak-traffic reliability and elasticity.
+        - >-
+          Decentralized CI/CD by migrating ~10 services and libraries from centralized TeamCity to GitHub
+          Actions, removing a delivery bottleneck so teams could own their pipelines.
+        - Authored and shepherded RFCs and scoped cross-team epics, setting technical direction adopted across teams.
+        - >-
+          Owned and grew shared platform libraries and service integrations (auth, email, SMS) relied on by
+          100+ engineers across nearly every team at Olo.
+    - org: Olo
+      industry: Restaurant Technology
+      title: Senior Software Engineer II
+      team: Software Infrastructure Team
+      location: Orem, UT (Remote)
+      start: 2021-08
+      end: 2024-04
+      bullets:
+        - >-
+          Improved resiliency and reduced operating cost of Olo's shared platform services and libraries used
+          across the engineering org.
+        - >-
+          Led a system-optimization initiative for the Payload Logging service that reduced AWS S3 upload
+          costs by more than $12K per month.
+        - >-
+          Migrated services to a centralized configuration system (Consul), simplifying Olo's ongoing
+          monolith-to-microservice extraction.
+        - >-
+          Integrated LaunchDarkly feature flags into core services to improve deployment success rates and
+          reduce incident MTTR.
+    - org: Olo
+      industry: Restaurant Technology
+      title: Senior Software Engineer II
+      team: Menu Team
+      location: Orem, UT (Remote)
+      start: 2018-09
+      end: 2021-08
+      bullets:
+        - >-
+          Built and shipped .NET Core full-stack applications (C#, F#, ASP.NET, React, SQL) supporting dynamic
+          menu item pricing and customizations used by tens of thousands of restaurant managers.
+        - >-
+          Designed and built the Menu Import Service, a service-oriented extraction from Olo's legacy monolith
+          that decoupled menu data ingestion across the platform.
+        - >-
+          Delivered POS and direct-brand partner integrations (Panda Express, Denny's, and others), connecting
+          Olo's ordering platform with enterprise restaurant systems.
+        - >-
+          Containerized applications with Docker and mentored engineers onboarding to Olo's stack, part of 20+
+          engineers mentored across my career.
+    - org: Confluence
+      industry: FinTech
+      title: Senior Software Engineer
+      team: Software Engineering Team
+      location: Orem, UT (Remote)
+      start: 2015-03
+      end: 2018-08
+      bullets:
+        - >-
+          Designed and delivered features for FinTech full-stack web applications (ASP.NET MVC, C#,
+          React/Relay/GraphQL, SQL), balancing scalability with maintainability.
+        - Owned production support and issue resolution, sustaining uptime and customer satisfaction.
+    - org: Curriculum Loft
+      industry: EdTech
+      title: Software Developer
+      team: Software Engineering Team
+      location: Sunman, IN (Remote)
+      start: 2014-04
+      end: 2015-02
+      bullets:
+        - >-
+          Built EdTech full-stack web applications (ASP.NET MVC, WebAPI, C#, TypeScript, KnockoutJS, SQL,
+          MongoDB) and automated CI/CD with TeamCity to improve release reliability.
+    - org: Hill-Rom
+      industry: Medical Devices
+      title: Software Engineering Specialist
+      team: New Product Development
+      location: Sunman, IN
+      start: 2002-05
+      end: 2014-04
+      bullets:
+        - >-
+          Lead or sole inventor on the majority of 36+ US patents granted over this period; two-time recipient
+          of Hill-Rom's "Patent of the Year" and recipient of the President's Innovation Award.
+  education:
+    - degree: M.Sc. Software Engineering
+      school: Drexel University
+      location: Philadelphia, PA
+      start: 2008
+      end: 2011
+    - degree: B.Sc. Electrical Engineering
+      school: Rose-Hulman Institute of Technology
+      location: Terre Haute, IN
+      start: 1998
+      end: 2002
+  skills:
+    - label: Distributed Systems & Reliability
+      items: >-
+        Service-oriented architecture (SOA), microservices, distributed-systems design, REST / HTTP APIs, API
+        integrations, observability (Datadog, Sumo Logic, Raygun), SLAs / SLOs, on-call, production support
+    - label: Cloud & Platform
+      items: >-
+        AWS, Kubernetes / EKS (HPA, KEDA), Docker, containerization, Terraform, Consul, IaC, GitOps, GitHub
+        Actions, CI/CD
+    - label: Languages
+      items: C#, F#, TypeScript, JavaScript, SQL, HTML, CSS
+    - label: Frameworks & Data
+      items: .NET, .NET Core, ASP.NET, React, GraphQL, Relay, MSSQL, PostgreSQL
+    - label: Operating Systems
+      items: Linux, Windows
+    - label: Leadership
+      items: >-
+        Technical strategy & RFCs, design review, team leadership, mentorship, Agile (Scrum / Kanban),
+        cross-functional project management
+  projects:
+    - name: KeithAndLindsey.com
+      body: >-
+        Travel blog on Ghost CMS with a fully custom theme, a GitHub Actions CI/CD pipeline, and two
+        Cloudflare Workers that process Ghost webhooks and manage the site's sitemaps.
+    - name: HomeLab
+      body: >-
+        Declarative, GitOps-driven home lab built on Proxmox VE, OPNsense, Talos Linux (Kubernetes),
+        Terraform/Atlantis, Docker, and GitHub Actions.
+  beyond:
+    - >-
+      Completed the 2025 Tour Divide, a 2,745-mile self-supported mountain bike race from Canada to Mexico,
+      in 27 days.
+    - Volunteer firefighter (2004 to 2016), promoted to the rank of Lieutenant.
