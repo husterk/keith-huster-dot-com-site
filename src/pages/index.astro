@@ -15,15 +15,16 @@ import BasinWyoming from '../components/scenes/BasinWyoming.astro';
 import PassColorado from '../components/scenes/PassColorado.astro';
 import DesertNewMexico from '../components/scenes/DesertNewMexico.astro';
 import FinishAntelopeWells from '../components/scenes/FinishAntelopeWells.astro';
-import { getSite } from '../lib/content';
+import { getPositions, getSite } from '../lib/content';
 
 const site = await getSite();
+const current = (await getPositions()).at(-1)!;
 const person = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: site.name,
-  jobTitle: site.person.jobTitle,
-  worksFor: { '@type': 'Organization', name: site.person.employer },
+  jobTitle: current.title,
+  worksFor: { '@type': 'Organization', name: current.org },
   url: Astro.site?.href,
   sameAs: [site.links.linkedin, site.links.github],
   address: {

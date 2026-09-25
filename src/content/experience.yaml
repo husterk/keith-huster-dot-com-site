@@ -1,49 +1,28 @@
-# One entry per role, oldest first (the timeline cards read left to right). `end: null` means present.
+# One timeline card per stretch of the career, oldest first. Each card covers the résumé positions at `orgs`
+# (and `team`, when set); the dates, location and current flag come from those positions.
 - id: hill-rom
-  org: Hill-Rom
-  team: New Product Development
-  title: Software Engineering Specialist
-  start: 2002-05
-  end: 2014-04
-  location: Sunman, IN
-  dates: '2002 – 2014 · Sunman, IN'
+  orgs: [Hill-Rom]
   cardTitle: Hill-Rom
   summary: >-
     Software Engineering Specialist. Embedded firmware, TCP/IP gateways, hospital-bed electronics
     for the VersaCare and TotalCare lines, and nurse communication systems. Two-time "Patent of the Year"
     and "President's Innovation" award winner.
 - id: curriculum-loft-confluence
-  org: Curriculum Loft, then Confluence
-  title: Software Developer, then Senior Software Engineer
-  start: 2014-04
-  end: 2018-08
-  location: Remote
-  dates: '2014 – 2018 · Remote'
+  orgs: [Curriculum Loft, Confluence]
   cardTitle: Curriculum Loft, then Confluence
   summary: >-
-    Transition from electronics/embedded firmware to SaaS software development. Full-stack EduTech and FinTech
+    Transition from electronics/embedded firmware to SaaS software development. Full-stack EdTech and FinTech
     applications in ASP.NET MVC, C#, React, Relay and GraphQL, plus production support.
 - id: olo-menu
-  org: Olo
+  orgs: [Olo]
   team: Menu Team
-  title: Senior Software Engineer II
-  start: 2018-09
-  end: 2021-08
-  location: Remote
-  dates: '2018 – 2021 · Remote'
   cardTitle: Olo · Menu team
   summary: >-
     Senior Software Engineer II. Menu structure and pricing tools used by tens of thousands of restaurant managers,
     and the Menu Import Service microservice carved out of the monolith.
 - id: olo-infra
-  org: Olo
+  orgs: [Olo]
   team: Software Infrastructure Team
-  title: Senior Software Engineer II
-  start: 2021-08
-  end: null
-  location: Remote
-  current: true
-  dates: '2021 – Now · Remote'
   cardTitle: Olo · Software Infrastructure
   summary: >-
     Senior Software Engineer II, then Team Lead II (2024 to 2025) for a six-engineer team, now back on the Staff track:

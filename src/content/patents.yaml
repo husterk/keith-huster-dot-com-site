@@ -1,14 +1,11 @@
 - id: patents
   eyebrow: '04 · Patents'
   heading: 'US patents, most as lead or sole inventor'
-  bigNumber: '36+'
+  bigNumber: '{{patents}}'
   paragraphs:
     - >-
       Before cloud platforms, I spent twelve years (2002 to 2014) in New Product Development at
       Hill-Rom, designing electronics, embedded firmware and network gateways for hospital beds and
-      helping take numerous products to market. That work produced 36+ US patents, most as lead or sole
+      helping take numerous products to market. That work produced {{patents}} US patents, most as lead or sole
       inventor, two "Patent of the Year" awards and the "President's Innovation Award", and a lasting
       standard for what "production-ready" means when patients depend on it.
-  education:
-    - 'M.Sc. Software Engineering · Drexel University'
-    - 'B.Sc. Electrical Engineering · Rose-Hulman Institute of Technology'
