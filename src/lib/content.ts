@@ -1,9 +1,8 @@
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 
-async function single<C extends 'site' | 'leadership' | 'patents' | 'beyond' | 'colophon'>(
-  collection: C,
-  id: C,
-): Promise<CollectionEntry<C>['data']> {
+async function single<
+  C extends 'site' | 'leadership' | 'patents' | 'beyond' | 'resume' | 'colophon',
+>(collection: C, id: C): Promise<CollectionEntry<C>['data']> {
   const entry = await getEntry(collection, id);
   if (!entry) throw new Error(`Missing content entry ${collection}/${id}`);
   return entry.data as CollectionEntry<C>['data'];
@@ -13,6 +12,7 @@ export const getSite = () => single('site', 'site');
 export const getLeadership = () => single('leadership', 'leadership');
 export const getPatents = () => single('patents', 'patents');
 export const getBeyond = () => single('beyond', 'beyond');
+export const getResume = () => single('resume', 'resume');
 export const getColophon = () => single('colophon', 'colophon');
 
 export const getExperience = async () =>
