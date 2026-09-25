@@ -23,6 +23,7 @@ jobs:
       - run: mise install --locked
       - run: bun install --frozen-lockfile
       - run: bun run check
+      - run: bunx playwright install --with-deps chromium
       - run: bun run build
 
       - name: Load secrets from 1Password

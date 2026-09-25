@@ -44,6 +44,7 @@
     githubLabel: 'GitHub'
   footer: 'Keith Huster · Open to Senior, Staff and Engineering Management roles · Remote from Orem, Utah'
   footerLinks:
+    resume: 'Résumé'
     colophon: 'How this site was built'
     back: 'Back to the site'
   seo:

@@ -28,7 +28,7 @@ const site = defineCollection({
       githubLabel: z.string(),
     }),
     footer: z.string(),
-    footerLinks: z.object({ colophon: z.string(), back: z.string() }),
+    footerLinks: z.object({ resume: z.string(), colophon: z.string(), back: z.string() }),
     seo: z.object({ title: z.string(), description: z.string() }),
     person: z.object({
       jobTitle: z.string(),
@@ -161,6 +161,17 @@ const resume = defineCollection({
   loader: file('src/content/resume.yaml'),
   schema: z
     .object({
+      page: z.object({
+        title: z.string(),
+        description: z.string(),
+        eyebrow: z.string(),
+        download: z.string(),
+      }),
+      sections: z.record(
+        z.enum(['summary', 'experience', 'education', 'skills', 'projects', 'beyond']),
+        z.string(),
+      ),
+      present: z.string(),
       headline: z.string(),
       tagline: z.string(),
       location: z.string(),
