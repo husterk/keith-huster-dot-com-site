@@ -1,5 +1,6 @@
 ---
 import { getSite } from '../lib/content';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 import { headScript, unregisterServiceWorkers } from '../lib/inline-scripts.mjs';
 import '@fontsource/barlow-condensed/latin-500.css';
 import '@fontsource/barlow-condensed/latin-600.css';
@@ -56,6 +57,7 @@ const imageUrl = new URL(image, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
     <slot name="head" />
+    <GoogleAnalytics />
     <script is:inline set:html={headScript}></script>
   </head>
   <body>

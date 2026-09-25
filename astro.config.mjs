@@ -34,9 +34,9 @@ export default defineConfig({
     csp: {
       directives: [
         "default-src 'self'",
-        "img-src 'self' data:",
+        "img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://www.google.com",
         "font-src 'self'",
-        "connect-src 'self' https://cloudflareinsights.com",
+        "connect-src 'self' https://cloudflareinsights.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.google.com",
         'frame-src https://challenges.cloudflare.com',
         "object-src 'none'",
         "base-uri 'self'",
@@ -51,6 +51,7 @@ export default defineConfig({
           "'self'",
           'https://challenges.cloudflare.com',
           'https://static.cloudflareinsights.com',
+          'https://www.googletagmanager.com',
         ],
       },
     },

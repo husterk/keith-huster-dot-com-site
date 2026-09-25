@@ -104,8 +104,8 @@
     - {
         emoji: '📈',
         label: 'Analytics',
-        title: 'Cloudflare Web Analytics',
-        why: 'Cookieless, no consent banner, injected at the edge.',
+        title: 'Cloudflare + Google Analytics',
+        why: 'Cloudflare counts visits at the edge without cookies; Google Analytics loads after the page does, only on the live domain.',
       }
     - {
         emoji: '🧰',

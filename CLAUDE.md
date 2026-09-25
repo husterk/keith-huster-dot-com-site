@@ -6,7 +6,7 @@ Agent guide for keithhuster.com. The plan lives in `docs/plan/`, the design in `
 
 - **Open a GitHub issue before starting any work**, including one-line fixes and docs. Give it a milestone and labels, put sub-tasks in a checkbox list, and reference it from the PR body with `Closes #N`. If the issue already exists, reuse it. Work that has no issue does not start.
 - **Every change goes through a PR** from a branch off `origin/main`. The `ci` check is required; PRs are rebase-merged, never squashed. Merge your own PR once CI is green. `git push --force` is not allowed here: after a rebase, push a new branch and open a replacement PR.
-- **No secrets in the repo, ever.** They live in 1Password and reach the Worker through `deploy.yml`. The only public value in the repo is the Turnstile site key. Scan every diff before committing.
+- **No secrets in the repo, ever.** They live in 1Password and reach the Worker through `deploy.yml`. The only public values in the repo are the Turnstile site key and the Google Analytics measurement ID, both of which every visitor can read in the page source. Scan every diff before committing.
 - **The design is the contract.** Pages must match `docs/design/png/` at 1440, 834 and 390; the rider must stay fully visible in every scene on the phone. Headline is "Reliable by design." The phone number never appears.
 - **Content is data.** Copy lives in `src/content/*.yaml` and `src/content/pages/*.md`, validated by `src/content.config.ts`. Change words there, not in components.
 - **Rewrite `docs/plan/STATUS.md` at the end of every session** so it describes the current state only: what is live, what merged, what is open, what needs Keith.
