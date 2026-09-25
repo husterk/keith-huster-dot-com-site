@@ -1,7 +1,7 @@
 ---
-import { getChart, getSite } from '../lib/content';
+import { getPositions, getSite } from '../lib/content';
 
-const rows = await getChart();
+const rows = await getPositions();
 const { nowLabel } = (await getSite()).experience;
 
 const WIDTH = 1280;
@@ -218,7 +218,9 @@ const summary = points.map((p) => `${p.org} from ${p.year}`).join(', then ');
     {points.map((p) => (
       <li>
         <span class="n">{pad(p.n)}</span>
-        <span class="yrs">{range(p)}</span>
+        <span class="yrs">
+          {range(p)} · {p.industry}
+        </span>
         <span class="o">{p.org}</span>
         <span class="t">
           {p.title}

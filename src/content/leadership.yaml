@@ -7,15 +7,18 @@
       Team Lead II without leaving the code. I hired and onboarded two Eastern European engineers, ran
       planning, and handled individual one-on-ones. When senior leadership mandated 24/7 support coverage,
       I designed the team's first L2 on-call practice as a weekly rotation calibrated for engineer
-      well-being. The team sustained greater than 99.9% availability with zero high-severity production
+      well-being. The team sustained greater than {{availability}} availability with zero high-severity production
       incidents during that time.
     - >-
       I've mentored more than 20 engineers over my career, and I set technical direction through RFCs
-      and design reviews rather than mandates; the shared libraries I own are relied on by 100+
+      and design reviews rather than mandates; the shared libraries I own are relied on by {{libraryEngineers}}
       engineers across nearly every team at Olo. I'm equally effective as a Staff-level IC or as the
       Engineering Manager clearing the path for the team.
   cells:
-    - { value: '6', label: 'engineers managed as a hands-on lead' }
-    - { value: '0', label: 'high-severity production incidents during my tenure' }
-    - { value: '2', label: 'remote engineers hired and onboarded' }
-    - { value: '20+', label: 'engineers mentored across my career' }
+    - { value: '{{teamSize}}', label: 'engineers managed as a hands-on lead' }
+    - {
+        value: '{{highSeverityIncidents}}',
+        label: 'high-severity production incidents during my tenure',
+      }
+    - { value: '{{hires}}', label: 'remote engineers hired and onboarded' }
+    - { value: '{{mentored}}', label: 'engineers mentored across my career' }
