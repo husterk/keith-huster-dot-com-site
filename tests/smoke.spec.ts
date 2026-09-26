@@ -85,10 +85,11 @@ test('the Tour Divide card draws the elevation profile', async ({ page }) => {
     await expect(profile.getByText(landmark, { exact: true })).toHaveCount(1);
 });
 
-test('each Beyond work box has a decorative icon beside its header', async ({ page }) => {
+test('every Beyond work block has a decorative icon beside its header', async ({ page }) => {
   await page.goto('/');
-  const icons = page.locator('#offclock .box .box-head svg.box-icon');
-  await expect(icons).toHaveCount(3);
+  const icons = page.locator('#offclock .box-head svg.box-icon');
+  await expect(icons).toHaveCount(4);
+  await expect(page.locator('#offclock .panel .box-head svg.box-icon')).toHaveCount(1);
   for (const icon of await icons.all()) await expect(icon).toHaveAttribute('aria-hidden', 'true');
 });
 

@@ -122,6 +122,7 @@ const beyond = defineCollection({
       body: z.string(),
       from: z.string(),
       to: z.string(),
+      icon: z.enum(['helmet', 'rack', 'map', 'rider']),
       profile: z.object({
         label: z.string(),
         points: z.array(z.tuple([z.number(), z.number()])).min(10),
@@ -147,7 +148,7 @@ const beyond = defineCollection({
           caption: z.string(),
           title: z.string(),
           body: z.string(),
-          icon: z.enum(['helmet', 'rack', 'map']),
+          icon: z.enum(['helmet', 'rack', 'map', 'rider']),
         }),
       )
       .length(3),
