@@ -27,7 +27,11 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('bun.lock') }}
-      - run: bunx playwright install --with-deps chromium
+      # Runner images usually carry Chromium's system libraries; install them only if a launch fails.
+      - run: >-
+          bunx playwright install chromium &&
+          node -e "require('@playwright/test').chromium.launch().then((b) => b.close())" ||
+          bunx playwright install --with-deps chromium
       - run: bun run build
 
       - name: Load secrets from 1Password
