@@ -218,18 +218,34 @@
     pause: 'Pause'
     play: 'Play'
     items:
-      - { name: 'Claude', icon: 'claude' }
-      - { name: 'Claude Code', icon: 'claudecode' }
-      - { name: 'Astro', icon: 'astro' }
-      - { name: 'TypeScript', icon: 'typescript' }
-      - { name: 'Zod', icon: 'zod' }
-      - { name: 'Bun', icon: 'bun' }
-      - { name: 'Node.js', icon: 'nodedotjs' }
-      - { name: 'Cloudflare Workers', icon: 'cloudflareworkers' }
-      - { name: 'Resend', icon: 'resend' }
-      - { name: 'Google Analytics', icon: 'googleanalytics' }
-      - { name: 'GitHub Actions', icon: 'githubactions' }
-      - { name: 'Lighthouse', icon: 'lighthouse' }
-      - { name: 'Prettier', icon: 'prettier' }
-      - { name: '1Password', icon: '1password' }
-      - { name: 'Renovate', icon: 'renovate' }
+      - { name: 'Claude', icon: 'claude', href: 'https://claude.com/product/overview' }
+      - { name: 'Claude Code', icon: 'claudecode', href: 'https://claude.com/product/claude-code' }
+      - { name: 'Astro', icon: 'astro', href: 'https://astro.build' }
+      - { name: 'TypeScript', icon: 'typescript', href: 'https://www.typescriptlang.org' }
+      - { name: 'Zod', icon: 'zod', href: 'https://zod.dev' }
+      - { name: 'Bun', icon: 'bun', href: 'https://bun.com' }
+      - { name: 'Node.js', icon: 'nodedotjs', href: 'https://nodejs.org' }
+      - {
+          name: 'Cloudflare Workers',
+          icon: 'cloudflareworkers',
+          href: 'https://workers.cloudflare.com',
+        }
+      - { name: 'Resend', icon: 'resend', href: 'https://resend.com' }
+      - {
+          name: 'Google Analytics',
+          icon: 'googleanalytics',
+          href: 'https://developers.google.com/analytics',
+        }
+      - {
+          name: 'GitHub Actions',
+          icon: 'githubactions',
+          href: 'https://github.com/features/actions',
+        }
+      - {
+          name: 'Lighthouse',
+          icon: 'lighthouse',
+          href: 'https://developer.chrome.com/docs/lighthouse',
+        }
+      - { name: 'Prettier', icon: 'prettier', href: 'https://prettier.io' }
+      - { name: '1Password', icon: '1password', href: 'https://1password.com' }
+      - { name: 'Renovate', icon: 'renovate', href: 'https://docs.renovatebot.com' }
