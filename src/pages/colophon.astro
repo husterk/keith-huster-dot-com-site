@@ -21,25 +21,28 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
   <Nav />
   <main id="main" class="colophon">
     <article class="content">
-      <p class="mono eyebrow">{c.eyebrow}</p>
-      <h1 class="cond">{c.title}</h1>
-      <p class="lead">
-        {c.intro} {c.sourceNote}{' '}
-        <a href={c.repo} target="_blank" rel="noopener">
-          {repoLabel}
-        </a>
-        .
-      </p>
-      <p class="summary">{c.summary}</p>
-
-      <ul class="tiles" aria-label={c.statsLabel}>
-        {c.stats.map((s) => (
-          <li class="tile">
-            <span class="n">{s.value}</span>
-            <span class="l">{s.label}</span>
-          </li>
-        ))}
-      </ul>
+      <header class="intro">
+        <div class="intro-text">
+          <p class="mono eyebrow">{c.eyebrow}</p>
+          <h1 class="cond">{c.title}</h1>
+          <p class="lead">
+            {c.intro} {c.sourceNote}{' '}
+            <a href={c.repo} target="_blank" rel="noopener">
+              {repoLabel}
+            </a>
+            .
+          </p>
+          <p class="summary">{c.summary}</p>
+        </div>
+        <ul class="tiles" aria-label={c.statsLabel}>
+          {c.stats.map((s) => (
+            <li class="tile">
+              <span class="n">{s.value}</span>
+              <span class="l">{s.label}</span>
+            </li>
+          ))}
+        </ul>
+      </header>
 
       <section class="block">
         <h2 class="cond h2">
@@ -65,12 +68,12 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
         </h2>
         <dl class="dec">
           {c.decisions.map((d) => (
-            <>
+            <div class="dec-item">
               <dt class="q">
                 <span aria-hidden="true">{d.emoji}</span> {d.title}
               </dt>
               <dd set:html={linkify(d.body)} />
-            </>
+            </div>
           ))}
         </dl>
       </section>
@@ -90,7 +93,10 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
               {c.legend.map((l) => (
                 <li style={`background: ${l.color}`}>
                   <span aria-hidden="true">{l.emoji}</span>
-                  <span class="place">{l.place}</span>
+                  <span class="leg-text">
+                    <span class="place">{l.place}</span>
+                    <span class="desc">{l.description}</span>
+                  </span>
                   <span class="mono muted sec">{l.section}</span>
                 </li>
               ))}
@@ -143,6 +149,23 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     text-transform: none;
     letter-spacing: 0.04em;
     max-width: var(--measure);
+  }
+  .intro,
+  .intro-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  @media (min-width: 1100px) {
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: clamp(40px, 5vw, 80px);
+      align-items: end;
+    }
+    .intro .tiles {
+      margin: 0;
+    }
   }
   .content {
     display: flex;
@@ -212,6 +235,22 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     font-size: 14px;
     line-height: 1.4;
   }
+  @media (min-width: 1100px), (max-width: 699px) {
+    .tiles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .tile {
+      padding: 16px 12px 16px;
+      border-top: 0;
+    }
+    .tile:nth-child(odd) {
+      padding-left: 0;
+      border-left: 0;
+    }
+    .tile:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+  }
   .block {
     margin-top: 32px;
   }
@@ -261,17 +300,17 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
   .dec {
     margin: 0;
     display: grid;
-    grid-template-columns: 260px minmax(0, 1fr);
-    gap: 0 40px;
-    align-items: start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 clamp(40px, 5vw, 80px);
   }
-  .dec dt,
-  .dec dd {
+  .dec-item {
     padding: 22px 0;
     border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
-  .dec dt:first-of-type,
-  .dec dd:first-of-type {
+  .dec-item:nth-child(-n + 2) {
     border-top: 0;
     padding-top: 0;
   }
@@ -287,7 +326,6 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     color: var(--text-body);
     font-size: 16px;
     line-height: 1.55;
-    max-width: var(--measure);
     text-wrap: pretty;
   }
   .legend {
@@ -298,7 +336,8 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
   }
   .legend li {
     padding: 14px 16px;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: baseline;
     gap: 12px;
     border-top: 1px solid var(--line2);
@@ -314,8 +353,18 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     text-transform: uppercase;
     line-height: 1;
   }
+  .legend .leg-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .legend .desc {
+    color: var(--text-body);
+    font-size: 15px;
+    line-height: 1.45;
+    text-wrap: pretty;
+  }
   .legend .sec {
-    margin-left: auto;
     font-size: 11px;
   }
   .updated {
@@ -337,6 +386,13 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     .kit {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+    .dec {
+      grid-template-columns: 1fr;
+    }
+    .dec-item:nth-child(2) {
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+    }
   }
   @media (max-width: 699px) {
     .colophon {
@@ -345,36 +401,11 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     .content .h2 {
       font-size: 32px;
     }
-    .tiles {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .tile {
-      padding: 16px 12px 16px;
-      border-top: 0;
-    }
-    .tile:nth-child(odd) {
-      padding-left: 0;
-      border-left: 0;
-    }
-    .tile:nth-child(n + 3) {
-      border-top: 1px solid var(--line);
-    }
     .tile .n {
       font-size: 36px;
     }
     .kit {
       grid-template-columns: 1fr;
-    }
-    .dec {
-      grid-template-columns: 1fr;
-    }
-    .dec dt {
-      padding-bottom: 8px;
-    }
-    .dec dd,
-    .dec dd:first-of-type {
-      border-top: 0;
-      padding-top: 0;
     }
   }
 </style>
