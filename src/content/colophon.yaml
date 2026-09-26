@@ -212,7 +212,9 @@
   credits: >-
     Design iterated with Claude Fable 5.1 on a design canvas over three rounds of direction, copy and
     responsive review, then built with Claude Code using lower-cost subagent sessions (Opus 5/Sonnet 5)
-    from a written plan, with parallel sessions in Git worktrees run under Agent of Empires. Fonts by their foundries under the SIL Open Font License. Hosted on Cloudflare.
+    from a written plan, with parallel sessions in Git worktrees run under Agent of Empires. Claude Code
+    also verifies each change end to end: the tests and preview before merge, then the production site
+    after the deploy. Fonts by their foundries under the SIL Open Font License. Hosted on Cloudflare.
   logos:
     label: 'Built with'
     pause: 'Pause'
