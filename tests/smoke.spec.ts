@@ -65,21 +65,14 @@ for (const width of heroGridWidths) {
   });
 }
 
-test.describe('colophon route map', () => {
-  for (const [width, height] of [
-    [1100, 700],
-    [1512, 860],
-    [1920, 1080],
-  ]) {
-    test(`stays whole while pinned at ${width}x${height}`, async ({ page }) => {
-      await page.setViewportSize({ width, height });
-      await page.goto('/colophon');
-      await page.evaluate(() => scrollTo(0, 1200));
-      const rail = (await page.locator('.rail').boundingBox())!;
-      expect(rail.y).toBeGreaterThan(0);
-      expect(rail.y + rail.height).toBeLessThanOrEqual(height);
-    });
-  }
+test('the colophon map scrolls with the page, beside the route section', async ({ page }) => {
+  await page.setViewportSize({ width: 1512, height: 860 });
+  await page.goto('/colophon');
+  const rail = page.locator('.route .rail');
+  await expect(rail).toHaveCSS('position', 'static');
+  const before = (await rail.boundingBox())!.y;
+  await page.evaluate(() => scrollBy(0, 400));
+  expect((await rail.boundingBox())!.y).toBeCloseTo(before - 400, 0);
 });
 
 test('every page ends with the same footer', async ({ page }) => {
