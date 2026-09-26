@@ -30,6 +30,7 @@ const sites: [string, string][] = [
   ['Bun', 'https://bun.sh'],
   ['mise', 'https://mise.jdx.dev'],
   ['Olo', 'https://www.olo.com'],
+  ['Tour Divide', 'https://tourdivide.org/'],
 ];
 
 const escape = (text: string) => text.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
