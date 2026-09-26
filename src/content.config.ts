@@ -229,7 +229,13 @@ const colophon = defineCollection({
     decisions: z.array(z.object({ emoji: z.string(), title: z.string(), body: z.string() })).min(3),
     legend: z
       .array(
-        z.object({ emoji: z.string(), place: z.string(), section: z.string(), color: z.string() }),
+        z.object({
+          emoji: z.string(),
+          place: z.string(),
+          section: z.string(),
+          color: z.string(),
+          description: z.string(),
+        }),
       )
       .length(6),
     themeNote: z.string(),

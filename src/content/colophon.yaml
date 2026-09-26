@@ -174,12 +174,41 @@
     around to help you, and finish. The homepage follows that route north to south, one scene per
     section, and the map on this page is shows the entirety and scale of the route.
   legend:
-    - { emoji: '🏔️', place: 'Banff', section: 'Hero', color: 'var(--bg-spruce)' }
-    - { emoji: '🏞️', place: 'Montana', section: 'Experience', color: 'var(--bg-lake)' }
-    - { emoji: '☀️', place: 'Wyoming', section: 'Impact', color: 'var(--bg-basin)' }
-    - { emoji: '🌙', place: 'Colorado', section: 'Leadership', color: 'var(--bg-alpine)' }
-    - { emoji: '🌄', place: 'New Mexico', section: 'Patents', color: 'var(--bg-desert)' }
-    - { emoji: '🏁', place: 'Antelope Wells', section: 'Contact', color: 'var(--bg-border)' }
+    - emoji: '🏔️'
+      place: 'Banff'
+      section: 'Hero'
+      color: 'var(--bg-spruce)'
+      description: 'Mile 0. Who I am, the roles I am after, and four numbers that sum up the work so far.'
+    - emoji: '🏞️'
+      place: 'Montana'
+      section: 'Experience'
+      color: 'var(--bg-lake)'
+      description: >-
+        Twenty-four years on one elevation chart, from hospital-bed firmware at Hill-Rom to platform
+        infrastructure at Olo.
+    - emoji: '☀️'
+      place: 'Wyoming'
+      section: 'Impact'
+      color: 'var(--bg-basin)'
+      description: >-
+        Five results with the numbers attached, from the Kubernetes migration to a smaller AWS bill.
+    - emoji: '🌙'
+      place: 'Colorado'
+      section: 'Leadership'
+      color: 'var(--bg-alpine)'
+      description: >-
+        Indiana Pass, the high point of the route, frames eighteen months leading Olo's Software
+        Infrastructure team.
+    - emoji: '🌄'
+      place: 'New Mexico'
+      section: 'Patents'
+      color: 'var(--bg-desert)'
+      description: '{{patents}} US patents from the medical-device years, and the degrees behind them.'
+    - emoji: '🏁'
+      place: 'Antelope Wells'
+      section: 'Contact'
+      color: 'var(--bg-border)'
+      description: 'The finish at the Mexican border: the contact form, email, LinkedIn and GitHub.'
   credits: >-
     Design iterated with Claude Fable 5.1 on a design canvas over three rounds of direction, copy and
     responsive review, then built with Claude Code using lower-cost subagent sessions (Opus 5/Sonnet 5)
