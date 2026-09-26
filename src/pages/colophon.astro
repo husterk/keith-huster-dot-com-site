@@ -20,94 +20,95 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
 <Base title={`${c.title} · ${site.name}`} description={c.description}>
   <Nav />
   <main id="main" class="colophon">
-    <div class="layout">
-      <aside class="rail" aria-label={c.map.label}>
-        <RouteMap />
-        <p class="mono muted rail-note">{c.map.railNote}</p>
-      </aside>
-      <article class="content">
-        <p class="mono eyebrow">{c.eyebrow}</p>
-        <h1 class="cond">{c.title}</h1>
-        <p class="lead">
-          {c.intro} {c.sourceNote}{' '}
-          <a href={c.repo} target="_blank" rel="noopener">
-            {repoLabel}
-          </a>
-          .
-        </p>
-        <p class="summary">{c.summary}</p>
+    <article class="content">
+      <p class="mono eyebrow">{c.eyebrow}</p>
+      <h1 class="cond">{c.title}</h1>
+      <p class="lead">
+        {c.intro} {c.sourceNote}{' '}
+        <a href={c.repo} target="_blank" rel="noopener">
+          {repoLabel}
+        </a>
+        .
+      </p>
+      <p class="summary">{c.summary}</p>
 
-        <ul class="tiles" aria-label={c.statsLabel}>
-          {c.stats.map((s) => (
-            <li class="tile">
-              <span class="n">{s.value}</span>
-              <span class="l">{s.label}</span>
+      <ul class="tiles" aria-label={c.statsLabel}>
+        {c.stats.map((s) => (
+          <li class="tile">
+            <span class="n">{s.value}</span>
+            <span class="l">{s.label}</span>
+          </li>
+        ))}
+      </ul>
+
+      <section class="block">
+        <h2 class="cond h2">
+          <span aria-hidden="true">{c.sections.kit.emoji}</span> {c.sections.kit.title}
+        </h2>
+        <ul class="kit">
+          {c.kit.map((k) => (
+            <li class="k">
+              <span class="k-emoji" aria-hidden="true">
+                {k.emoji}
+              </span>
+              <span class="mono muted w">{k.label}</span>
+              <span class="t" set:html={linkify(k.title)} />
+              <span class="d" set:html={linkify(k.why)} />
             </li>
           ))}
         </ul>
+      </section>
 
-        <section class="block">
-          <h2 class="cond h2">
-            <span aria-hidden="true">{c.sections.kit.emoji}</span> {c.sections.kit.title}
-          </h2>
-          <ul class="kit">
-            {c.kit.map((k) => (
-              <li class="k">
-                <span class="k-emoji" aria-hidden="true">
-                  {k.emoji}
-                </span>
-                <span class="mono muted w">{k.label}</span>
-                <span class="t" set:html={linkify(k.title)} />
-                <span class="d" set:html={linkify(k.why)} />
-              </li>
-            ))}
-          </ul>
-        </section>
+      <section class="block">
+        <h2 class="cond h2">
+          <span aria-hidden="true">{c.sections.decisions.emoji}</span> {c.sections.decisions.title}
+        </h2>
+        <dl class="dec">
+          {c.decisions.map((d) => (
+            <>
+              <dt class="q">
+                <span aria-hidden="true">{d.emoji}</span> {d.title}
+              </dt>
+              <dd set:html={linkify(d.body)} />
+            </>
+          ))}
+        </dl>
+      </section>
 
-        <section class="block">
-          <h2 class="cond h2">
-            <span aria-hidden="true">{c.sections.decisions.emoji}</span>{' '}
-            {c.sections.decisions.title}
-          </h2>
-          <dl class="dec">
-            {c.decisions.map((d) => (
-              <>
-                <dt class="q">
-                  <span aria-hidden="true">{d.emoji}</span> {d.title}
-                </dt>
-                <dd set:html={linkify(d.body)} />
-              </>
-            ))}
-          </dl>
-        </section>
+      <section class="block">
+        <h2 class="cond h2">
+          <span aria-hidden="true">{c.sections.route.emoji}</span> {c.sections.route.title}
+        </h2>
+        <div class="route">
+          <aside class="rail" aria-label={c.map.label}>
+            <RouteMap />
+            <p class="mono muted rail-note">{c.map.railNote}</p>
+          </aside>
+          <div class="route-text">
+            <p class="body theme" set:html={linkify(c.themeNote)} />
+            <ol class="legend">
+              {c.legend.map((l) => (
+                <li style={`background: ${l.color}`}>
+                  <span aria-hidden="true">{l.emoji}</span>
+                  <span class="place">{l.place}</span>
+                  <span class="mono muted sec">{l.section}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
 
-        <section class="block">
-          <h2 class="cond h2">
-            <span aria-hidden="true">{c.sections.route.emoji}</span> {c.sections.route.title}
-          </h2>
-          <p class="body theme" set:html={linkify(c.themeNote)} />
-          <ol class="legend">
-            {c.legend.map((l) => (
-              <li style={`background: ${l.color}`}>
-                <span aria-hidden="true">{l.emoji}</span>
-                <span class="place">{l.place}</span>
-                <span class="mono muted sec">{l.section}</span>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section class="block">
-          <h2 class="cond h2">
-            <span aria-hidden="true">{c.sections.credits.emoji}</span> {c.sections.credits.title}
-          </h2>
-          <p class="body" set:html={linkify(c.credits)} />
-          <p class="mono muted updated">
-            {c.updatedLabel} {updated}
-          </p>
-        </section>
-      </article>
-    </div>
+      <section class="block">
+        <h2 class="cond h2">
+          <span aria-hidden="true">{c.sections.credits.emoji}</span> {c.sections.credits.title}
+        </h2>
+        <p class="body" set:html={linkify(c.credits)} />
+        <p class="mono muted updated">
+          {c.updatedLabel} {updated}
+        </p>
+      </section>
+    </article>
   </main>
   <div class="page-foot">
     <Footer />
@@ -119,15 +120,19 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     background: var(--bg-spruce);
     padding: 40px var(--pad) 64px;
   }
-  .layout {
+  .route {
     display: grid;
-    grid-template-columns: minmax(340px, 34%) minmax(0, 1fr);
-    gap: clamp(48px, 5vw, 96px);
+    grid-template-columns: minmax(300px, 400px) minmax(0, 1fr);
+    gap: clamp(40px, 5vw, 80px);
     align-items: start;
   }
+  .route-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+  }
   .rail {
-    position: sticky;
-    top: 120px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -215,7 +220,7 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
   }
   .k {
@@ -289,20 +294,18 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     list-style: none;
     margin: 0;
     padding: 0;
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
     border: 1px solid var(--line2);
   }
   .legend li {
-    padding: 14px 12px;
+    padding: 14px 16px;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    border-left: 1px solid var(--line2);
+    align-items: baseline;
+    gap: 12px;
+    border-top: 1px solid var(--line2);
     font-size: 15px;
   }
   .legend li:first-child {
-    border-left: 0;
+    border-top: 0;
   }
   .legend .place {
     font-family: var(--font-cond);
@@ -312,6 +315,7 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     line-height: 1;
   }
   .legend .sec {
+    margin-left: auto;
     font-size: 11px;
   }
   .updated {
@@ -321,33 +325,17 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     background: var(--bg-spruce);
     padding: 0 var(--pad);
   }
-  @media (min-width: 1100px) {
-    .rail :global(.route-map) {
-      width: min(100%, calc((100dvh - 232px) * 632 / 1090));
-      margin-inline: auto;
-    }
-  }
   @media (max-width: 1099px) {
-    .layout {
+    .route {
       grid-template-columns: 1fr;
-      gap: 48px;
+      gap: 32px;
     }
     .rail {
-      position: static;
       order: 2;
       max-width: 520px;
     }
     .kit {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .legend {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .legend li:nth-child(4) {
-      border-left: 0;
-    }
-    .legend li:nth-child(n + 4) {
-      border-top: 1px solid var(--line2);
     }
   }
   @media (max-width: 699px) {
@@ -387,18 +375,6 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
     .dec dd:first-of-type {
       border-top: 0;
       padding-top: 0;
-    }
-    .legend {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .legend li:nth-child(4) {
-      border-left: 1px solid var(--line2);
-    }
-    .legend li:nth-child(odd) {
-      border-left: 0;
-    }
-    .legend li:nth-child(n + 3) {
-      border-top: 1px solid var(--line2);
     }
   }
 </style>
