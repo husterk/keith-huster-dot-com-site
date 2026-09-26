@@ -124,17 +124,3 @@ const { links, menu, cta } = site.nav;
     });
   }
 </script>
-
-<script>
-  document.querySelector<HTMLAnchorElement>('[data-home]')?.addEventListener('click', (event) => {
-    event.preventDefault();
-    if (location.pathname === '/') {
-      history.replaceState(null, '', '/');
-      history.scrollRestoration = 'manual';
-      scrollTo(0, 0);
-      location.reload();
-    } else {
-      location.href = '/';
-    }
-  });
-</script>
