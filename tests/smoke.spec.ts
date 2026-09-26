@@ -65,6 +65,23 @@ for (const width of heroGridWidths) {
   });
 }
 
+test.describe('colophon route map', () => {
+  for (const [width, height] of [
+    [1100, 700],
+    [1512, 860],
+    [1920, 1080],
+  ]) {
+    test(`stays whole while pinned at ${width}x${height}`, async ({ page }) => {
+      await page.setViewportSize({ width, height });
+      await page.goto('/colophon');
+      await page.evaluate(() => scrollTo(0, 1200));
+      const rail = (await page.locator('.rail').boundingBox())!;
+      expect(rail.y).toBeGreaterThan(0);
+      expect(rail.y + rail.height).toBeLessThanOrEqual(height);
+    });
+  }
+});
+
 test('every page ends with the same footer', async ({ page }) => {
   const footers: string[] = [];
   for (const path of ['/', '/resume', '/colophon', '/404']) {
