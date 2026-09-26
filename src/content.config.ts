@@ -125,12 +125,13 @@ const beyond = defineCollection({
       profile: z.object({
         label: z.string(),
         points: z.array(z.tuple([z.number(), z.number()])).min(10),
-        peaks: z.array(
+        markers: z.array(
           z.object({
             mile: z.number(),
             text: z.string(),
             anchor: z.enum(['start', 'middle', 'end']),
             high: z.boolean().default(false),
+            labelFt: z.number().optional(),
           }),
         ),
         states: z
