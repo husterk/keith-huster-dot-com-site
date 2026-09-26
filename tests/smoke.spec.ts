@@ -71,7 +71,18 @@ test('the Tour Divide card draws the elevation profile', async ({ page }) => {
   await expect(profile).toHaveAttribute('aria-label', /Indiana Pass, 11,910 feet/);
   await expect(profile.locator('.tp-line')).toHaveCount(1);
   await expect(profile.locator('.tp-bands rect')).toHaveCount(7);
-  await expect(profile.getByText('Indiana Pass · 11,910 ft')).toHaveCount(1);
+  await expect(profile.locator('.tp-markers circle')).toHaveCount(8);
+  for (const landmark of [
+    'Banff',
+    'Koko Claims',
+    'The Wall',
+    'Fleecer Ridge',
+    'Indiana Pass · 11,910 ft',
+    'Pie Town',
+    'Hachita',
+    'Antelope Wells',
+  ])
+    await expect(profile.getByText(landmark, { exact: true })).toHaveCount(1);
 });
 
 test('the colophon map scrolls with the page, beside the route section', async ({ page }) => {

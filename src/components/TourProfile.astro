@@ -2,11 +2,17 @@
 interface Props {
   label: string;
   points: [number, number][];
-  peaks: { mile: number; text: string; anchor: 'start' | 'middle' | 'end'; high: boolean }[];
+  markers: {
+    mile: number;
+    text: string;
+    anchor: 'start' | 'middle' | 'end';
+    high: boolean;
+    labelFt?: number;
+  }[];
   states: { from: number; short: string; name: string; color: string }[];
 }
 
-const { label, points, peaks, states } = Astro.props;
+const { label, points, markers, states } = Astro.props;
 
 const W = 640;
 const LEFT = 46;
@@ -35,10 +41,33 @@ const bands = states.map((s, i) => {
   const width = x(end) - x0;
   return { ...s, x0, width, text: width > 70 ? s.name : s.short };
 });
-const labeled = peaks.map((peak) => {
-  const point = at(peak.mile);
-  if (!point) throw new Error(`Tour profile peak at mile ${peak.mile} has no matching point`);
-  return { ...peak, px: x(point[0]), py: y(point[1]) };
+const labeled = markers.map((marker) => {
+  const point = at(marker.mile);
+  if (!point) throw new Error(`Tour profile marker at mile ${marker.mile} has no matching point`);
+  const px = x(point[0]);
+  const py = y(point[1]);
+  const nudge = marker.anchor === 'start' ? 6 : marker.anchor === 'end' ? -6 : 0;
+  if (marker.labelFt !== undefined) {
+    const ly = y(marker.labelFt);
+    const above = ly < py;
+    return {
+      ...marker,
+      px,
+      py,
+      lx: px + nudge,
+      ly,
+      leader: [above ? py - 5 : py + 5, above ? ly + 4 : ly - 12],
+    };
+  }
+  const beside = marker.anchor !== 'middle';
+  return {
+    ...marker,
+    px,
+    py,
+    lx: px + (beside ? nudge * 1.5 : 0),
+    ly: beside ? py + 4 : py - 11,
+    leader: undefined,
+  };
 });
 ---
 
@@ -79,22 +108,15 @@ const labeled = peaks.map((peak) => {
       </text>
     ))}
   </g>
-  <g class="tp-peaks">
-    {labeled.map((peak) => (
+  <g class="tp-markers">
+    {labeled.map((m) => (
       <>
-        <circle
-          cx={peak.px}
-          cy={peak.py}
-          r={peak.high ? 5 : 3.5}
-          class={peak.high ? 'tp-high' : ''}
-        />
-        <text
-          x={peak.px + (peak.anchor === 'start' ? 9 : peak.anchor === 'end' ? -9 : 0)}
-          y={peak.anchor === 'middle' ? peak.py - 11 : peak.py + 4}
-          text-anchor={peak.anchor}
-          class={peak.high ? 'tp-high' : ''}
-        >
-          {peak.text}
+        {m.leader !== undefined && (
+          <line class="tp-leader" x1={m.px} y1={m.leader[0]} x2={m.px} y2={m.leader[1]} />
+        )}
+        <circle cx={m.px} cy={m.py} r={m.high ? 5 : 3.5} />
+        <text x={m.lx} y={m.ly} text-anchor={m.anchor} class={m.high ? 'tp-high' : ''}>
+          {m.text}
         </text>
       </>
     ))}
@@ -138,12 +160,15 @@ const labeled = peaks.map((peak) => {
     fill: var(--bone);
     text-transform: uppercase;
   }
-  .tp-peaks circle {
+  .tp-leader {
+    stroke: var(--line3);
+  }
+  .tp-markers circle {
     fill: var(--bg-desert);
     stroke: var(--accent);
     stroke-width: 2;
   }
-  .tp-peaks text {
+  .tp-markers text {
     font-family: var(--font-cond);
     font-weight: 600;
     font-size: 13px;
@@ -155,14 +180,14 @@ const labeled = peaks.map((peak) => {
     stroke-width: 4px;
     stroke-linejoin: round;
   }
-  .tp-peaks text.tp-high {
+  .tp-markers text.tp-high {
     font-size: 15px;
     fill: var(--accent);
   }
   @media (max-width: 699px) {
     .tp-grid text,
     .tp-bands text,
-    .tp-peaks text {
+    .tp-markers text {
       display: none;
     }
     .tp-ticks text {

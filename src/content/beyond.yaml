@@ -12,9 +12,9 @@
     to: 'Mile 2,745 · Antelope Wells, NM (Mexico Border)'
     profile:
       label: >-
-        Tour Divide elevation profile: 2,745 miles from Banff, Alberta at about 4,500 feet, over Togwotee and
-        Boreas passes, to the route's high point at Indiana Pass, 11,910 feet, and down to Antelope Wells, New
-        Mexico, at about 4,500 feet.
+        Tour Divide elevation profile: 2,745 miles from Banff, Alberta at about 4,500 feet, past Koko Claims,
+        The Wall and Fleecer Ridge to the route's high point at Indiana Pass, 11,910 feet, then Pie Town and
+        Hachita, and down to Antelope Wells, New Mexico, at about 4,500 feet.
       # Approximate [mile, feet] points traced from the published Tour Divide profile; close enough to read the shape.
       points:
         - [0, 4540]
@@ -26,6 +26,7 @@
         - [190, 4600]
         - [200, 6300]
         - [215, 4200]
+        - [225, 5800]
         - [235, 6200]
         - [255, 2950]
         - [290, 3300]
@@ -105,10 +106,16 @@
         - [2670, 4500]
         - [2700, 4500]
         - [2745, 4550]
-      peaks:
-        - { mile: 1175, text: 'Togwotee Pass', anchor: middle }
-        - { mile: 1750, text: 'Boreas Pass', anchor: end }
-        - { mile: 2020, text: 'Indiana Pass · 11,910 ft', anchor: start, high: true }
+      # Famous landmarks. `labelFt` moves a crowded label to that height, above or below its point, with a leader line.
+      markers:
+        - { mile: 0, text: 'Banff', anchor: start, labelFt: 8200 }
+        - { mile: 200, text: 'Koko Claims', anchor: start, labelFt: 10200 }
+        - { mile: 225, text: 'The Wall', anchor: start, labelFt: 9200 }
+        - { mile: 830, text: 'Fleecer Ridge', anchor: middle }
+        - { mile: 2020, text: 'Indiana Pass · 11,910 ft', anchor: end, high: true }
+        - { mile: 2430, text: 'Pie Town', anchor: middle }
+        - { mile: 2700, text: 'Hachita', anchor: end, labelFt: 3400 }
+        - { mile: 2745, text: 'Antelope Wells', anchor: end, labelFt: 9000 }
       states:
         - { from: 0, short: 'AB', name: 'Alberta', color: 'var(--bg-spruce)' }
         - { from: 160, short: 'BC', name: 'British Columbia', color: 'var(--bg-spruce)' }
