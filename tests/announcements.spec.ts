@@ -89,10 +89,22 @@ const live = (id: string, extra: Partial<Scheduled> = {}): Scheduled => ({
 });
 
 for (const width of [1440, 390]) {
-  test(`an active announcement shows above the nav at ${width}px without shifting the page`, async ({
+  test(`an active announcement shows above the nav at ${width}px before first paint`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: 900 });
+    // Parser insertions reach a MutationObserver before the next paint, so a bar already
+    // displayed here was never drawn hidden and then shown, which would push the page down.
+    await page.addInitScript(() =>
+      new MutationObserver((records, observer) => {
+        for (const node of records.flatMap((r) => [...r.addedNodes]))
+          if (node instanceof Element && node.matches('.ann[data-announcement="shown"]')) {
+            (window as Window & { shownAtParse?: string }).shownAtParse =
+              getComputedStyle(node).display;
+            observer.disconnect();
+          }
+      }).observe(document, { childList: true, subtree: true }),
+    );
     await fixture([
       live('shown', { link: { label: 'Read more', href: 'https://example.com/post' } }),
       live('upcoming', { from: now + hour, until: null }),
@@ -107,31 +119,9 @@ for (const width of [1440, 390]) {
     expect(barBox.width).toBe(width);
     expect(navBox.y).toBeCloseTo(barBox.height, 0);
     await expect(bar.locator('a')).toHaveAttribute('target', '_blank');
-    const shift = await page.evaluate(
-      () =>
-        new Promise<number>((resolve) => {
-          new PerformanceObserver((list) =>
-            resolve(
-              list
-                .getEntries()
-                .filter(
-                  (e) =>
-                    (e as PerformanceEntry & { hadRecentInput: boolean }).hadRecentInput === false,
-                )
-                .filter((e) =>
-                  ((e as PerformanceEntry & { sources: { node?: Node }[] }).sources ?? []).some(
-                    (s) => s.node && (s.node as Element).closest?.('.ann, .nav'),
-                  ),
-                )
-                .reduce((sum, e) => sum + (e as PerformanceEntry & { value: number }).value, 0),
-            ),
-          ).observe({ type: 'layout-shift', buffered: true });
-          setTimeout(() => resolve(0), 500);
-        }),
-    );
-    // A bar shown after first paint would push the page down its full height (about 0.06 at
-    // 1440px); a web font swapping in reflows the text by far less.
-    expect(shift).toBeLessThan(0.01);
+    expect(
+      await page.evaluate(() => (window as Window & { shownAtParse?: string }).shownAtParse),
+    ).toBe('flex');
   });
 }
 
