@@ -47,6 +47,9 @@
   footerLinks:
     resume: 'Résumé'
     colophon: 'How this site was built'
+  announcement:
+    label: 'Announcement'
+    dismiss: 'Dismiss announcement'
   seo:
     title: 'Keith Huster · Reliable by design'
     description: >-

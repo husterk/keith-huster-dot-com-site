@@ -1,5 +1,6 @@
 ---
-import { getSite } from '../lib/content';
+import { getAnnouncements, getSite } from '../lib/content';
+import { barHtml, windowsJson } from '../lib/announcements';
 import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 import { headScript, unregisterServiceWorkers } from '../lib/inline-scripts.mjs';
 import '@fontsource/barlow-condensed/latin-500.css';
@@ -24,6 +25,7 @@ interface Props {
 
 const { title, description, image = '/og.png', noindex = false } = Astro.props;
 const site = await getSite();
+const announcements = await getAnnouncements();
 const canonical = new URL(Astro.url.pathname.replace(/(index)?\.html$/, ''), Astro.site);
 const imageUrl = new URL(image, Astro.site);
 ---
@@ -58,6 +60,14 @@ const imageUrl = new URL(image, Astro.site);
     <meta name="twitter:image" content={imageUrl} />
     <slot name="head" />
     <GoogleAnalytics />
+    {announcements.length > 0 && (
+      <script
+        type="application/json"
+        id="announcements"
+        is:inline
+        set:html={windowsJson(announcements)}
+      ></script>
+    )}
     <script is:inline set:html={headScript}></script>
   </head>
   <body>
@@ -65,6 +75,7 @@ const imageUrl = new URL(image, Astro.site);
       {site.nav.skip}
     </a>
     <script is:inline set:html={unregisterServiceWorkers}></script>
+    <Fragment set:html={announcements.map((a) => barHtml(a, site.announcement)).join('')} />
     <slot />
   </body>
 </html>

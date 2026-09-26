@@ -1,0 +1,12 @@
+# Announcements for the bar above the nav. Keep past ones here as a record; the build drops
+# any whose end date has passed. Dates are whole days in Mountain Time (America/Denver):
+# the bar appears at midnight on start and stays through the end of the end date. With no
+# end, it stays until one is added. When two overlap, the later start wins. Every entry
+# ships in the page source from the first deploy after it merges, so only merge an
+# announcement once it can be public. Preview a date with ?announce-at=YYYY-MM-DD.
+- id: new-website-2026
+  tag: 'New'
+  text: 'My new website is live.'
+  link: { label: 'Read the announcement', href: 'https://lnkd.in/p/gWhN-9qC' }
+  start: 2026-09-26
+  end: 2026-10-02

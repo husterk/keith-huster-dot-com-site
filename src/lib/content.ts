@@ -1,4 +1,5 @@
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import { schedule } from './announcements';
 
 type Single = 'site' | 'leadership' | 'patents' | 'beyond' | 'resume' | 'colophon';
 
@@ -40,6 +41,15 @@ export const getPatents = () => single('patents');
 export const getBeyond = () => single('beyond');
 export const getResume = () => single('resume');
 export const getColophon = () => single('colophon');
+
+export const getAnnouncements = async (now = Date.now()) => {
+  const known = await facts();
+  const list = (await getCollection('announcements')).map(({ id, data }) => {
+    if (!/^[a-z0-9-]+$/.test(id)) throw new Error(`Announcement id ${id}: use a-z, 0-9 and -`);
+    return { id, ...fill(data, known) };
+  });
+  return schedule(list, now);
+};
 
 export const getPositions = async () => [...(await getResume()).positions].reverse();
 
