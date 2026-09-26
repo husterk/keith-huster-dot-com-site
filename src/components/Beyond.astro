@@ -2,6 +2,7 @@
 import { getBeyond } from '../lib/content';
 import { linkify } from '../lib/links';
 import TourProfile from './TourProfile.astro';
+import BoxIcon from './BoxIcon.astro';
 
 const beyond = await getBeyond();
 const { feature, boxes } = beyond;
@@ -31,16 +32,21 @@ const { feature, boxes } = beyond;
     <ul class="side">
       {boxes.map((box) => (
         <li class="box">
-          <div class="mono muted" style="font-size: 12px;">
-            {/^[a-z0-9.-]+\.[a-z]{2,}(\/\S*)?$/i.test(box.caption) ? (
-              <a href={`https://${box.caption}`} target="_blank" rel="noopener">
-                {box.caption}
-              </a>
-            ) : (
-              box.caption
-            )}
+          <div class="box-head">
+            <BoxIcon name={box.icon} />
+            <div class="box-name">
+              <div class="mono muted" style="font-size: 12px;">
+                {/^[a-z0-9.-]+\.[a-z]{2,}(\/\S*)?$/i.test(box.caption) ? (
+                  <a href={`https://${box.caption}`} target="_blank" rel="noopener">
+                    {box.caption}
+                  </a>
+                ) : (
+                  box.caption
+                )}
+              </div>
+              <div class="t">{box.title}</div>
+            </div>
           </div>
-          <div class="t">{box.title}</div>
           <div class="d" set:html={linkify(box.body)} />
         </li>
       ))}
