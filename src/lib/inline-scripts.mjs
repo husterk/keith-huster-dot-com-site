@@ -1,3 +1,12 @@
+export function pickAnnouncement(windows, now, dismissed) {
+  let pick = null;
+  for (const a of windows) {
+    const open = a.from <= now && (a.until === null || now < a.until);
+    if (open && !dismissed.includes(a.id) && (!pick || a.from >= pick.from)) pick = a;
+  }
+  return pick ? pick.id : null;
+}
+
 export const headScript = `if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
   document.documentElement.classList.add('rides');
 (() => {
@@ -88,6 +97,44 @@ export const headScript = `if (!matchMedia('(prefers-reduced-motion: reduce)').m
     }
     const el = byHash(location.hash);
     if (el) glide(el);
+  });
+})();
+(() => {
+  const data = document.getElementById('announcements');
+  if (!data) return;
+  const windows = JSON.parse(data.textContent);
+  const key = 'dismissed-announcements';
+  let dismissed = [];
+  try {
+    dismissed = JSON.parse(localStorage.getItem(key) || '[]');
+  } catch {}
+  if (!Array.isArray(dismissed)) dismissed = [];
+  let now = Date.now();
+  const at = new URLSearchParams(location.search).get('announce-at');
+  if (at) {
+    const t = Date.parse(at.includes('T') ? at : at + 'T12:00:00-07:00');
+    if (!Number.isNaN(t)) now = t;
+  }
+  ${pickAnnouncement}
+  const id = pickAnnouncement(windows, now, dismissed);
+  if (!id) return;
+  try {
+    const sheet = new CSSStyleSheet();
+    sheet.replaceSync('.ann[data-announcement="' + id + '"] { display: flex; }');
+    document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+  } catch {
+    return;
+  }
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest && event.target.closest('[data-dismiss-announcement]');
+    if (!button) return;
+    const kept = dismissed.filter((d) => windows.some((w) => w.id === d));
+    try {
+      localStorage.setItem(key, JSON.stringify([...kept, id]));
+    } catch {}
+    button.closest('.ann').remove();
+    const home = document.querySelector('[data-home]');
+    if (home) home.focus();
   });
 })();`;
 

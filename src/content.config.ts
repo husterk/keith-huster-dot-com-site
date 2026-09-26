@@ -5,6 +5,10 @@ import { file } from 'astro/loaders';
 const link = z.object({ label: z.string(), href: z.string() });
 const stat = z.object({ value: z.string(), label: z.string() });
 const yearMonth = z.string().regex(/^\d{4}-\d{2}$/, 'use YYYY-MM');
+// YAML reads an unquoted 2026-09-26 as a Date at UTC midnight.
+const day = z
+  .union([z.date(), z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'use YYYY-MM-DD')])
+  .transform((d) => (d instanceof Date ? d.toISOString().slice(0, 10) : d));
 
 const site = defineCollection({
   loader: file('src/content/site.yaml'),
@@ -28,6 +32,7 @@ const site = defineCollection({
     }),
     footer: z.string(),
     footerLinks: z.object({ resume: z.string(), colophon: z.string() }),
+    announcement: z.object({ label: z.string(), dismiss: z.string() }),
     seo: z.object({ title: z.string(), description: z.string() }),
     person: z.object({
       city: z.string(),
@@ -275,8 +280,23 @@ const colophon = defineCollection({
   }),
 });
 
+const announcements = defineCollection({
+  loader: file('src/content/announcements.yaml'),
+  schema: z
+    .object({
+      tag: z.string(),
+      text: z.string(),
+      link: link.optional(),
+      start: day,
+      end: day.optional(),
+      dismissible: z.boolean().default(true),
+    })
+    .refine((a) => !a.end || a.end >= a.start, 'end must not be before start'),
+});
+
 export const collections = {
   site,
+  announcements,
   experience,
   impact,
   leadership,
