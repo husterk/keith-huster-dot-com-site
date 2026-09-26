@@ -244,7 +244,7 @@ const colophon = defineCollection({
       label: z.string(),
       pause: z.string(),
       play: z.string(),
-      items: z.array(z.object({ name: z.string(), icon: z.string() })).min(6),
+      items: z.array(z.object({ name: z.string(), icon: z.string(), href: z.url() })).min(6),
     }),
   }),
 });

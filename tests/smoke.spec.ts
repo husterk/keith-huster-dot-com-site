@@ -93,6 +93,21 @@ test.describe('colophon logo strip', () => {
     await expect(track).toHaveCSS('animation-play-state', 'running');
   });
 
+  test('each logo links out, and only the visible copy takes focus', async ({ page }) => {
+    await page.goto('/colophon');
+    const strip = page.locator('[data-marquee]');
+    const links = strip.locator('ul:not([aria-hidden]) a');
+    await expect(links).toHaveCount(15);
+    for (const link of await links.all()) {
+      await expect(link).toHaveAttribute('href', /^https:\/\//);
+      await expect(link).toHaveAttribute('target', '_blank');
+      await expect(link).toHaveAttribute('rel', /noopener/);
+    }
+    const copies = strip.locator('ul[aria-hidden="true"] a');
+    await expect(copies).toHaveCount(15);
+    for (const copy of await copies.all()) await expect(copy).toHaveAttribute('tabindex', '-1');
+  });
+
   test('holds still under reduced motion, each logo listed once', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/colophon');

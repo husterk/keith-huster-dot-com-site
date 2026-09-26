@@ -5,7 +5,7 @@ interface Props {
   label: string;
   pause: string;
   play: string;
-  items: { name: string; icon: string }[];
+  items: { name: string; icon: string; href: string }[];
 }
 
 const { label, pause, play, items } = Astro.props;
@@ -21,12 +21,12 @@ const luminance = (hex: string) => {
   });
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 };
-const logos = items.map(({ name, icon }) => {
+const logos = items.map(({ name, icon, href }) => {
   const found = bySlug.get(icon);
   if (!found) throw new Error(`No Simple Icons logo named "${icon}" for ${name}`);
   // Near-black brand colors would vanish on the dark page, so those fall back to the text color.
   const brand = luminance(found.hex) > 0.12 ? `#${found.hex}` : 'var(--bone)';
-  return { name, path: found.path, brand };
+  return { name, href, path: found.path, brand };
 });
 ---
 
@@ -41,10 +41,12 @@ const logos = items.map(({ name, icon }) => {
         >
           {logos.map((logo) => (
             <li style={`--brand: ${logo.brand}`}>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d={logo.path} />
-              </svg>
-              <span>{logo.name}</span>
+              <a href={logo.href} target="_blank" rel="noopener" tabindex={copy ? -1 : undefined}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d={logo.path} />
+                </svg>
+                <span>{logo.name}</span>
+              </a>
             </li>
           ))}
         </ul>
@@ -83,11 +85,13 @@ const logos = items.map(({ name, icon }) => {
     margin: 0;
     list-style: none;
   }
-  .set li {
+  .set a {
     display: flex;
     align-items: center;
     gap: 12px;
+    padding-block: 8px;
     color: var(--mute);
+    text-decoration: none;
     font-family: var(--font-cond);
     font-weight: 600;
     font-size: 26px;
@@ -96,7 +100,8 @@ const logos = items.map(({ name, icon }) => {
     white-space: nowrap;
     transition: color 0.2s;
   }
-  .set li:hover {
+  .set a:hover,
+  .set a:focus-visible {
     color: var(--brand);
   }
   .set svg {
@@ -118,6 +123,7 @@ const logos = items.map(({ name, icon }) => {
     color: var(--bone);
   }
   .window:hover .track,
+  .window:focus-within .track,
   .marquee[data-paused] .track {
     animation-play-state: paused;
   }
