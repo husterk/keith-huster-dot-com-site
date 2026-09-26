@@ -31,6 +31,7 @@ const sites: [string, string][] = [
   ['mise', 'https://mise.jdx.dev'],
   ['Olo', 'https://www.olo.com'],
   ['Tour Divide', 'https://tourdivide.org/'],
+  ['Agent of Empires', 'https://www.agent-of-empires.com/'],
 ];
 
 const escape = (text: string) => text.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);

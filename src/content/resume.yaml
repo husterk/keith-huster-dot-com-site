@@ -28,7 +28,7 @@
     hires: 2
     highSeverityIncidents: 0
   headline: Senior Software Engineer II
-  tagline: Staff-Track Platform Engineer · Distributed Systems · .NET · Technical Leadership
+  tagline: Staff-Track Platform Engineer · Distributed Systems · .NET · Agentic AI Development · Technical Leadership
   location: Orem, UT, USA
   summary: >-
     {{years}} years architecting and scaling distributed .NET platforms: service-oriented architecture,
@@ -45,6 +45,9 @@
       Drove org-wide modernization and service-oriented rearchitecture: migrated 5 core services from EC2
       to Kubernetes (EKS), decentralized TeamCity-to-GitHub Actions CI/CD, and shared platform libraries
       used by {{libraryEngineers}} engineers.
+    - >-
+      Advanced practitioner of agentic AI development: plans, builds and reviews with Claude and Claude Code,
+      running several agent workstreams in parallel, each in its own Git worktree, under Agent of Empires.
     - >-
       Lead or sole inventor on the majority of {{patents}} US patents; two-time recipient of "Patent of the Year"
       and the President's Innovation Award.
@@ -64,6 +67,9 @@
           Drive in-flight EC2-to-Kubernetes (EKS) and CI/CD modernization to completion across remaining
           services and libraries; contribute to cross-team architectural direction through RFCs and design
           reviews.
+        - >-
+          Deliver platform work through agentic AI development with Claude Code and Agent of Empires, running
+          parallel workstreams in isolated Git worktrees from written plan to reviewed pull request.
     - org: Olo
       industry: Restaurant Technology
       title: Team Lead II
@@ -190,11 +196,19 @@
       items: .NET, .NET Core, ASP.NET, React, GraphQL, Relay, MSSQL, PostgreSQL
     - label: Operating Systems
       items: Linux, Windows
+    - label: AI-Assisted Development
+      items: >-
+        Claude, Claude Code, Agent of Empires, agentic workflows, parallel agent sessions in Git worktrees,
+        subagent delegation, AI-assisted code review
     - label: Leadership
       items: >-
         Technical strategy & RFCs, design review, team leadership, mentorship, Agile (Scrum / Kanban),
         cross-functional project management
   projects:
+    - name: KeithHuster.com
+      body: >-
+        This site: Astro on Cloudflare Workers, built with Claude Code in parallel Git worktrees, behind CI
+        gates for tests, accessibility and Lighthouse budgets.
     - name: KeithAndLindsey.com
       body: >-
         Travel blog on Ghost CMS with a fully custom theme, a GitHub Actions CI/CD pipeline, and two
