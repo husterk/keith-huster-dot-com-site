@@ -108,6 +108,28 @@ test.describe('colophon logo strip', () => {
     for (const copy of await copies.all()) await expect(copy).toHaveAttribute('tabindex', '-1');
   });
 
+  test('resumes after a logo opens its site and the tab is closed', async ({ page, context }) => {
+    await context.route(/^https:\/\/(?!localhost)/, (route) => route.fulfill({ body: 'ok' }));
+    await page.goto('/colophon');
+    const strip = page.locator('[data-marquee]');
+    const track = strip.locator('.track');
+    const opened = context.waitForEvent('page');
+    await strip.locator('ul:not([aria-hidden]) a').first().click({ force: true });
+    await (await opened).close();
+    await page.bringToFront();
+    await page.mouse.move(0, 0);
+    await expect(track).toHaveCSS('animation-play-state', 'running');
+  });
+
+  test('keyboard focus on a logo pauses the strip', async ({ page }) => {
+    await page.goto('/colophon');
+    const strip = page.locator('[data-marquee]');
+    await strip.locator('ul:not([aria-hidden]) a').first().focus();
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Tab');
+    await expect(strip.locator('.track')).toHaveCSS('animation-play-state', 'paused');
+  });
+
   test('holds still under reduced motion, each logo listed once', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/colophon');
