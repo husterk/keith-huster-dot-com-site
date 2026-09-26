@@ -1,12 +1,12 @@
 ---
 interface Props {
-  name: 'helmet' | 'rack' | 'map';
+  name: 'helmet' | 'rack' | 'map' | 'rider';
 }
 
 const { name } = Astro.props;
 ---
 
-<svg class="box-icon" viewBox="0 0 48 48" aria-hidden="true">
+<svg class="box-icon" viewBox={name === 'rider' ? '-2 -16 100 90' : '0 0 48 48'} aria-hidden="true">
   {name === 'helmet' && (
     <>
       <path class="ink" d="M11 30 C11 18.5 17 11 24 11 C31 11 37 18.5 37 30" />
@@ -20,6 +20,22 @@ const { name } = Astro.props;
       />
       <path class="accent" d="M18 15.5 Q24 11.5 30 15.5 V23 L24 28.5 L18 23 Z" />
       <path class="cut" d="M20.8 17.3 Q24 15.4 27.2 17.3 V22 L24 25 L20.8 22 Z" />
+    </>
+  )}
+  {name === 'rider' && (
+    <>
+      <path class="limb far" d="M37,20 L40.2,39.7 L38.3,59.7" />
+      <g class="frame">
+        <circle cx="18" cy="54" r="15" />
+        <circle cx="78" cy="54" r="15" />
+        <path d="M18,54 L37,29 L66,29 L44,54 Z M37,29 L44,54 M66,29 L78,54 M66,29 L64,22 L72,20 M37,29 L35,23 M29,23 L41,23" />
+      </g>
+      <path class="accent" d="M41,32 L62,32 L46,50 Z" />
+      <path class="accent" d="M31,21 L10,17 L12,27 L32,27 Z" />
+      <rect class="accent" x="68" y="12" width="12" height="9" rx="4.5" />
+      <path class="limb" d="M37,20 L57,4 L69,19 M37,20 L54.8,29.0 L49.7,48.3" />
+      <circle class="head" cx="62" cy="-5" r="6" />
+      <path class="accent" d="M55,-6 C56,-14 68,-14 69,-6 Z" />
     </>
   )}
   {name === 'rack' && (
@@ -73,6 +89,26 @@ const { name } = Astro.props;
   }
   .cut-fill {
     fill: var(--bg-desert);
+  }
+  .frame {
+    fill: none;
+    stroke: var(--text-soft);
+    stroke-width: 3.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .limb {
+    fill: none;
+    stroke: var(--text-soft);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .limb.far {
+    opacity: 0.55;
+  }
+  .head {
+    fill: var(--text-soft);
   }
   .dim {
     fill: var(--mute);

@@ -15,10 +15,15 @@ const { feature, boxes } = beyond;
   </div>
   <div class="grid">
     <div class="panel">
-      <div class="mono muted" style="font-size: 12px;">
-        {feature.caption}
+      <div class="box-head">
+        <BoxIcon name={feature.icon} />
+        <div class="box-name">
+          <div class="mono muted" style="font-size: 12px;">
+            {feature.caption}
+          </div>
+          <div class="t">{feature.title}</div>
+        </div>
       </div>
-      <div class="t">{feature.title}</div>
       <p class="body" set:html={linkify(feature.body)} />
       <TourProfile {...feature.profile} />
       <div
