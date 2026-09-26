@@ -1,8 +1,12 @@
 import { chromium } from '@playwright/test';
 import { readFile, writeFile } from 'node:fs/promises';
 import { extname } from 'node:path';
+import { parse } from 'yaml';
 
 const dist = new URL('../dist/client/', import.meta.url);
+const resume = parse(
+  await readFile(new URL('../src/content/resume.yaml', import.meta.url), 'utf8'),
+)[0];
 const origin = 'http://resume.build';
 const types = {
   '.html': 'text/html',
@@ -38,7 +42,7 @@ try {
     tagged: true,
     outline: true,
   });
-  await writeFile(new URL('Keith-Huster-Resume.pdf', dist), pdf);
+  await writeFile(new URL(resume.page.pdf.slice(1), dist), pdf);
   console.log(`résumé PDF: ${pdf.length} bytes`);
 } finally {
   await browser.close();

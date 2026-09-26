@@ -140,6 +140,7 @@ const resume = defineCollection({
         description: z.string(),
         eyebrow: z.string(),
         download: z.string(),
+        pdf: z.string().regex(/^\/[\w-]+\.pdf$/),
       }),
       sections: z.record(
         z.enum(['summary', 'experience', 'education', 'skills', 'projects', 'beyond']),
