@@ -20,20 +20,20 @@ export const headScript = `if (!matchMedia('(prefers-reduced-motion: reduce)').m
     }
     el.focus({ preventScroll: true });
   };
-  const glide = (el) => {
+  const glide = (el, target = () => top(el)) => {
     stop();
     if (reduce) {
-      scrollTo(0, top(el));
+      scrollTo(0, target());
       land(el);
       return;
     }
     const from = scrollY;
-    const duration = Math.min(900, 300 + Math.abs(top(el) - from) / 4);
+    const duration = Math.min(900, 300 + Math.abs(target() - from) / 4);
     const started = performance.now();
     const step = (now) => {
       const t = Math.min(1, (now - started) / duration);
       const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      scrollTo(0, from + (top(el) - from) * eased);
+      scrollTo(0, from + (target() - from) * eased);
       if (t < 1) frame = requestAnimationFrame(step);
       else land(el);
     };
@@ -65,8 +65,15 @@ export const headScript = `if (!matchMedia('(prefers-reduced-motion: reduce)').m
     stop();
     if (link.classList.contains('skip') || event.defaultPrevented) return;
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    if (link.origin !== location.origin || link.pathname !== location.pathname || !link.hash)
+    if (link.origin !== location.origin || link.pathname !== location.pathname) return;
+    const main = document.getElementById('main');
+    if (link.hasAttribute('data-home') && main) {
+      event.preventDefault();
+      if (location.hash) history.pushState(null, '', location.pathname + location.search);
+      glide(main, () => 0);
       return;
+    }
+    if (!link.hash) return;
     const el = byHash(link.hash);
     if (!el) return;
     event.preventDefault();
@@ -74,7 +81,12 @@ export const headScript = `if (!matchMedia('(prefers-reduced-motion: reduce)').m
     glide(el);
   });
   addEventListener('popstate', () => {
-    const el = location.hash && byHash(location.hash);
+    if (!location.hash) {
+      const main = document.getElementById('main');
+      if (main) glide(main, () => 0);
+      return;
+    }
+    const el = byHash(location.hash);
     if (el) glide(el);
   });
 })();`;

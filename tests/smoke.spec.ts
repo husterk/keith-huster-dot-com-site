@@ -235,16 +235,28 @@ test.describe('phone menu', () => {
   });
 });
 
-test('the nav stays visible, the brand returns to the top, and external links open in a new tab', async ({
+test('the nav stays visible, the brand glides back to the top, and external links open in a new tab', async ({
   page,
 }) => {
   await page.goto('/#contact');
   await page.waitForTimeout(300);
   expect((await page.locator('header.nav').boundingBox())!.y).toBe(0);
+  await expect(page.locator('#contact')).toBeFocused();
+  await page.evaluate(() => ((window as unknown as { stayed: boolean }).stayed = true));
+  const start = await page.evaluate(() => scrollY);
   await page.locator('header.nav a.brand').click();
-  await page.waitForLoadState('load');
+  await page.waitForTimeout(150);
+  const midway = await page.evaluate(() => scrollY);
+  expect(midway).toBeGreaterThan(0);
+  expect(midway).toBeLessThan(start);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
   expect(new URL(page.url()).pathname + new URL(page.url()).hash).toBe('/');
-  expect(await page.evaluate(() => scrollY)).toBe(0);
+  expect(await page.evaluate(() => (window as unknown as { stayed?: boolean }).stayed)).toBe(true);
+  await expect(page.locator('#main')).toBeFocused();
+  await page.goBack();
+  await expect(page.locator('#contact')).toBeFocused();
+  await page.goForward();
+  await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
   const external = page.locator('a[href^="http"]:not([href*="keithhuster.com"])');
   expect(await external.count()).toBeGreaterThan(0);
   for (const link of await external.all()) {
