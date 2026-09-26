@@ -65,6 +65,24 @@ for (const width of heroGridWidths) {
   });
 }
 
+test('every page ends with the same footer', async ({ page }) => {
+  const footers: string[] = [];
+  for (const path of ['/', '/resume', '/colophon', '/404']) {
+    await page.goto(path);
+    const footer = page.locator('footer.foot');
+    await expect(footer).toHaveCount(1);
+    footers.push((await footer.textContent())!.replace(/\s+/g, ' ').trim());
+    const current = footer.locator('a[aria-current="page"]');
+    if (path === '/resume' || path === '/colophon') {
+      await expect(current).toHaveAttribute('href', path);
+    } else {
+      await expect(current).toHaveCount(0);
+    }
+  }
+  expect(new Set(footers).size).toBe(1);
+  expect(footers[0]).not.toContain('Back to the site');
+});
+
 test.describe('page transitions', () => {
   const recordReveal = async (page: Page) =>
     page.addInitScript(() =>

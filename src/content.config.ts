@@ -27,7 +27,7 @@ const site = defineCollection({
       githubLabel: z.string(),
     }),
     footer: z.string(),
-    footerLinks: z.object({ resume: z.string(), colophon: z.string(), back: z.string() }),
+    footerLinks: z.object({ resume: z.string(), colophon: z.string() }),
     seo: z.object({ title: z.string(), description: z.string() }),
     person: z.object({
       city: z.string(),
