@@ -247,6 +247,11 @@ const month = (ym: string) =>
     display: flex;
     flex-direction: column;
     gap: 1px;
+  }
+  .rs-role > .rs-row {
+    break-after: avoid;
+  }
+  .rs-bullets li {
     break-inside: avoid;
   }
   .rs-role + .rs-role {
@@ -331,7 +336,7 @@ const month = (ym: string) =>
 
   @page {
     size: letter;
-    margin: 0.5in;
+    margin: 0.45in 0.5in;
   }
   @media print {
     .resume-page {
@@ -346,9 +351,15 @@ const month = (ym: string) =>
     .sheet {
       max-width: none;
       padding: 0 0.05in;
-      font-size: 9.6pt;
+      font-size: 9.2pt;
       box-shadow: none;
       background: #fff;
+    }
+    .sheet section {
+      margin-top: 0.7em;
+    }
+    .rs-role + .rs-role {
+      margin-top: 0.3em;
     }
   }
 </style>

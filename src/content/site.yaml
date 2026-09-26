@@ -30,6 +30,7 @@
     - 'Datadog · Sumo Logic · Raygun'
     - 'React · GraphQL · TypeScript'
     - 'MSSQL · PostgreSQL'
+    - 'Claude Code · Agent of Empires'
   links:
     email: husterk@gmail.com
     linkedin: https://www.linkedin.com/in/husterk/
@@ -50,7 +51,8 @@
     title: 'Keith Huster · Reliable by design'
     description: >-
       Keith Huster, Senior / Staff Software Engineer and Engineering Manager. Distributed .NET
-      platforms, Kubernetes, CI/CD, and {{patents}} US patents. Remote from Orem, Utah.
+      platforms, Kubernetes, CI/CD, agentic AI development with Claude Code, and {{patents}} US patents.
+      Remote from Orem, Utah.
   person:
     city: 'Orem'
     region: 'UT'
