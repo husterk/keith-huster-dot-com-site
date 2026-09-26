@@ -129,7 +129,9 @@ for (const width of [1440, 390]) {
           setTimeout(() => resolve(0), 500);
         }),
     );
-    expect(shift).toBe(0);
+    // A bar shown after first paint would push the page down its full height (about 0.06 at
+    // 1440px); a web font swapping in reflows the text by far less.
+    expect(shift).toBeLessThan(0.01);
   });
 }
 
