@@ -46,7 +46,6 @@
   footerLinks:
     resume: 'Résumé'
     colophon: 'How this site was built'
-    back: 'Back to the site'
   seo:
     title: 'Keith Huster · Reliable by design'
     description: >-
@@ -121,6 +120,7 @@
     sendFailed: 'Something went wrong sending your message. {direct}'
     turnstileFailed: "The anti-spam check didn't pass. Please try again, or email me directly."
     pageThanks: 'Thanks'
+    pageBack: 'Back to the site'
     pageSorry: 'Sorry'
   notFound:
     title: 'Not found'

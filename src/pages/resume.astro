@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 import { getResume, getSite } from '../lib/content';
 
 const r = await getResume();
@@ -13,7 +14,6 @@ const month = (ym: string) =>
     year: 'numeric',
     timeZone: 'UTC',
   });
-const year = new Date().getFullYear();
 ---
 
 <Base title={`${r.page.title} · ${site.name}`} description={r.page.description}>
@@ -131,12 +131,9 @@ const year = new Date().getFullYear();
       </section>
     </article>
   </main>
-  <footer class="foot page-foot">
-    <span>
-      <a href="/">{site.footerLinks.back}</a>
-    </span>
-    <span>© {year}</span>
-  </footer>
+  <div class="page-foot">
+    <Footer />
+  </div>
 </Base>
 
 <style>
@@ -299,7 +296,7 @@ const year = new Date().getFullYear();
     font-weight: 600;
   }
   .page-foot {
-    margin: 0 var(--pad);
+    padding: 0 var(--pad);
   }
 
   @media (max-width: 699px) {

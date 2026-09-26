@@ -1,10 +1,10 @@
 ---
 import { getSite } from '../lib/content';
 import ContactForm from './ContactForm.astro';
+import Footer from './Footer.astro';
 
 const site = await getSite();
-const { contact, links, footer, footerLinks } = site;
-const year = new Date().getFullYear();
+const { contact, links } = site;
 ---
 
 <section id="contact" class="contact">
@@ -30,11 +30,5 @@ const year = new Date().getFullYear();
     </div>
   </div>
   <slot name="scene" />
-  <footer class="foot">
-    <span>{footer}</span>
-    <span>
-      <a href="/resume">{footerLinks.resume}</a> · <a href="/colophon">{footerLinks.colophon}</a> ·
-      ©{year}
-    </span>
-  </footer>
+  <Footer />
 </section>

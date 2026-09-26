@@ -22,10 +22,18 @@ export const POST: APIRoute = async ({ request }) => {
   const reply = (status: number, message: string, extra: Record<string, unknown> = {}) =>
     wantsJson
       ? Response.json({ ok: status < 300, message, ...extra }, { status })
-      : new Response(page(status < 300 ? t('pageThanks') : t('pageSorry'), message, site?.data), {
-          status,
-          headers: { 'content-type': 'text/html;charset=utf-8' },
-        });
+      : new Response(
+          page(
+            status < 300 ? t('pageThanks') : t('pageSorry'),
+            message,
+            t('pageBack'),
+            site?.data.name,
+          ),
+          {
+            status,
+            headers: { 'content-type': 'text/html;charset=utf-8' },
+          },
+        );
   const log = (outcome: string, extra: Record<string, unknown> = {}) =>
     console.log(
       JSON.stringify({ requestId, outcome, version, ms: Date.now() - started, ...extra }),
@@ -119,13 +127,7 @@ function referrerOrigin(request: Request) {
   }
 }
 
-function page(
-  title: string,
-  message: string,
-  site?: { name: string; footerLinks: { back: string } },
-) {
-  const name = site?.name ?? '';
-  const back = site?.footerLinks.back ?? 'Back';
+function page(title: string, message: string, back: string, name = '') {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escapeHtml(title)} · ${escapeHtml(name)}</title></head>
 <body style="margin:0;background:#1b0f0b;color:#ebe6d8;font:19px/1.6 Barlow,system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;padding:24px;box-sizing:border-box">
 <main style="max-width:560px"><h1 style="font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;font-size:56px;line-height:.95;margin:0 0 16px">${title}</h1>

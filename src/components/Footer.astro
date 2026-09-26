@@ -1,0 +1,26 @@
+---
+import { getSite } from '../lib/content';
+
+const { footer, footerLinks } = await getSite();
+const year = new Date().getFullYear();
+const here = Astro.url.pathname.replace(/\.html$/, '');
+const pages = [
+  { href: '/resume', label: footerLinks.resume },
+  { href: '/colophon', label: footerLinks.colophon },
+];
+---
+
+<footer class="foot">
+  <span>{footer}</span>
+  <span>
+    {pages.map((p) => (
+      <>
+        <a href={p.href} aria-current={here === p.href ? 'page' : undefined}>
+          {p.label}
+        </a>
+        {' · '}
+      </>
+    ))}
+    ©&nbsp;{year}
+  </span>
+</footer>
