@@ -123,7 +123,7 @@ const logos = items.map(({ name, icon, href }) => {
     color: var(--bone);
   }
   .window:hover .track,
-  .window:focus-within .track,
+  .window:has(a:focus-visible) .track,
   .marquee[data-paused] .track {
     animation-play-state: paused;
   }
