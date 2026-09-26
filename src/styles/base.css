@@ -205,12 +205,10 @@ ol {
   text-transform: uppercase;
 }
 
-@media (max-width: 1099px) {
+/* The nav carries six links, so it compacts and collapses to the menu at wider breakpoints than the page. */
+@media (max-width: 1219px) {
   [id] {
     scroll-margin-top: 72px;
-  }
-  .section {
-    padding: 80px var(--pad);
   }
   .nav {
     padding: 18px var(--pad);
@@ -238,22 +236,11 @@ ol {
     width: 26px;
     height: 26px;
   }
-  .h2 {
-    font-size: 56px;
-  }
-  .head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
 }
 
-@media (max-width: 699px) {
+@media (max-width: 779px) {
   [id] {
     scroll-margin-top: 64px;
-  }
-  .section {
-    padding: 64px var(--pad);
   }
   .nav {
     padding: 14px var(--pad);
@@ -263,9 +250,6 @@ ol {
   }
   .nav .links a:not(.cta) {
     display: none;
-  }
-  .brand .name {
-    font-size: 17px;
   }
   .nav .links a.cta {
     padding: 10px 12px;
@@ -285,6 +269,26 @@ ol {
   }
   .brand .name {
     font-size: 20px;
+  }
+}
+
+@media (max-width: 1099px) {
+  .section {
+    padding: 80px var(--pad);
+  }
+  .h2 {
+    font-size: 56px;
+  }
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 699px) {
+  .section {
+    padding: 64px var(--pad);
   }
   .eb-long {
     display: none;

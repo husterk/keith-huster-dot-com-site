@@ -13,7 +13,7 @@
     or Engineering Management role where reliability is the product.
   cta:
     primary: { label: 'See the impact', href: '#segments' }
-    secondary: { label: 'Download résumé', href: '/Keith-Huster-Resume.pdf' }
+    secondary: { label: 'View résumé', href: '/resume' }
   stats:
     - {
         value: '>{{availability}}',
@@ -63,6 +63,7 @@
       - { label: 'Leadership', href: '/#crew' }
       - { label: 'Patents', href: '/#patents' }
       - { label: 'Beyond work', href: '/#offclock' }
+      - { label: 'Résumé', href: '/resume' }
     menu: 'Menu'
     cta: { label: 'Get in touch', href: '/#contact' }
     skip: 'Skip to content'

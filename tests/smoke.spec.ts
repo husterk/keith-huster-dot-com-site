@@ -65,6 +65,24 @@ for (const width of heroGridWidths) {
   });
 }
 
+test.describe('the way to the résumé', () => {
+  for (const width of widths) {
+    test(`the hero button and the nav open /resume at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/');
+      const hero = page.locator('.hero a.btn.ghost');
+      await expect(hero).toHaveText('View résumé');
+      await expect(hero).toHaveAttribute('href', '/resume');
+      await expect(hero).not.toHaveAttribute('target', /./);
+      if (width < 780) await page.locator('button.menu').click();
+      const nav = page.locator(width < 780 ? '#mobile-menu' : 'header.nav');
+      await nav.locator('a[href="/resume"]').click();
+      await expect(page).toHaveURL(/\/resume$/);
+      await expect(page.locator('a[download]')).toHaveAttribute('href', '/Keith-Huster-Resume.pdf');
+    });
+  }
+});
+
 test.describe('phone menu', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
