@@ -22,7 +22,6 @@ keith-huster-portfolio-site/
 │       ├── menu.js          ← mobile menu
 │       └── parallax.js      ← optional scene motion
 ├── public/
-│   └── Keith-Huster-Resume.pdf
 └── README.md
 ```
 
@@ -31,7 +30,7 @@ A static-site generator is optional; the page is a single HTML document. If one 
 ## Things the mockup only stubs
 
 1. **Mobile menu.** The phone nav shows a `Menu` button; wire it to a full-screen overlay listing the five anchors and Get in touch. Use a real `<button aria-expanded>` and trap focus while open.
-2. **Résumé download.** Both "Download résumé" (hero) and the contact block should link to the PDF in `public/`. Keep the filename stable so it can be linked from LinkedIn.
+2. **Résumé download.** "Download résumé" (hero) links to `/Keith-Huster-Resume.pdf`. The build generates that file from `src/content/resume.yaml`; keep the filename stable so it can be linked from LinkedIn.
 3. **Container queries → media queries.** The mockup queries the page container; on the real site plain `@media (max-width: 1099px)` and `(max-width: 699px)` are simpler and equivalent.
 4. **Scene captions** (`.lbl`) are hidden below 1100px in the mockup; keep that.
 5. **Scene scaling.** Either keep the `transform: scale(var(--k))` + focus-point technique from the mockup, or give each scene a `viewBox="0 0 1440 H"` with `preserveAspectRatio="xMidYMax slice"` and set `--cx` via `viewBox` offsets. The transform approach is already tuned and verified; the viewBox approach is cleaner CSS.

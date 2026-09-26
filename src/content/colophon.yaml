@@ -52,11 +52,11 @@
     secrets kept out of the repository, and the whole thing reproducible from a git clone.
   summary: '🚵 Banff to Antelope Wells in six scenes, one Worker, and about 190 KB.'
   repo: https://github.com/husterk/keith-huster-dot-com-site
-  updated: 2026-09-19
+  updated: 2026-09-25
   stats:
     - { value: '<200 KB', label: 'cold load of the homepage, fonts included' }
     - { value: '<10', label: 'requests on that first load' }
-    - { value: '<1 s', label: 'production build, second of two runs' }
+    - { value: '<3 s', label: 'production build, résumé PDF included, second of two runs' }
     - { value: '100%', label: 'Lighthouse score in all four categories' }
   kit:
     - {
@@ -149,6 +149,13 @@
       body: >-
         Edit a YAML file, open a pull request, get a preview URL, merge. If a field is missing or a
         date is malformed, the build fails with a message pointing at the line.
+    - emoji: '📄'
+      title: Why the résumé is data
+      body: >-
+        The résumé lives in a YAML file beside the rest of the content. The build renders it as the
+        résumé page and prints that page to the PDF with the same headless Chromium the tests use, so
+        the download never falls behind the site. Numbers that both state, like the patent count, are
+        written once and filled in everywhere else.
     - emoji: '🤫'
       title: How the contact form stays quiet
       body: >-
