@@ -53,6 +53,6 @@ Each milestone ends with something deployable. Estimates assume focused sessions
 
 ## Ongoing upkeep (what maintenance actually looks like)
 
-- Content edit: YAML change → PR → merge. Minutes.
+- Content edit: YAML change → PR → merge. Minutes. A résumé edit regenerates the PDF in the same build.
 - Weekly: merge Renovate's grouped PR if CI is green (patch-level dev tooling automerges on its own).
-- Yearly: bump `compatibility_date` in `wrangler.jsonc` and the Bun/Node versions in `.bun-version` / `.nvmrc`, rotate the Cloudflare and Resend keys in 1Password and re-run the deploy workflow, re-export the résumé PDF.
+- Yearly: bump `compatibility_date` in `wrangler.jsonc` and the Bun/Node versions in `.bun-version` / `.nvmrc`, rotate the Cloudflare and Resend keys in 1Password and re-run the deploy workflow.
