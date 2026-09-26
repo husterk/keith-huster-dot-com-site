@@ -65,6 +65,15 @@ for (const width of heroGridWidths) {
   });
 }
 
+test('the Tour Divide card draws the elevation profile', async ({ page }) => {
+  await page.goto('/');
+  const profile = page.locator('#offclock svg.tour-profile');
+  await expect(profile).toHaveAttribute('aria-label', /Indiana Pass, 11,910 feet/);
+  await expect(profile.locator('.tp-line')).toHaveCount(1);
+  await expect(profile.locator('.tp-bands rect')).toHaveCount(7);
+  await expect(profile.getByText('Indiana Pass · 11,910 ft')).toHaveCount(1);
+});
+
 test('the colophon map scrolls with the page, beside the route section', async ({ page }) => {
   await page.setViewportSize({ width: 1512, height: 860 });
   await page.goto('/colophon');

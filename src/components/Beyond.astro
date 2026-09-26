@@ -1,6 +1,7 @@
 ---
 import { getBeyond } from '../lib/content';
 import { linkify } from '../lib/links';
+import TourProfile from './TourProfile.astro';
 
 const beyond = await getBeyond();
 const { feature, boxes } = beyond;
@@ -18,20 +19,7 @@ const { feature, boxes } = beyond;
       </div>
       <div class="t">{feature.title}</div>
       <p class="body" set:html={linkify(feature.body)} />
-      <svg class="profile" width="720" height="90" preserveAspectRatio="none" aria-hidden="true">
-        <path
-          d="M0,70 L30,58 60,64 90,40 120,52 150,30 180,46 210,24 240,44 270,34 300,56 330,28 360,18 390,36 420,14 450,32 480,22 510,44 540,38 570,56 600,50 630,64 660,60 690,74 720,78"
-          style="fill: none; stroke-width: 2; stroke-linejoin: round;"
-          stroke="var(--accent)"
-        ></path>
-        <line
-          x1="0"
-          y1="88"
-          x2="720"
-          y2="88"
-          style="stroke: rgba(235, 230, 216, 0.24); stroke-width: 1;"
-        ></line>
-      </svg>
+      <TourProfile {...feature.profile} />
       <div
         class="mono muted"
         style="font-size: 12px; display: flex; justify-content: space-between;"
