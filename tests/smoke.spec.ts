@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 const widths = [1440, 834, 390];
 
@@ -64,6 +64,38 @@ for (const width of heroGridWidths) {
     });
   });
 }
+
+test.describe('page transitions', () => {
+  const recordReveal = async (page: Page) =>
+    page.addInitScript(() =>
+      addEventListener('pagereveal', (event) => {
+        (window as unknown as { transitioned: boolean }).transitioned = !!(
+          event as Event & { viewTransition: unknown }
+        ).viewTransition;
+      }),
+    );
+
+  test('moving between pages crossfades', async ({ page }) => {
+    await recordReveal(page);
+    await page.goto('/');
+    await page.locator('.foot a[href="/resume"]').click();
+    await expect(page).toHaveURL(/\/resume$/);
+    expect(
+      await page.evaluate(() => (window as unknown as { transitioned: boolean }).transitioned),
+    ).toBe(true);
+  });
+
+  test('reduced motion switches pages without a transition', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await recordReveal(page);
+    await page.goto('/');
+    await page.locator('.foot a[href="/resume"]').click();
+    await expect(page).toHaveURL(/\/resume$/);
+    expect(
+      await page.evaluate(() => (window as unknown as { transitioned: boolean }).transitioned),
+    ).toBe(false);
+  });
+});
 
 test.describe('the way to the résumé', () => {
   for (const width of widths) {
