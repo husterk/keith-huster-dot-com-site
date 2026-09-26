@@ -8,7 +8,7 @@ Agent guide for keithhuster.com. The plan lives in `docs/plan/`, the design in `
 - **Every change goes through a PR** from a branch off `origin/main`. The `ci` check is required; PRs are rebase-merged, never squashed. Merge your own PR once CI is green. `git push --force` is not allowed here: after a rebase, push a new branch and open a replacement PR.
 - **No secrets in the repo, ever.** They live in 1Password and reach the Worker through `deploy.yml`. The only public values in the repo are the Turnstile site key and the Google Analytics measurement ID, both of which every visitor can read in the page source. Scan every diff before committing.
 - **The design is the contract.** Pages must match `docs/design/png/` at 1440, 834 and 390; the rider must stay fully visible in every scene on the phone. Headline is "Reliable by design." The phone number never appears.
-- **Content is data.** Copy lives in `src/content/*.yaml` and `src/content/pages/*.md`, validated by `src/content.config.ts`. Change words there, not in components.
+- **Content is data.** Copy lives in `src/content/*.yaml` and `src/content/pages/*.md`, validated by `src/content.config.ts`. Change words there, not in components. The résumé is `src/content/resume.yaml`: the build prints `/resume` to `Keith-Huster-Resume.pdf`, so never commit a PDF. Numbers the résumé and the site share live in its `facts` and are written `{{name}}` everywhere else.
 - **Rewrite `docs/plan/STATUS.md` at the end of every session** so it describes the current state only: what is live, what merged, what is open, what needs Keith.
 - Subagents run on Sonnet or Haiku, never the top model. An agent worktree starts from a stale commit: `git fetch origin && git reset --hard origin/main` first.
 - Prose rules: US English, no em or en dashes, no code comments unless they explain a non-obvious why, never emoji in code.
@@ -18,6 +18,7 @@ Agent guide for keithhuster.com. The plan lives in `docs/plan/`, the design in `
 ```sh
 mise install                     # Bun and Node from mise.toml
 bun install --frozen-lockfile
+bunx playwright install chromium # the build prints the résumé PDF with it
 cp .dev.vars.example .dev.vars   # before the build: the preview Worker reads it for the contact tests
 bun run check                    # wrangler types, astro check, prettier --check
 bun run build

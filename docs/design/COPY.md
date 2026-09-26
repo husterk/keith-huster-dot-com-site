@@ -1,6 +1,6 @@
 # Site copy — final ("B4 · the blend", 2026-09-18)
 
-Source of every fact: `Keith Huster - Resume - 2026.pdf` unless noted. Phone number intentionally omitted everywhere.
+Source of every fact: the résumé, now kept as data in `src/content/resume.yaml`, unless noted. Phone number intentionally omitted everywhere.
 
 ## Nav
 
