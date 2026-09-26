@@ -48,7 +48,6 @@ Each milestone ends with something deployable. Estimates assume focused sessions
 
 - Parallax and the rider bob, behind `prefers-reduced-motion`.
 - Fill in the colophon's measured numbers.
-- A first case-study page if you want one (the on-call design or the EKS migration are the strongest candidates); this is where the `pages/` collection gets added.
 - Renovate's first grouped update, to confirm the upkeep loop works.
 
 ## Ongoing upkeep (what maintenance actually looks like)
