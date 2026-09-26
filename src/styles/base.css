@@ -333,3 +333,17 @@ ol {
   color: var(--accent);
   text-decoration-color: var(--accent);
 }
+
+.nav {
+  view-transition-name: site-nav;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 250ms;
+  }
+}
