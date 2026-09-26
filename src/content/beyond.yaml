@@ -6,10 +6,117 @@
     title: 'Tour Divide finisher'
     body: >-
       Cycling 2,745 miles along the Continental Divide, self-supported, in 27 days: roughly a hundred miles
-      or rough, rugged terrain per day. Constant planning, troubleshooting, and pacing with nobody else to
+      of rough, rugged terrain per day. Constant planning, troubleshooting, and pacing with nobody else to
       hand the problems to. It's the same discipline I bring to a multi-quarter migration or a 3 a.m. incident.
-    from: 'Mile 0 · Baff, AB (Canada)'
+    from: 'Mile 0 · Banff, AB (Canada)'
     to: 'Mile 2,745 · Antelope Wells, NM (Mexico Border)'
+    profile:
+      label: >-
+        Tour Divide elevation profile: 2,745 miles from Banff, Alberta at about 4,500 feet, over Togwotee and
+        Boreas passes, to the route's high point at Indiana Pass, 11,910 feet, and down to Antelope Wells, New
+        Mexico, at about 4,500 feet.
+      # Approximate [mile, feet] points traced from the published Tour Divide profile; close enough to read the shape.
+      points:
+        - [0, 4540]
+        - [40, 5300]
+        - [75, 5900]
+        - [100, 6250]
+        - [130, 5000]
+        - [165, 3400]
+        - [190, 4600]
+        - [200, 6300]
+        - [215, 4200]
+        - [235, 6200]
+        - [255, 2950]
+        - [290, 3300]
+        - [320, 3000]
+        - [345, 5500]
+        - [370, 3500]
+        - [420, 4000]
+        - [470, 4500]
+        - [500, 7400]
+        - [530, 4500]
+        - [560, 4100]
+        - [585, 4500]
+        - [610, 6400]
+        - [640, 4500]
+        - [665, 4100]
+        - [690, 6500]
+        - [705, 7100]
+        - [725, 5400]
+        - [750, 6300]
+        - [775, 5500]
+        - [805, 6700]
+        - [830, 7600]
+        - [850, 5600]
+        - [880, 7000]
+        - [910, 6500]
+        - [945, 6000]
+        - [970, 6250]
+        - [1010, 6700]
+        - [1030, 7100]
+        - [1060, 6400]
+        - [1090, 6300]
+        - [1140, 6800]
+        - [1175, 9650]
+        - [1210, 7600]
+        - [1240, 9200]
+        - [1280, 7800]
+        - [1305, 7200]
+        - [1350, 7400]
+        - [1380, 7700]
+        - [1420, 7000]
+        - [1455, 6800]
+        - [1490, 6700]
+        - [1530, 7400]
+        - [1560, 7300]
+        - [1600, 6700]
+        - [1640, 8950]
+        - [1680, 7600]
+        - [1720, 8800]
+        - [1750, 11480]
+        - [1790, 9200]
+        - [1810, 8900]
+        - [1850, 9500]
+        - [1870, 10840]
+        - [1895, 8400]
+        - [1930, 9400]
+        - [1955, 10200]
+        - [1990, 7880]
+        - [2020, 11910]
+        - [2060, 9000]
+        - [2085, 10500]
+        - [2110, 9800]
+        - [2130, 7900]
+        - [2160, 6100]
+        - [2185, 10000]
+        - [2215, 7800]
+        - [2245, 7000]
+        - [2300, 6800]
+        - [2370, 6500]
+        - [2400, 7200]
+        - [2430, 7900]
+        - [2470, 7000]
+        - [2510, 7500]
+        - [2540, 6500]
+        - [2570, 7600]
+        - [2610, 6000]
+        - [2640, 5000]
+        - [2670, 4500]
+        - [2700, 4500]
+        - [2745, 4550]
+      peaks:
+        - { mile: 1175, text: 'Togwotee Pass', anchor: middle }
+        - { mile: 1750, text: 'Boreas Pass', anchor: end }
+        - { mile: 2020, text: 'Indiana Pass · 11,910 ft', anchor: start, high: true }
+      states:
+        - { from: 0, short: 'AB', name: 'Alberta', color: 'var(--bg-spruce)' }
+        - { from: 160, short: 'BC', name: 'British Columbia', color: 'var(--bg-spruce)' }
+        - { from: 255, short: 'MT', name: 'Montana', color: 'var(--bg-lake)' }
+        - { from: 1030, short: 'ID', name: 'Idaho', color: 'var(--bg-basin)' }
+        - { from: 1110, short: 'WY', name: 'Wyoming', color: 'var(--bg-basin)' }
+        - { from: 1545, short: 'CO', name: 'Colorado', color: 'var(--bg-alpine)' }
+        - { from: 2060, short: 'NM', name: 'New Mexico', color: 'var(--bg-desert)' }
   boxes:
     - caption: 'sunmanfire.com'
       title: 'Volunteer firefighter, Lieutenant'

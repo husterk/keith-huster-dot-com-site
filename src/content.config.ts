@@ -122,6 +122,23 @@ const beyond = defineCollection({
       body: z.string(),
       from: z.string(),
       to: z.string(),
+      profile: z.object({
+        label: z.string(),
+        points: z.array(z.tuple([z.number(), z.number()])).min(10),
+        peaks: z.array(
+          z.object({
+            mile: z.number(),
+            text: z.string(),
+            anchor: z.enum(['start', 'middle', 'end']),
+            high: z.boolean().default(false),
+          }),
+        ),
+        states: z
+          .array(
+            z.object({ from: z.number(), short: z.string(), name: z.string(), color: z.string() }),
+          )
+          .min(1),
+      }),
     }),
     boxes: z
       .array(z.object({ caption: z.string(), title: z.string(), body: z.string() }))
