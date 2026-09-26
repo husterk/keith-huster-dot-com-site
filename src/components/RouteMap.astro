@@ -1,8 +1,79 @@
 ---
+import { feature } from 'topojson-client';
+import type { Topology, GeometryCollection } from 'topojson-specification';
+import type { Feature, MultiPolygon, Polygon } from 'geojson';
+import statesTopology from 'us-atlas/states-10m.json';
 import { getColophon } from '../lib/content';
 
 const { map } = await getColophon();
 const className = { place: 'lbl', big: 'lbl-big', mile: 'mile' } as const;
+
+// Same equirectangular projection the route and labels use: 49°N sits on the border line at y=170.
+const project = ([lon, lat]: number[]) => [276.8 + (lon + 111.05) * 37.16, 170 + (49 - lat) * 50];
+const fills: Record<string, string> = {
+  Montana: 'var(--bg-lake)',
+  Idaho: 'var(--bg-basin)',
+  Wyoming: 'var(--bg-basin)',
+  Colorado: 'var(--bg-alpine)',
+  'New Mexico': 'var(--bg-desert)',
+};
+const FRAME = { left: -10, right: 642, top: 160, bottom: 1100 };
+// Sutherland-Hodgman against each frame edge; the parts of a state outside the frame never ship.
+const clip = (ring: number[][]) => {
+  const edges: [(p: number[]) => boolean, (a: number[], b: number[]) => number[]][] = [
+    [(p) => p[0] >= FRAME.left, (a, b) => at(a, b, 0, FRAME.left)],
+    [(p) => p[0] <= FRAME.right, (a, b) => at(a, b, 0, FRAME.right)],
+    [(p) => p[1] >= FRAME.top, (a, b) => at(a, b, 1, FRAME.top)],
+    [(p) => p[1] <= FRAME.bottom, (a, b) => at(a, b, 1, FRAME.bottom)],
+  ];
+  return edges.reduce((points, [inside, cross]) => {
+    const out: number[][] = [];
+    points.forEach((current, i) => {
+      const previous = points[(i + points.length - 1) % points.length];
+      if (inside(current)) {
+        if (!inside(previous)) out.push(cross(previous, current));
+        out.push(current);
+      } else if (inside(previous)) out.push(cross(previous, current));
+    });
+    return out;
+  }, ring);
+};
+const at = (a: number[], b: number[], axis: number, value: number) => {
+  const t = (value - a[axis]) / (b[axis] - a[axis]);
+  return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+};
+const topology = statesTopology as unknown as Topology<{ states: GeometryCollection }>;
+const states = (
+  feature(topology, topology.objects.states).features as Feature<
+    Polygon | MultiPolygon,
+    { name: string }
+  >[]
+)
+  .map((state) => {
+    const polygons =
+      state.geometry.type === 'Polygon' ? [state.geometry.coordinates] : state.geometry.coordinates;
+    const rings = polygons.flat().map((ring) => {
+      const points: number[][] = [];
+      for (const point of clip(ring.map(project))) {
+        const last = points.at(-1);
+        if (!last || Math.hypot(point[0] - last[0], point[1] - last[1]) > 2) points.push(point);
+      }
+      return points;
+    });
+    const xs = rings.flat().map((p) => p[0]);
+    const ys = rings.flat().map((p) => p[1]);
+    const visible =
+      Math.max(...xs) > 0 &&
+      Math.min(...xs) < 632 &&
+      Math.max(...ys) > 170 &&
+      Math.min(...ys) < 1090;
+    const d = rings
+      .filter((ring) => ring.length > 2)
+      .map((ring) => `M${ring.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join('L')}Z`)
+      .join('');
+    return { name: state.properties.name, d, visible };
+  })
+  .filter((state) => state.visible);
 ---
 
 <svg
@@ -15,118 +86,15 @@ const className = { place: 'lbl', big: 'lbl-big', mile: 'mile' } as const;
   <rect width="632" height="1090" fill="var(--bg-spruce)" />
   <rect x="0" y="0" width="632" height="170.0" fill="#101d18" />
   <g>
-    <polygon
-      points="91.0,170.0 536.9,170.0 536.9,370.0 276.8,370.0 276.8,395.0 219.2,395.0 185.8,375.0 148.6,340.0 154.2,290.0 104.0,250.0 91.0,220.0"
-      fill="var(--bg-lake)"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="91.0,170.0 54.6,170.0 54.6,320.0 59.5,345.0 48.3,400.0 59.5,420.0 48.3,520.0 276.8,520.0 276.8,395.0 219.2,395.0 185.8,375.0 148.6,340.0 154.2,290.0 104.0,250.0 91.0,220.0"
-      fill="var(--bg-basin)"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="276.8,370.0 536.9,370.0 536.9,570.0 276.8,570.0"
-      fill="var(--bg-basin)"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="351.1,570.0 611.2,570.0 611.2,770.0 351.1,770.0"
-      fill="var(--bg-alpine)"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="351.1,770.0 575.9,770.0 575.9,1020.0 442.2,1020.0 442.2,1031.0 382.7,1031.0 382.7,1053.5 351.1,1053.5"
-      fill="var(--bg-desert)"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="165.3,520.0 276.8,520.0 276.8,570.0 351.1,570.0 351.1,770.0 165.3,770.0"
-      fill="#141a17"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="165.3,770.0 351.1,770.0 351.1,1053.5 276.1,1053.5 137.5,995.0 144.9,870.0 165.3,820.0"
-      fill="#141a17"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="-55.7,520.0 165.3,520.0 165.3,770.0 144.9,870.0 -55.7,670.0"
-      fill="#141a17"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="-222.9,320.0 54.6,320.0 48.3,520.0 -222.9,520.0"
-      fill="#141a17"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="-222.9,170.0 54.6,170.0 54.6,320.0 -222.9,320.0"
-      fill="#141a17"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="536.9,170.0 817.5,170.0 817.5,325.0 536.9,325.0"
-      fill="#141a17"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="536.9,325.0 817.5,325.0 817.5,470.0 536.9,470.0"
-      fill="#141a17"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="536.9,470.0 862.0,470.0 862.0,620.0 611.2,620.0 611.2,570.0 536.9,570.0"
-      fill="#141a17"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="611.2,620.0 888.1,620.0 888.1,770.0 611.2,770.0"
-      fill="#141a17"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="575.9,770.0 895.5,770.0 895.5,940.0 687.4,940.0 687.4,795.0 575.9,795.0"
-      fill="#141a17"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
-    <polygon
-      points="575.9,795.0 687.4,795.0 687.4,940.0 895.5,940.0 895.5,1145.0 791.4,1320.0 557.4,1135.0 442.2,1031.0 442.2,1020.0 575.9,1020.0"
-      fill="#141a17"
-      stroke="rgba(235,230,216,.22)"
-      stroke-width="1.2"
-      stroke-linejoin="round"
-    />
+    {states.map((state) => (
+      <path
+        d={state.d}
+        fill={fills[state.name] ?? '#141a17'}
+        stroke="rgba(235,230,216,.22)"
+        stroke-width="1.2"
+        stroke-linejoin="round"
+      />
+    ))}
   </g>
   <line
     x1="0"
@@ -138,7 +106,7 @@ const className = { place: 'lbl', big: 'lbl-big', mile: 'mile' } as const;
     stroke-dasharray="6 6"
   />
   <polyline
-    points="108.9,61.0 115.2,75.0 128.2,100.0 133.0,119.0 134.5,133.5 127.8,145.0 127.8,170.0 128.2,176.0 154.6,199.5 160.5,201.5 164.6,217.0 170.9,235.0 186.5,261.0 199.5,269.0 216.3,272.5 240.0,290.5 231.9,306.5 221.8,320.0 204.4,330.5 200.6,345.0 204.7,362.5 219.6,388.0 234.1,392.5 263.8,399.0 290.9,415.0 304.7,432.5 319.6,450.0 321.0,476.5 363.0,495.0 390.2,510.0 418.4,530.5 416.2,550.0 412.4,567.5 433.6,595.5 450.0,617.0 461.9,638.5 462.6,646.0 468.6,654.5 471.9,669.0 464.5,693.5 449.6,700.0 451.5,736.0 442.2,745.0 444.8,752.5 449.6,770.0 445.9,785.0 452.6,809.5 428.8,819.0 416.2,840.0 395.7,862.5 390.2,880.0 385.3,905.0 382.7,940.0 379.7,981.5 375.3,1010.0 378.3,1024.0 370.5,1053.5"
+    points="108.9,61.0 115.2,75.0 128.2,100.0 133.0,119.0 134.5,133.5 127.8,145.0 127.8,170.0 128.2,176.0 154.6,199.5 160.5,201.5 164.6,217.0 170.9,235.0 186.5,261.0 199.5,269.0 216.3,272.5 240.0,290.5 231.9,306.5 221.8,320.0 204.4,330.5 200.6,345.0 204.7,362.5 219.6,388.0 234.1,392.5 263.8,399.0 290.9,415.0 304.7,432.5 319.6,450.0 321.0,476.5 363.0,495.0 390.2,510.0 391.0,536.4 399.5,553.0 412.4,567.5 433.6,595.5 450.0,617.0 461.9,638.5 462.6,646.0 468.6,654.5 471.9,669.0 464.5,693.5 449.6,700.0 451.5,736.0 442.2,745.0 444.8,752.5 449.6,770.0 445.9,785.0 452.6,809.5 428.8,819.0 416.2,840.0 395.7,862.5 390.2,880.0 385.3,905.0 382.7,940.0 379.7,981.5 375.3,1010.0 378.3,1024.0 370.5,1053.5"
     fill="none"
     stroke="var(--accent)"
     stroke-width="3.5"
@@ -210,8 +178,8 @@ const className = { place: 'lbl', big: 'lbl-big', mile: 'mile' } as const;
     stroke-width="2.5"
   />
   <circle
-    cx="418.4"
-    cy="530.5"
+    cx="391.0"
+    cy="536.4"
     r="4.5"
     fill="var(--bg-spruce)"
     stroke="var(--accent)"

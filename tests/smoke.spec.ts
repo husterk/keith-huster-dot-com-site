@@ -75,6 +75,14 @@ test('the colophon map scrolls with the page, beside the route section', async (
   expect((await rail.boundingBox())!.y).toBeCloseTo(before - 400, 0);
 });
 
+test('the colophon map follows the Tour Divide through Wamsutter', async ({ page }) => {
+  await page.goto('/colophon');
+  const map = page.locator('.route-map');
+  await expect(map.getByText('Wamsutter, WY')).toHaveCount(1);
+  await expect(map.getByText('Rawlins')).toHaveCount(0);
+  expect(await map.locator('g > path').count()).toBeGreaterThanOrEqual(10);
+});
+
 test.describe('colophon logo strip', () => {
   test('scrolls and pauses on request', async ({ page }) => {
     await page.goto('/colophon');
