@@ -37,7 +37,14 @@ const month = (ym: string) =>
         <div class="rs-who">
           <h1>{site.name}</h1>
           <p class="rs-headline">{r.headline}</p>
-          <p class="rs-tagline">{r.tagline}</p>
+          <p class="rs-tagline">
+            {r.tagline.split(' · ').map((part, i) => (
+              <>
+                {i > 0 && ' · '}
+                <span class="rs-nowrap">{part}</span>
+              </>
+            ))}
+          </p>
         </div>
         <ul class="rs-contact rs-contact-right">
           <li>
@@ -223,6 +230,9 @@ const month = (ym: string) =>
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--ink);
+  }
+  .rs-nowrap {
+    white-space: nowrap;
   }
   .rs-tagline {
     max-width: 35em;
