@@ -345,8 +345,7 @@ const year = new Date().getFullYear();
     .page-foot {
       display: none;
     }
-    /* PDF viewers clip ink past the page margin, and the Linux build's right-aligned text reaches
-         it, so the side padding keeps that text on the page. */
+    /* PDF viewers clip ink past the page margin; the Linux build reaches it without this padding. */
     .sheet {
       max-width: none;
       padding: 0 0.05in;
