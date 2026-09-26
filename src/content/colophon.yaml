@@ -32,7 +32,7 @@
       - { text: 'Pinedale, WY', kind: place, x: 335.0, y: 481.5, anchor: start }
       - { text: 'MILE 1,100', kind: mile, x: 335.0, y: 497.5, anchor: start }
       - { text: 'Great Divide Basin', kind: place, x: 404.2, y: 515.0, anchor: start }
-      - { text: 'Rawlins, WY', kind: place, x: 432.4, y: 535.5, anchor: start }
+      - { text: 'Wamsutter, WY', kind: place, x: 405.0, y: 541.0, anchor: start }
       - { text: 'Steamboat Springs, CO', kind: place, x: 447.6, y: 600.5, anchor: start }
       - { text: 'Breckenridge, CO', kind: place, x: 476.6, y: 651.0, anchor: start }
       - { text: 'Salida, CO', kind: place, x: 478.5, y: 698.5, anchor: start }
@@ -45,7 +45,7 @@
       - { text: 'Silver City, NM', kind: place, x: 393.7, y: 986.5, anchor: start }
       - { text: 'Antelope Wells, NM', kind: big, x: 384.5, y: 1058.5, anchor: start }
       - { text: 'MILE 2,745', kind: mile, x: 384.5, y: 1074.5, anchor: start }
-      - { text: '2,745 MI · 27 DAYS · SELF-SUPPORTED', kind: mile, x: 618, y: 1074, anchor: end }
+      - { text: '2,745 MI · 27 DAYS · SELF-SUPPORTED', kind: mile, x: 618, y: 30, anchor: end }
   intro: >-
     This site is a static page with one server endpoint for sending emails, built and deployed the way
     I would build a small production service: content and layout separated, everything validated in CI,
