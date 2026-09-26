@@ -364,16 +364,14 @@ test.describe('motion', () => {
         await rider(page).evaluate((el) => getComputedStyle(el.children[0]).animationName),
       ).toBe('bob');
       await rider(page).evaluate((el) => el.scrollIntoView({ block: 'end' }));
-      await page.waitForTimeout(200);
+      await expect.poll(() => rider(page).getAttribute('transform')).not.toBe(before);
       const low = await rider(page).getAttribute('transform');
       const legLow = await rider(page).locator('.leg').first().getAttribute('d');
       await page.mouse.wheel(0, 500);
-      await page.waitForTimeout(200);
-      const high = await rider(page).getAttribute('transform');
+      await expect
+        .poll(async () => x(await rider(page).getAttribute('transform')))
+        .toBeGreaterThan(x(low));
       const legHigh = await rider(page).locator('.leg').first().getAttribute('d');
-      expect(low).not.toBe(before);
-      expect(high).not.toBe(low);
-      expect(x(high)).toBeGreaterThan(x(low));
       expect(legHigh).not.toBe(legLow);
     });
   });
