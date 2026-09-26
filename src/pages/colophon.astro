@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import RouteMap from '../components/RouteMap.astro';
+import LogoMarquee from '../components/LogoMarquee.astro';
 import { getColophon, getSite } from '../lib/content';
 import { linkify } from '../lib/links';
 
@@ -109,10 +110,13 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
         <h2 class="cond h2">
           <span aria-hidden="true">{c.sections.credits.emoji}</span> {c.sections.credits.title}
         </h2>
-        <p class="body" set:html={linkify(c.credits)} />
-        <p class="mono muted updated">
-          {c.updatedLabel} {updated}
-        </p>
+        <LogoMarquee {...c.logos} />
+        <div class="credits">
+          <p class="body" set:html={linkify(c.credits)} />
+          <p class="mono muted updated">
+            {c.updatedLabel} {updated}
+          </p>
+        </div>
       </section>
     </article>
   </main>
@@ -367,8 +371,16 @@ const repoLabel = c.repo.replace(/^https?:\/\//, '');
   .legend .sec {
     font-size: 11px;
   }
+  .credits {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px 40px;
+  }
   .updated {
-    margin: 16px 0 0;
+    margin: 0;
   }
   .page-foot {
     background: var(--bg-spruce);

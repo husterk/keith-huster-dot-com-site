@@ -75,6 +75,35 @@ test('the colophon map scrolls with the page, beside the route section', async (
   expect((await rail.boundingBox())!.y).toBeCloseTo(before - 400, 0);
 });
 
+test.describe('colophon logo strip', () => {
+  test('scrolls and pauses on request', async ({ page }) => {
+    await page.goto('/colophon');
+    const strip = page.locator('[data-marquee]');
+    const track = strip.locator('.track');
+    await expect(track).toHaveCSS('animation-play-state', 'running');
+    const button = strip.locator('button.toggle');
+    await button.click();
+    await expect(strip).toHaveAttribute('data-paused', '');
+    await expect(button).toHaveText('Play');
+    await page.mouse.move(0, 0);
+    await expect(track).toHaveCSS('animation-play-state', 'paused');
+    await button.click();
+    await expect(button).toHaveText('Pause');
+    await page.mouse.move(0, 0);
+    await expect(track).toHaveCSS('animation-play-state', 'running');
+  });
+
+  test('holds still under reduced motion, each logo listed once', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/colophon');
+    const strip = page.locator('[data-marquee]');
+    await expect(strip.locator('.track')).toHaveCSS('animation-name', 'none');
+    await expect(strip.locator('button.toggle')).toBeHidden();
+    await expect(strip.locator('ul[aria-hidden="true"]')).toBeHidden();
+    await expect(strip.locator('ul:not([aria-hidden]) li')).toHaveCount(15);
+  });
+});
+
 test('every page ends with the same footer', async ({ page }) => {
   const footers: string[] = [];
   for (const path of ['/', '/resume', '/colophon', '/404']) {

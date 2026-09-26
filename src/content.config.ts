@@ -240,6 +240,12 @@ const colophon = defineCollection({
       .length(6),
     themeNote: z.string(),
     credits: z.string(),
+    logos: z.object({
+      label: z.string(),
+      pause: z.string(),
+      play: z.string(),
+      items: z.array(z.object({ name: z.string(), icon: z.string() })).min(6),
+    }),
   }),
 });
 

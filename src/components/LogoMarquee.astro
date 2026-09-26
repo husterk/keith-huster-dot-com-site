@@ -1,0 +1,162 @@
+---
+import * as simpleIcons from 'simple-icons';
+
+interface Props {
+  label: string;
+  pause: string;
+  play: string;
+  items: { name: string; icon: string }[];
+}
+
+const { label, pause, play, items } = Astro.props;
+const bySlug = new Map(
+  Object.values(simpleIcons)
+    .filter((icon) => typeof icon === 'object' && icon !== null && 'slug' in icon)
+    .map((icon) => [icon.slug, icon]),
+);
+const luminance = (hex: string) => {
+  const [r, g, b] = [0, 2, 4].map((i) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+const logos = items.map(({ name, icon }) => {
+  const found = bySlug.get(icon);
+  if (!found) throw new Error(`No Simple Icons logo named "${icon}" for ${name}`);
+  // Near-black brand colors would vanish on the dark page, so those fall back to the text color.
+  const brand = luminance(found.hex) > 0.12 ? `#${found.hex}` : 'var(--bone)';
+  return { name, path: found.path, brand };
+});
+---
+
+<div class="marquee" data-marquee>
+  <div class="window">
+    <div class="track">
+      {[false, true].map((copy) => (
+        <ul
+          class="set"
+          aria-label={copy ? undefined : label}
+          aria-hidden={copy ? 'true' : undefined}
+        >
+          {logos.map((logo) => (
+            <li style={`--brand: ${logo.brand}`}>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d={logo.path} />
+              </svg>
+              <span>{logo.name}</span>
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+  <button type="button" class="toggle mono" data-pause={pause} data-play={play}>
+    {pause}
+  </button>
+</div>
+
+<style>
+  .marquee {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .window {
+    align-self: stretch;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .track {
+    display: flex;
+    width: max-content;
+    animation: marquee 48s linear infinite;
+  }
+  .set {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    padding: 0 64px 0 0;
+    margin: 0;
+    list-style: none;
+  }
+  .set li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--mute);
+    font-family: var(--font-cond);
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .set li:hover {
+    color: var(--brand);
+  }
+  .set svg {
+    width: 30px;
+    height: 30px;
+    fill: currentColor;
+    flex: none;
+  }
+  .toggle {
+    font-size: 11px;
+    color: var(--mute);
+    background: none;
+    border: 0;
+    padding: 0;
+    min-height: 44px;
+    cursor: pointer;
+  }
+  .toggle:hover {
+    color: var(--bone);
+  }
+  .window:hover .track,
+  .marquee[data-paused] .track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .window {
+      mask-image: none;
+    }
+    .track {
+      animation: none;
+      width: auto;
+    }
+    .set {
+      flex-wrap: wrap;
+      row-gap: 20px;
+      padding-right: 0;
+    }
+    .set[aria-hidden] {
+      display: none;
+    }
+    .toggle {
+      display: none;
+    }
+    .marquee {
+      padding-bottom: 28px;
+    }
+  }
+</style>
+
+<script>
+  for (const marquee of document.querySelectorAll<HTMLElement>('[data-marquee]')) {
+    const button = marquee.querySelector<HTMLButtonElement>('.toggle')!;
+    button.addEventListener('click', () => {
+      const paused = marquee.toggleAttribute('data-paused');
+      button.textContent = (paused ? button.dataset.play : button.dataset.pause) ?? '';
+    });
+  }
+</script>
