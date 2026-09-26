@@ -213,3 +213,23 @@
     Design iterated with Claude Fable 5.1 on a design canvas over three rounds of direction, copy and
     responsive review, then built with Claude Code using lower-cost subagent sessions (Opus 5/Sonnet 5)
     from a written plan. Fonts by their foundries under the SIL Open Font License. Hosted on Cloudflare.
+  logos:
+    label: 'Built with'
+    pause: 'Pause'
+    play: 'Play'
+    items:
+      - { name: 'Claude', icon: 'claude' }
+      - { name: 'Claude Code', icon: 'claudecode' }
+      - { name: 'Astro', icon: 'astro' }
+      - { name: 'TypeScript', icon: 'typescript' }
+      - { name: 'Zod', icon: 'zod' }
+      - { name: 'Bun', icon: 'bun' }
+      - { name: 'Node.js', icon: 'nodedotjs' }
+      - { name: 'Cloudflare Workers', icon: 'cloudflareworkers' }
+      - { name: 'Resend', icon: 'resend' }
+      - { name: 'Google Analytics', icon: 'googleanalytics' }
+      - { name: 'GitHub Actions', icon: 'githubactions' }
+      - { name: 'Lighthouse', icon: 'lighthouse' }
+      - { name: 'Prettier', icon: 'prettier' }
+      - { name: '1Password', icon: '1password' }
+      - { name: 'Renovate', icon: 'renovate' }
