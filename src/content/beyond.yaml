@@ -126,12 +126,14 @@
         - { from: 2060, short: 'NM', name: 'New Mexico', color: 'var(--bg-desert)' }
   boxes:
     - caption: 'sunmanfire.com'
+      icon: helmet
       title: 'Volunteer firefighter, Lieutenant'
       body: >-
         Twelve years (2004 – 2016) on the department, promoted to Lieutenant. Calm, clear communication under
         immense pressure is a skill I learned long before my first production incident. Firefighting taught me
         to stay calm, assess the situation, and make decisions quickly and effectively.
     - caption: 'github.com/husterk'
+      icon: rack
       title: 'HomeLab'
       body: >-
         A declarative, GitOps-driven lab on Proxmox VE, OPNsense, Talos Linux Kubernetes and Terraform with Atlantis.
@@ -139,6 +141,7 @@
         risking production systems. It's also a great way to learn how to troubleshoot and debug complex systems, which
         is a skill that translates well to my work as a software engineer.
     - caption: 'KeithAndLindsey.com'
+      icon: map
       title: 'Travel blog'
       body: >-
         Ghost CMS blog site with a fully custom theme, a GitHub Actions pipeline and two Cloudflare Workers handling

@@ -85,6 +85,13 @@ test('the Tour Divide card draws the elevation profile', async ({ page }) => {
     await expect(profile.getByText(landmark, { exact: true })).toHaveCount(1);
 });
 
+test('each Beyond work box has a decorative icon beside its header', async ({ page }) => {
+  await page.goto('/');
+  const icons = page.locator('#offclock .box .box-head svg.box-icon');
+  await expect(icons).toHaveCount(3);
+  for (const icon of await icons.all()) await expect(icon).toHaveAttribute('aria-hidden', 'true');
+});
+
 test('the colophon map scrolls with the page, beside the route section', async ({ page }) => {
   await page.setViewportSize({ width: 1512, height: 860 });
   await page.goto('/colophon');

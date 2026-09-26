@@ -142,7 +142,14 @@ const beyond = defineCollection({
       }),
     }),
     boxes: z
-      .array(z.object({ caption: z.string(), title: z.string(), body: z.string() }))
+      .array(
+        z.object({
+          caption: z.string(),
+          title: z.string(),
+          body: z.string(),
+          icon: z.enum(['helmet', 'rack', 'map']),
+        }),
+      )
       .length(3),
   }),
 });
