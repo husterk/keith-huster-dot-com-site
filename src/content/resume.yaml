@@ -209,7 +209,7 @@
   projects:
     - name: KeithHuster.com
       body: >-
-        This site: Astro on Cloudflare Workers, built end to end with Claude Code in parallel Git worktrees,
+        Portfolio site on Astro and Cloudflare Workers, built end to end with Claude Code in parallel Git worktrees,
         behind CI gates for tests, accessibility and Lighthouse budgets, with agent-run checks of every preview
         and production deploy.
     - name: KeithAndLindsey.com
