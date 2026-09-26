@@ -4,26 +4,27 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 ## Live
 
-- https://keithhuster.com serves the new site (cut over 2026-09-19): homepage, `/colophon`, `/api/contact`, `og.png`, `robots.txt`, `Keith-Huster-Resume.pdf`. The old `keithhuster-sapper` Worker's route and the placeholder apex A record were removed; the old Worker script itself is still in the account and can be deleted after a month.
+- https://keithhuster.com serves the new site (cut over 2026-09-19): homepage, `/resume`, `/colophon`, `/api/contact`, `og.png`, `robots.txt`, and `Keith-Huster-Resume.pdf`, which the build now generates. The old `keithhuster-sapper` Worker's route and the placeholder apex A record were removed; the old Worker script itself is still in the account and can be deleted after a month.
 - https://keithhuster-com.husterk.workers.dev still works as a preview host.
 - Every merge to `main` deploys and syncs the Worker secrets from 1Password. Every PR gets a preview URL comment.
 
 ## Merged
 
 - M0 through M5: everything in docs/plan/06-milestones.md except the first case-study page (#21), parked at Keith's request. M5 added the rider bob and, replacing the first parallax, a rider that travels the ground path as each strip scrolls, pedaling as it goes, with the hero rider crossing from the left until it leaves the view (#44, #49), both behind prefers-reduced-motion, the colophon's measured numbers, and confirmed Renovate's upkeep loop (lock-file PR #39 went through CI and merged on its own; Renovate ignores docs/).
-- Lighthouse in CI: median of three runs against 95/100/95/100. Playwright: 21 tests at 1440/834/390 including the rider-visible assertion, the phone menu, axe on three pages, the contact endpoint (405, 403, 400, honeypot, dry run, 429, no-JS HTML), rider motion under both motion preferences, and the eased hash scroll.
+- M6 (#147, merged 2026-09-25): the résumé is data. `src/content/resume.yaml` holds it; `/resume` renders it and is linked from the hero ("View résumé"), the nav and the footer; a post-build script prints that page with Playwright's Chromium to `/Keith-Huster-Resume.pdf`, which is no longer committed. The chart, experience card dates, education list and JSON-LD job title read the résumé, and the numbers both state live once in its `facts`. The live PDF no longer carries a phone number.
+- Lighthouse in CI: median of three runs against 95/100/95/100 on /, /colophon, /resume and /404. Playwright: 52 tests at 1440/834/390 including the rider-visible assertion, the phone menu, axe on four pages, the generated PDF (two tagged pages, size, links, no phone number), the résumé facts, the contact endpoint (405, 403, 400, honeypot, dry run, 429, no-JS HTML), rider motion under both motion preferences, and the eased hash scroll.
 
 ## Open
 
 - Nothing in flight. Every content string now lives in src/content: site.yaml carries the nav, section headings and intros, form labels and status messages, endpoint messages, SEO and structured-data fields and the 404 copy; colophon.yaml carries the colophon headings, rail note and all route map labels. Keith reviewed every content file on 2026-09-20 (#100). The copyright year is computed at build time.
-- Merged 2026-09-20: the scene scale is a CSS clamp on the viewport, so every strip fills any width up to the 1920px cap; the Turnstile slot is clipped to zero height until the widget turns interactive and the widget runs its challenge only on submit; the hero keeps two columns down to 1150px and goes single-column from 1100px to 1149px; body copy shares one 72ch measure; the career chart derives from dated rows in chart.yaml with tiered labels on wide screens and a numbered legend below 1100px; the home page has a main landmark; pages build as files so /colophon serves without a redirect; sections and strips below the hero use content-visibility so first paint skips their render work; the 404 page fills the viewport.
+- Merged 2026-09-20: the scene scale is a CSS clamp on the viewport, so every strip fills any width up to the 1920px cap; the Turnstile slot is clipped to zero height until the widget turns interactive and the widget runs its challenge only on submit; the hero keeps two columns down to 1150px and goes single-column from 1100px to 1149px; body copy shares one 72ch measure; the career chart derives from the résumé positions with tiered labels on wide screens and a numbered legend, with industries, below 1100px; the home page has a main landmark; pages build as files so /colophon serves without a redirect; sections and strips below the hero use content-visibility so first paint skips their render work; the 404 page fills the viewport.
 - Merged 2026-09-22: a one-time Front-End Checklist audit (#125) led to a Content Security Policy and security headers (#126), noindex on the 404 page with the Lighthouse SEO budget skipped for that URL only (#127), a noscript email note in the contact form (#128) and at least 24px hit areas on footer and card caption links (#129). Keith confirmed the contact form still sends under the CSP. The findings the audit still reports are static heuristics the site meets another way; #125 lists why. TypeScript is 6.0.3: 7.x breaks `astro check` because the native compiler lacks the programmatic API Astro uses, so renovate.json holds typescript below 7 until Astro supports it.
 - Lighthouse 13 scores 100 in every category on /, /colophon and /404 for desktop and mobile in repeated runs (Keith sees 100 on most runs in DevTools). CI runs the same Lighthouse 13 through an override in package.json.
 - The only open work item is #21 (first case-study page), parked at Keith's request; the pages collection and the [slug] route are ready for it. Renovate's weekly grouped PR lands Monday before 6am Denver time; patch updates of dev tooling automerge, everything else waits for a merge. No PRs are open.
 
 ## Blocked on Keith
 
-- Nothing. M0 through M5 are complete and verified.
+- Nothing. M0 through M6 are complete and verified.
 
 ## Done at cutover
 
@@ -37,13 +38,15 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 - Rebase merge only, head branches auto-deleted, wiki/discussions/projects off, vulnerability alerts, secret scanning and push protection on.
 - Ruleset `main`: PR required, linear history, required status check `ci`, no force push or deletion.
-- Labels, milestones M0 to M5, issues #2 to #22, GitHub environment `production`, Project board https://github.com/users/husterk/projects/1 with Status (Todo / In progress / Blocked on Keith / Done).
+- Labels, milestones M0 to M6, issues #2 to #22, GitHub environment `production`, Project board https://github.com/users/husterk/projects/1 with Status (Todo / In progress / Blocked on Keith / Done).
 
 ## Things a future session should know
 
 - Pages build as files (`colophon.html`, `404.html`) so `/colophon` serves without a trailing-slash redirect; canonical URLs strip the extension. @lhci/cli bundles Lighthouse 12, so package.json overrides `lighthouse` to 13.x for the CI budget; Renovate keeps the override current. Lighthouse cannot score a real 404 response, so audit the 404 page at `/404`, which serves it with status 200.
 - Content Security Policy: Astro's `security.csp` emits a meta policy that hashes every inline script and style element. The two pre-paint inline scripts live in `src/lib/inline-scripts.mjs` so astro.config.mjs can hash them; edit them there, never inline in the layout. Inline style attributes pass through `style-src-attr` (the SVG scenes use hundreds). `public/_headers` adds frame-ancestors, X-Frame-Options, Referrer-Policy and Permissions-Policy. A Playwright test fails on any CSP violation; a new third-party origin must be added to the config.
 - Google Analytics 4: the measurement ID is `analytics.googleMeasurementId` in site.yaml (public, like the Turnstile site key). `src/components/GoogleAnalytics.astro` loads gtag.js after the page's load event and only when the hostname is keithhuster.com, so local runs, CI and PR previews send nothing. The CSP allows googletagmanager.com, *.google-analytics.com, *.analytics.google.com and www.google.com for it.
+- Résumé: edit `src/content/resume.yaml`, never a PDF. The build needs Chromium (`bunx playwright install chromium`), and every CI job that builds installs it. Write a shared number as `{{name}}` from the résumé's `facts`; `src/lib/content.ts` fills placeholders in every content getter and fails the build on an unknown name, and `tests/facts.spec.ts` checks the copy that spells a fact out in words ("Six engineers"). The PDF CI builds on Linux sets text slightly wider than a macOS build, so judge the layout from the preview's PDF, opened in Preview, not from a local build; print keeps 0.05in of side padding because Preview clips ink past the page margin. The tests fail if the PDF grows past two pages.
+- The nav has its own breakpoints because it carries six links: compact below 1220px and the menu button below 780px, while the page keeps 1100px and 700px.
 - `astro preview` backgrounds itself when it detects an AI agent; the Playwright config passes `--ignore-lock` to keep it in the foreground. Stop a stray one with `bunx astro preview stop`.
 - `.dev.vars` must exist before `astro build` for the preview Worker to see the Turnstile test secret; CI copies `.dev.vars.example` into place. Locally run `bun run secrets:local` (needs the 1Password CLI) or copy the example.
 - Worker secrets sync after `wrangler deploy`, because PR preview uploads leave a newer undeployed version and Cloudflare refuses secret edits in that state (error 10215).
