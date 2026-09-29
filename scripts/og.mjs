@@ -26,7 +26,7 @@ h1 span{color:#ff7a1a}
 .tag{position:absolute;left:72px;top:330px;margin:0;font:600 26px/1 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#ebe6d8}
 .tag span{color:#9db0a3}
 </style></head><body>
-${svg.replace('class="scene"', 'class="scene"')}
+${svg}
 <h1>${site.headline.lead}<br>${accentLead} <span>${accentWord}</span></h1>
 <p class="tag">${site.name} <span>· ${tag} · ${site.location.split(' ')[0]}</span></p>
 </body></html>`;

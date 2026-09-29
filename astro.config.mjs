@@ -10,12 +10,9 @@ const externalLinks = {
     filter: ['a'],
     visit(node) {
       const href = node.properties?.href;
-      if (
-        typeof href !== 'string' ||
-        !/^https?:\/\//.test(href) ||
-        href.includes('keithhuster.com')
-      )
-        return;
+      if (typeof href !== 'string' || !/^https?:\/\//.test(href)) return;
+      const host = new URL(href).hostname;
+      if (host === 'keithhuster.com' || host.endsWith('.keithhuster.com')) return;
       return { ...node, properties: { ...node.properties, target: '_blank', rel: 'noopener' } };
     },
   },
