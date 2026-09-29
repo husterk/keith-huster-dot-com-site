@@ -104,8 +104,12 @@ jobs:
       - run: bunx lhci autorun --collect.url=http://localhost/${{ matrix.page }}.html
 
   preview:
-    # Same-repo PRs only: forks never get credentials.
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    # Same-repo PRs from people only: forks never get credentials, and Renovate's
+    # PRs install new dependency versions before the Cloudflare token loads.
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login != 'renovate[bot]'
     needs: build
     runs-on: ubuntu-latest
     permissions:
