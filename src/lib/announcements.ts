@@ -59,7 +59,11 @@ const escape = (s: string) =>
     (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!,
   );
 
-const external = (href: string) => /^https?:\/\//.test(href) && !href.includes('keithhuster.com');
+const external = (href: string) => {
+  if (!/^https?:\/\//.test(href)) return false;
+  const host = new URL(href).hostname;
+  return host !== 'keithhuster.com' && !host.endsWith('.keithhuster.com');
+};
 
 // Plain HTML rather than a component so the tests can render a fixture bar with the same markup.
 export const barHtml = (a: Scheduled, labels: BarLabels) => {
