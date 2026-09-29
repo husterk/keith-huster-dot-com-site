@@ -6,7 +6,7 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 - https://keithhuster.com serves the new site (cut over 2026-09-19): homepage, `/resume`, `/colophon`, `/api/contact`, `og.png`, `robots.txt`, and `Keith-Huster-Resume.pdf`, which the build now generates. The old `keithhuster-sapper` Worker's route and the placeholder apex A record were removed; the old Worker script itself is still in the account and can be deleted after a month.
 - https://keithhuster-com.husterk.workers.dev serves production too. PR preview (version) URLs are behind Cloudflare Access (Previews only, 7-day sessions): Keith signs in with an email code, Claude uses the `claude-preview-checks` service token from 1Password. Old previews, including one that served the hand-exported résumé PDF with a phone number, are behind the same sign-in.
-- Every merge to `main` deploys and syncs the Worker secrets from 1Password. Every PR gets a preview URL comment.
+- Every merge to `main` deploys and syncs the Worker secrets from 1Password. Every PR a person opens gets a preview URL comment; Renovate's PRs skip the preview, so dependency updates never run next to the Cloudflare token (#194).
 
 ## Merged
 
@@ -25,7 +25,7 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 ## Blocked on Keith
 
-- Nothing. M0 through M6 are complete and verified.
+- #194, the credential half: move `OP_SERVICE_ACCOUNT_TOKEN` from a repository secret into the `production` environment, and give previews their own 1Password service account and vault with a preview-only Cloudflare token. Both need the 1Password and GitHub web UIs; the preview skip for Renovate and the `main`-only `production` environment are already done.
 
 ## Done at cutover
 
@@ -37,8 +37,11 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 ## Repository configuration (done)
 
-- Rebase merge only, head branches auto-deleted, wiki/discussions/projects off, vulnerability alerts, secret scanning and push protection on.
-- Ruleset `main`: PR required, linear history, required status check `ci`, no force push or deletion.
+- Follows the account baseline in `husterk/.github`; `mise run audit -- husterk/keith-huster-dot-com-site` in a clone of that repository compares the live settings with it.
+- Squash merge only (rebase merging is off because GitHub does not sign the commits it rewrites), head branches auto-deleted, wiki/discussions/projects off. Vulnerability alerts, secret scanning, push protection, private vulnerability reporting and CodeQL (actions and JavaScript/TypeScript) are on; Dependabot security updates are off because Renovate opens the update PRs.
+- Ruleset `main`: PR required, squash only, linear history, signed commits, required checks `ci` and `Linked issue`, no force push or deletion. `Linked issue` comes from the shared `husterk/.github/actions/linked-issue` action pinned by SHA; Renovate PRs are exempt.
+- Actions: only GitHub-owned and husterk actions plus `jdx/mise-action` and `1password/load-secrets-action`, all pinned by full SHA; fork PRs need approval for every outside contributor. The `production` environment deploys from `main` only.
+- Renovate extends `github>husterk/.github//renovate/default` at a pinned tag, first in `extends`, so this repository's own schedule, grouping and rules win.
 - Labels, milestones M0 to M6, issues #2 to #22, GitHub environment `production`, Project board https://github.com/users/husterk/projects/1 with Status (Todo / In progress / Blocked on Keith / Done).
 
 ## Things a future session should know

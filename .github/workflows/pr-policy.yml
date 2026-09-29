@@ -1,0 +1,16 @@
+name: pr-policy
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+jobs:
+  linked-issue:
+    name: Linked issue
+    runs-on: ubuntu-latest
+    steps:
+      - uses: husterk/.github/actions/linked-issue@a2dcf907cade988137eb1588512400b208885966 # v1.1.1
