@@ -2,15 +2,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>husterk/.github//renovate/default#v1.3.0",
-    "config:recommended",
     "group:allNonMajor",
-    ":pinAllExceptPeerDependencies",
-    "helpers:pinGitHubActionDigests"
+    ":pinAllExceptPeerDependencies"
   ],
   "ignorePaths": ["docs/**"],
   "timezone": "America/Denver",
   "schedule": ["before 6am on monday"],
-  "labels": ["dependencies"],
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": ["before 6am on the first day of the month"]
@@ -33,6 +30,12 @@
       "description": "astro check needs the TypeScript programmatic API, which the native TypeScript 7 compiler does not ship yet; lift once Astro supports it (withastro/roadmap discussion 1321)",
       "matchPackageNames": ["typescript"],
       "allowedVersions": "<7"
+    },
+    {
+      "description": "Keep husterk/.github releases in their own PR, opened at any time, as the shared preset intends; group:allNonMajor would otherwise hold them for Monday",
+      "matchDepNames": ["husterk/.github"],
+      "groupName": "husterk .github",
+      "schedule": ["at any time"]
     }
   ]
 }
