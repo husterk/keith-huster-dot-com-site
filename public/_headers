@@ -12,3 +12,6 @@
 
 /og.png
   Cache-Control: public, max-age=604800
+
+https://:worker.:account.workers.dev/*
+  X-Robots-Tag: noindex
