@@ -1,6 +1,8 @@
-# keithhuster.com — implementation plan
+# keithhuster.com implementation plan
 
 Plan for turning the approved design (`../design/`) into the production site. Written 2026-09-18.
+
+These documents record how the site was planned and built. They are not kept current: the live state is in `STATUS.md`, `../../CLAUDE.md` and the repository settings.
 
 ## The recommendation in one paragraph
 
@@ -16,7 +18,7 @@ Build the site with **Astro** as a mostly static site, with every word of conten
 | `04-contact-form.md` | The contact endpoint: Turnstile, Resend, rate limiting, spam handling, failure modes |
 | `05-colophon.md` | Outline and draft copy for the "How this site was built" page |
 | `06-milestones.md` | Build order in six milestones, each with a definition of done |
-| `samples/` | Starter files: `wrangler.jsonc`, `astro.config.mjs`, `content.config.ts`, sample content YAML, both GitHub Actions workflows, `renovate.json`, the contact endpoint, the Playwright config and smoke test |
+| `samples/` | Starter files: `wrangler.jsonc`, `astro.config.mjs`, `content.config.ts`, sample content YAML, `renovate.json`, the contact endpoint, the Playwright config and smoke test |
 
 ## Versions verified on 2026-09-18
 
