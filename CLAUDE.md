@@ -5,7 +5,7 @@ Agent guide for keithhuster.com. The plan lives in `docs/plan/`, the design in `
 ## Rules
 
 - **Open a GitHub issue before starting any work**, including one-line fixes and docs. Give it a milestone and labels, put sub-tasks in a checkbox list, and reference it from the PR body with `Closes #N`. If the issue already exists, reuse it. Work that has no issue does not start.
-- **Every change goes through a PR** from a branch off `origin/main`. The `ci` check is required; merge with the squash or merge-commit button, never rebase: GitHub does not sign the commits a rebase merge rewrites, and `main` requires signed commits. Merge your own PR once CI is green. `git push --force` is not allowed here: after a rebase, push a new branch and open a replacement PR.
+- **Every change goes through a PR** from a branch off `origin/main`. The `ci` check is required; merge with the squash or merge-commit button, never rebase: GitHub does not sign the commits a rebase merge rewrites, and `main` requires signed commits. Merge your own PR once CI is green. Rebase and squash locally, then update the feature branch with `git push --force-with-lease`; the ruleset rejects force pushes to `main`.
 - **No secrets in the repo, ever.** They live in 1Password and reach the Worker through `deploy.yml`. The only public values in the repo are the Turnstile site key and the Google Analytics measurement ID, both of which every visitor can read in the page source. Scan every diff before committing.
 - **The design is the contract.** Pages must match `docs/design/png/` at 1440, 834 and 390; the rider must stay fully visible in every scene on the phone. Headline is "Reliable by design." The phone number never appears.
 - **Content is data.** Copy lives in `src/content/*.yaml`, validated by `src/content.config.ts`. Change words there, not in components. The résumé is `src/content/resume.yaml`: the build prints `/resume` to `Keith-Huster-Resume.pdf`, so never commit a PDF. Numbers the résumé and the site share live in its `facts` and are written `{{name}}` everywhere else.
@@ -29,6 +29,18 @@ bun run og                       # regenerate public/og.png after a hero change
 ```
 
 `astro preview` backgrounds itself when it detects an AI agent; the Playwright config passes `--ignore-lock` to keep it in the foreground. If port 4321 is busy: `bunx astro preview stop` and `pkill -f "astro preview"`.
+
+## CI job to local command
+
+The ruleset requires `ci` and `Linked issue`. `ci` passes only when the four jobs it gates pass.
+
+| Failing job    | Local command                                           |
+| -------------- | ------------------------------------------------------- |
+| `check`        | `bun run check`                                         |
+| `build`        | `cp .dev.vars.example .dev.vars && bun run build`       |
+| `test`         | `bun run test`, after a build                           |
+| `lighthouse`   | `bunx lhci autorun`, after a build                      |
+| `Linked issue` | Put `Closes #<number>` for an open issue in the PR body |
 
 ## Deploy
 

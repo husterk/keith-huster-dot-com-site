@@ -1,14 +1,18 @@
 # keithhuster.com
 
-Source of Keith Huster's portfolio site: a static Astro 7 site with one Cloudflare Worker endpoint, content in YAML/Markdown, deployed to Cloudflare Workers from GitHub Actions.
+Source of Keith Huster's portfolio site at [keithhuster.com](https://keithhuster.com): a static Astro 7 site with one Cloudflare Worker endpoint for the contact form, deployed to Cloudflare Workers from GitHub Actions.
 
-**Status:** M1 (skeleton that deploys). See [`docs/plan/STATUS.md`](docs/plan/STATUS.md) for what is merged, open and blocked, and the [issues](../../issues) for the work items.
+|        |                                                                                                                                     |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Status | [`docs/plan/STATUS.md`](docs/plan/STATUS.md): what is live, what is open, and what needs Keith                                      |
+| Design | [`docs/design/`](docs/design/README.md): spec, copy, PDFs at three widths, a standalone preview, scene and character SVGs           |
+| Plan   | [`docs/plan/`](docs/plan/README.md): the technology choices, CI/CD and secrets, contact form and milestones the site was built from |
+| Setup  | [`docs/plan/MANUAL-SETUP.md`](docs/plan/MANUAL-SETUP.md): the accounts and secrets Keith configures by hand                         |
+| Work   | the [issues](../../issues)                                                                                                          |
 
-|              |                                                                                                                                         |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Design       | [`docs/design/`](docs/design/README.md): spec, copy, PDFs at three widths, a standalone preview, scene and character SVGs               |
-| Plan         | [`docs/plan/`](docs/plan/README.md): technology choices, repo structure, CI/CD and secrets, contact form, colophon, milestones, samples |
-| Manual setup | [`docs/plan/MANUAL-SETUP.md`](docs/plan/MANUAL-SETUP.md): the accounts and secrets Keith configures by hand                             |
+## Content
+
+Every word on the site lives in `src/content/*.yaml`, validated by `src/content.config.ts` at build time. The résumé is `src/content/resume.yaml`: `/resume` renders it and the build prints that page to `Keith-Huster-Resume.pdf`. Dated announcements for the bar above the nav live in `src/content/announcements.yaml`.
 
 ## Development
 
@@ -16,18 +20,18 @@ Tool versions are pinned in `mise.toml`; `mise install` provides Bun and Node. B
 
 ```sh
 mise install
-bun install
-bun run dev                    # astro dev inside workerd
+bun install --frozen-lockfile
+bunx playwright install chromium   # the build prints the résumé PDF with it
+cp .dev.vars.example .dev.vars     # or `bun run secrets:local` with the 1Password CLI
+bun run dev                        # astro dev inside workerd
+bun run check                      # wrangler types, astro check, prettier --check
 bun run build && bun run preview
-bun run check                  # astro check + prettier --check
-bun run test                   # Playwright at 1440 / 834 / 390
+bun run test                       # Playwright at 1440 / 834 / 390
 ```
-
-Content lives in `src/content/` (from M2); see `docs/plan/02-repo-structure.md` for the content model.
 
 ## Deploying
 
-Every pull request gets a CI run and a Worker preview URL. Merging to `main` runs `deploy.yml`, which builds, loads the Cloudflare token from 1Password and runs `wrangler deploy`. No secrets live in this repository; see `docs/plan/03-ci-cd-and-secrets.md`.
+Every pull request runs CI: format and type checks, the build, Playwright and Lighthouse. Pull requests opened by a person also get a Worker preview URL behind Cloudflare Access; Renovate's pull requests skip the preview. Merging to `main` runs `deploy.yml`, which builds, loads the Cloudflare token from 1Password, runs `wrangler deploy` and then syncs the Worker secrets. No secrets live in this repository; see [SECURITY.md](SECURITY.md).
 
 ## License
 
