@@ -15,7 +15,7 @@ Each milestone ends with something deployable. Estimates assume focused sessions
 
 - `bun create astro@latest` (Astro 7, minimal, TypeScript strict), `bun astro add cloudflare` (adapter 14), `wrangler.jsonc` and `renovate.json` from `samples/`, `mise.toml` pinning Bun 1.4.2 and Node 24 (+ `mise.lock`), `packageManager` field, Prettier, `.dev.vars.example`. Pin the versions from the README table.
 - `Base.astro` with fonts, tokens, a placeholder `index.astro` and `404.astro`.
-- `ci.yml` and `deploy.yml` from `samples/`; first deploy to the `workers.dev` URL (no custom domain yet).
+- `ci.yml` and `deploy.yml`; first deploy to the `workers.dev` URL (no custom domain yet).
 
 **Done when:** a PR gets a green check and a preview URL comment; merging deploys to `keithhuster-com.<account>.workers.dev`.
 

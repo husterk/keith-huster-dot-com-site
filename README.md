@@ -7,7 +7,7 @@ Source of Keith Huster's portfolio site at [keithhuster.com](https://keithhuster
 | Status | [`docs/plan/STATUS.md`](docs/plan/STATUS.md): what is live, what is open, and what needs Keith                                      |
 | Design | [`docs/design/`](docs/design/README.md): spec, copy, PDFs at three widths, a standalone preview, scene and character SVGs           |
 | Plan   | [`docs/plan/`](docs/plan/README.md): the technology choices, CI/CD and secrets, contact form and milestones the site was built from |
-| Setup  | [`docs/plan/MANUAL-SETUP.md`](docs/plan/MANUAL-SETUP.md): the accounts and secrets Keith configures by hand                         |
+| Setup  | [`docs/plan/MANUAL-SETUP.md`](docs/plan/MANUAL-SETUP.md): the accounts and secrets Keith configured by hand during the build        |
 | Work   | the [issues](../../issues)                                                                                                          |
 
 ## Content
@@ -35,4 +35,4 @@ Every pull request runs CI: format and type checks, the build, Playwright and Li
 
 ## License
 
-Code: MIT. Content and illustrations: all rights reserved. See [LICENSE](LICENSE).
+Code: MIT, see [LICENSE](LICENSE). Content, illustrations and the Keith Huster name: all rights reserved, see [NOTICE.md](NOTICE.md).

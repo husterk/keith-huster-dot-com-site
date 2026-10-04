@@ -17,7 +17,7 @@ Purpose: let a recruiter or hiring manager reach you without leaving the page, w
 2. **Origin check**: `Origin`/`Referer` must be `https://keithhuster.com` (or the preview URL pattern in non-production) → 403 otherwise.
 3. **Rate limit**: `env.CONTACT_RL.limit({ key: clientIp })` (Workers rate-limiting binding, 5 per minute per IP) → 429 with a friendly page.
 4. **Honeypot**: if `company` is non-empty, return the success page without sending (don't tell bots they failed).
-5. **Validation**: name 1–100 chars, email syntactically valid, message 10–3000 chars, all trimmed → 400 with field errors.
+5. **Validation**: name 1 to 100 chars, email syntactically valid, message 10 to 3000 chars, all trimmed → 400 with field errors.
 6. **Turnstile**: POST `cf-turnstile-response` + `secret` + `remoteip` to `https://challenges.cloudflare.com/turnstile/v0/siteverify`; require `success: true` and matching `hostname` → 400 "please try again".
 7. **Send** via Resend `POST https://api.resend.com/emails`: `from: "keithhuster.com <contact@keithhuster.com>"`, `to: env.CONTACT_TO`, `reply_to: <their email>`, `subject: "Site contact: <name>"`, plain-text body with name, email, message, timestamp, request id, and the Worker version (`env.CF_VERSION_METADATA` if bound) so preview submissions are distinguishable. Retry once on a 5xx.
 8. Respond 200 (JSON `{ ok: true }` for fetch, HTML page for no-JS) or 502 with a message to email you directly.
@@ -37,7 +37,7 @@ Logging: `console.log` a single JSON line per request with `requestId`, outcome,
 
 ## Failure modes and what the user sees
 
-| Failure | Behaviour |
+| Failure | Behavior |
 |---|---|
 | Turnstile script blocked (privacy extension) | Form still submits; endpoint rejects with "please try again or email me directly" and the mailto link. Acceptable; these users are rare and have the email. |
 | Resend outage | 502 page/inline error with the mailto link; the message text is preserved in the form. Logged. |

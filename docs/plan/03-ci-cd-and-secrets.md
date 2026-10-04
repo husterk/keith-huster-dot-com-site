@@ -38,7 +38,7 @@ Local development: `.dev.vars` (gitignored) holds the two runtime secrets; `op i
 
 Concurrency group `production` with `cancel-in-progress: false` so two merges in quick succession deploy in order.
 
-Both workflows are in `samples/github/workflows/` (copy to `.github/` in the repo). They use the current major versions of the official actions as of 2026-09-19: `actions/checkout@v7`, `actions/upload-artifact@v7`, `actions/github-script@v9` (ESM-only), `1password/load-secrets-action@v5`, `jdx/mise-action@v4`. Actions are pinned to commit SHAs with a version comment, the same way Keith's dotfiles repo does; Renovate keeps the digests current. Bun and Node are installed by mise from `mise.toml`, the single source of truth for tool versions locally and in CI. Wrangler is run with `bunx wrangler` so the version pinned in `package.json` (4.134+) is what deploys; `cloudflare/wrangler-action@v4` is an equivalent alternative.
+Both workflows live in `.github/workflows/`. They use the current major versions of the official actions as of 2026-09-19: `actions/checkout@v7`, `actions/upload-artifact@v7`, `actions/github-script@v9` (ESM-only), `1password/load-secrets-action@v5`, `jdx/mise-action@v4`. Actions are pinned to commit SHAs with a version comment, the same way Keith's dotfiles repo does; Renovate keeps the digests current. Bun and Node are installed by mise from `mise.toml`, the single source of truth for tool versions locally and in CI. Wrangler is run with `bunx wrangler` so the version pinned in `package.json` (4.134+) is what deploys; `cloudflare/wrangler-action@v4` is an equivalent alternative.
 
 ## Cloudflare configuration
 
