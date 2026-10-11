@@ -112,6 +112,9 @@ jobs:
       github.event.pull_request.user.login != 'renovate[bot]'
     needs: build
     runs-on: ubuntu-latest
+    # The preview environment's service account reads only the preview vault,
+    # whose Cloudflare token has no zone permissions.
+    environment: preview
     permissions:
       contents: read
       pull-requests: write
@@ -131,8 +134,8 @@ jobs:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          CLOUDFLARE_API_TOKEN: op://secrets_keith-huster-dot-com-site/Cloudflare API token/credential
-          CLOUDFLARE_ACCOUNT_ID: op://secrets_keith-huster-dot-com-site/Cloudflare API token/account id
+          CLOUDFLARE_API_TOKEN: op://secrets_keith-huster-dot-com-site-preview/Cloudflare API token/credential
+          CLOUDFLARE_ACCOUNT_ID: op://secrets_keith-huster-dot-com-site-preview/Cloudflare API token/account id
       - name: Upload preview version
         id: upload
         env:

@@ -26,7 +26,7 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 
 ## Blocked on Keith
 
-- #194, the credential half: move `OP_SERVICE_ACCOUNT_TOKEN` from a repository secret into the `production` environment, and give previews their own 1Password service account and vault with a preview-only Cloudflare token. Both need the 1Password and GitHub web UIs; the preview skip for Renovate and the `main`-only `production` environment are already done.
+- Nothing. `OP_SERVICE_ACCOUNT_TOKEN` exists only as `production` and `preview` environment secrets, and previews use their own service account and vault (#228).
 
 ## Done at cutover
 
