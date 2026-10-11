@@ -43,7 +43,7 @@ Repo → Settings:
 
    Use the *API Credential* item type for the first two and a *Password* item with two custom fields for Turnstile.
 3. Create a **Service Account**: 1Password → Developer → Service Accounts → *Create*. Name `github-actions-keithhuster`, grant **read** access to the `secrets_keith-huster-dot-com-site` vault only. Copy the token once.
-4. GitHub repo → Settings → Secrets and variables → Actions → *New repository secret*: name **`OP_SERVICE_ACCOUNT_TOKEN`**, value = the service-account token. This is the only GitHub secret the project will ever have.
+4. GitHub repo → Settings → Environments → `production` (deployment branches: `main` only) → *Add environment secret*: name **`OP_SERVICE_ACCOUNT_TOKEN`**, value = the service-account token. PR previews use a second service account that reads only `secrets_keith-huster-dot-com-site-preview`, stored the same way in the `preview` environment. The project has no repository secrets.
 5. Optional but useful: `op vault list` on your Mac should show the vault; `op read "op://secrets_keith-huster-dot-com-site/Cloudflare API token/credential"` will work once step 4 is done.
 
 **Done when:** the four items exist and the GitHub secret is set. Tell me "1Password done".
