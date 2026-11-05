@@ -42,6 +42,7 @@ Hand-off file between sessions. Rewritten at the end of every session; describes
 - Squash and merge commits allowed (rebase merging is off because GitHub does not sign the commits it rewrites), head branches auto-deleted, wiki/discussions/projects off. Vulnerability alerts, secret scanning, push protection, private vulnerability reporting and CodeQL (actions and JavaScript/TypeScript) are on; Dependabot security updates are off because Renovate opens the update PRs.
 - Ruleset `main`: PR required, squash or merge commit, signed commits, required checks `ci` and `Linked issue`, no force push or deletion. `Linked issue` comes from the shared `husterk/.github/actions/linked-issue` action pinned by SHA; Renovate PRs are exempt.
 - Actions: only GitHub-owned and husterk actions plus `jdx/mise-action` and `1password/load-secrets-action`, all pinned by full SHA; fork PRs need approval for every outside contributor. The `production` environment deploys from `main` only.
+- CI installs a pinned mise version through the `version` input on every `jdx/mise-action` step. Renovate proposes updates on its own `renovate/mise-cli` branch.
 - Renovate extends `github>husterk/.github//renovate/default` at a pinned tag, first in `extends`, so this repository's own schedule, grouping and rules win.
 - Labels, milestones M0 to M6, issues #2 to #22, GitHub environment `production`, Project board https://github.com/users/husterk/projects/1 with Status (Todo / In progress / Blocked on Keith / Done).
 

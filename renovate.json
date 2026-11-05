@@ -14,6 +14,11 @@
   },
   "packageRules": [
     {
+      "description": "Update the mise CLI on its own, so a breaking release fails a PR that changes nothing else",
+      "matchDepNames": ["jdx/mise"],
+      "groupName": "mise CLI"
+    },
+    {
       "description": "Automerge patch updates of dev tooling once CI is green",
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["patch"],
